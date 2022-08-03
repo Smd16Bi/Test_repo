@@ -1,0 +1,360 @@
+<!-- START SECTION SHOP -->
+<div class="section" data-section="owlcarouselajax" id="section-{{ section.id }}">
+  <div class="container{% if section.settings.fullwidth_on %}-fluid{%endif%}">
+    {% if section.settings.section_title != '' %}
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="heading_s1 text-center">
+          <h2>{{ section.settings.section_title }}</h2>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="featured_products product_slider carousel_slider owl-carousel owl-theme nav_style1" 
+            data-owl-carousel='{
+            "loop": true,
+            "dots": false,                  
+            "nav": true,
+            "margin": 15,                 
+            {%- if settings.rtl_enable -%}
+            "rtl": true, 
+            {%- endif -%}
+            "items": 4,
+            "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+            "responsive":{
+				"0":{"items": "1"}, 
+                "481":{"items": "2"}, 
+                "768":{"items": "3"}, 
+                "1199":{"items": "4"}
+            }}'>
+          <!-- product-item start -->
+          {% assign featured_product = collections[section.settings.featured_product_collection] %}
+          {% assign featured_product_limit = section.settings.featured_product_limit_handle %}  
+
+          {%- if featured_product == empty -%}
+          {% assign a = 1 %}
+          {% for i in (1..featured_product_limit) %}
+
+          {% assign product_item = "product-" | append: a  %}
+          {% assign a = a | plus: 1 %}
+          <div class="item" style="margin-bottom: 30px;">
+            <div>
+              <div>
+                {{ product_item | placeholder_svg_tag: 'product-svg-image' }}
+              </div>
+              <h6>
+                Product Title
+              </h6>
+              <div class="">
+                <span>$99.99</span>
+              </div>
+            </div>
+          </div>
+          {% if a == 7 %}
+          {% assign a = 1 %}
+          {% endif %}
+          {% endfor %}
+
+          {%- else -%}
+          {% for product in featured_product.products limit: featured_product_limit %}
+          <div class="item">
+            {% include 'product-grid-item' %}
+          </div>
+          {% endfor %}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END SECTION SHOP -->
+
+
+{%- include 'section-style' -%}
+
+
+{% schema %}
+  {
+    "name": "Featured Product",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Section width Control"
+        },
+		{
+            "type": "checkbox",
+            "id": "fullwidth_on",
+            "label": "Full Width Enable",
+            "default": false,
+            "info": "If you want Full Width click checkbox"
+        },
+		{
+		  "type": "header",
+          "content": "Product Grid Style"
+        },
+		{
+          "type": "select",
+          "id": "product_grid_style",
+          "label": "Product Grid Style",
+          "options":[
+            {
+              "value":"product",
+              "label": "Style One"
+            },
+            {
+              "value":"product_box",
+              "label": "Style Two"
+            },
+            {
+              "value":"product_wrap",
+              "label": "Style Three"
+            }
+          ],
+
+          "default": "product"
+         },
+		 {
+          "type": "select",
+          "id": "product_aline",
+          "label": "Product Align",
+          "options":[
+            {
+              "value":"text-left",
+              "label": "Left Align"
+            },
+            {
+              "value":"text-right",
+              "label": "Right Align"
+            },
+            {
+              "value":"text-center",
+              "label": "Center Align"
+            },
+			{
+              "value":"default-align",
+              "label": "Default"
+            }
+          ],
+
+          "default": "default-align"
+         },
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Featured Products"
+      	},
+		{
+			"type": "header",
+            "content": "Product"
+        },
+		{
+			"type": "collection",
+            "id": "featured_product_collection",
+            "label": "Select Collection"
+        },
+		{
+            "type": "range",
+            "id": "featured_product_limit_handle",
+            "min": 2,
+            "max": 40,
+            "step": 1,
+            "label": "Limit",
+            "default": 8
+        }
+    ],
+	"blocks":[
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Featured Product",
+		  "category": "4. product",
+		  "blocks":[
+
+			]
+		}
+	]
+  }
+{% endschema %}

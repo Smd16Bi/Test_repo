@@ -1,0 +1,454 @@
+<!-- START SECTION BANNER -->
+<div class="banner_section slide_medium shop_banner_slider staggered-animation-wrap" data-section="sliderone" id="section-{{ section.id }}">
+  <div id="carouselExampleControls" class="carousel slide carousel-fade light_arrow" data-ride="carousel" data-interval="{{ section.settings.slider_on_off }}">
+    <div class="carousel-inner">
+      {% for block in section.blocks %}
+      {% case block.type %}
+      {% when 'slide' %}
+      <div class="carousel-item background_bg" data-img-src="{% if block.settings.slider_bg_img %}{{ block.settings.slider_bg_img | img_url: 'master' }}{% else %}http:\/\/via.placeholder.com\/1920x500{% endif %}" style="background-image: url({% if block.settings.slider_bg_img %}{{ block.settings.slider_bg_img | img_url: 'master' }}{% else %}http:\/\/via.placeholder.com\/1920x500{% endif %});">
+        <div class="banner_slide_content">
+          <div class="container"><!-- STRART CONTAINER -->
+            <div class="row">
+              <div class="col-lg-7 banner_text_wrapper col-9">
+                <div id="block-{{ block.id }}" class="banner_content overflow-hidden">
+                  {%if block.settings.slider_sub_title != '' %}
+                  <h5 class="mb-3 staggered-animation font-weight-light" data-animation="slideInLeft" data-animation-delay="0.5s">{{ block.settings.slider_sub_title }}</h5>
+                  {%endif%}
+                  {%if block.settings.slider_title != '' %}
+                  <h2 class="staggered-animation" data-animation="slideInLeft" data-animation-delay="1s">{{ block.settings.slider_title }}</h2>
+                  {%endif%}
+                  {%if block.settings.slider_content != '' %}
+                  <p>{{ block.settings.slider_content }}</p>
+                  {%endif%}
+                  {%if block.settings.slider_button != '' %}
+                  <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="{{ block.settings.slider_button_url }}" data-animation="slideInLeft" data-animation-delay="1.5s">{{ block.settings.slider_button }}</a>
+                  {%endif%}
+                </div>
+              </div>
+            </div>
+          </div><!-- END CONTAINER-->
+        </div>
+      </div>
+      {% endcase %}
+      {% endfor %}
+    </div>
+    {% if section.block.size >= 2 %}
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><i class="ion-chevron-left"></i></a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><i class="ion-chevron-right"></i></a>
+    {% endif %}
+  </div>
+</div>
+<!-- END SECTION BANNER -->
+
+<script>
+ 
+   
+
+    var $slider = $('.carousel-inner');
+    var $current = $slider.find('div.carousel-item.active');
+    var $next = $current.next();
+
+    if(!$next.length) {
+        $next = $slider.find('div.carousel-item:first');
+    }
+
+    $current.removeClass('active');
+    $next.addClass('active'); 
+  
+ 
+</script>
+
+{%- include 'section-style' -%}
+
+{%- style -%}
+
+.banner_text_wrapper{
+  max-width: 100% !important;
+  flex: 1 1 100% !important;
+}
+.ht-hero-slider .ht-single-slide {
+    height: {{ section.settings.slider_height }}vh;
+}
+
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'slide' %}
+
+  #block-{{ block.id }}.banner_content h2 {
+      color: {{ block.settings.slider_title_color }} !important;
+      font-size: {{ block.settings.slider_title_size }} !important;
+  }
+
+  #block-{{ block.id }}.banner_content h5 {
+      color: {{ block.settings.slider_subtitle_color }} !important;
+      font-size: {{ block.settings.slider_sub_title_size }} !important;
+  }
+
+  #block-{{ block.id }}.banner_content p {
+      color: {{ block.settings.slider_content_color }} !important;
+      font-size: {{ block.settings.slider_content_size }} !important;
+  }
+
+  #block-{{ block.id }}.banner_content a {
+      background: {{ block.settings.slider_btn_bg_color }} !important;
+      border: 2px solid {{ block.settings.slider_btn_bc_color }} !important;
+      color: {{ block.settings.slider_btn_color }} !important;
+      max-width: 237px;
+      width: 100%;
+      padding: 15px 35px !important;
+  }
+  #block-{{ block.id }}.banner_content a:hover {
+      color: {{ block.settings.slider_btn_color_hov }} !important;
+      border-color: {{ block.settings.slider_btn_bc_color_hov }} !important;
+      background: {{ block.settings.slider_btn_bg_color_hov }} !important;
+  }
+
+  {% endcase %}
+  {% endfor %}
+
+{%- endstyle -%}
+
+{% style %}
+#shopify-section-{{section.id}} .carousel-item, #shopify-section-{{section.id}} .banner_section{
+  height: {{section.settings.height}}px !important;
+}
+@media screen and (max-width: 576px){
+  #shopify-section-{{section.id}} .carousel-item, #shopify-section-{{section.id}} .banner_section{
+    height: {{section.settings.height_mob}}px !important;
+  }
+}
+{% endstyle %}
+
+{% schema %}
+  {
+    "name": "Slider One",
+    "settings": [
+		{
+           "type": "select",
+           "id": "slider_on_off",
+           "label": "Slider Auto Play On/Off",
+           "options":[
+			   {
+                  "value":"7000",
+                  "label": "ON"
+               },
+			  {
+                  "value":"false",
+                  "label": "OFF"
+               }
+
+            ],
+
+            "default": "7000"
+        },
+       {
+         "type": "range",
+         "id": "height",
+         "label": "Height",
+         "unit": "px",
+         "min": 300,
+         "max": 900,
+         "step": 10,
+         "default": 650
+       },
+       {
+        "type": "range",
+        "id": "height_mob",
+        "label": "Height mobile",
+        "unit": "px",
+        "min": 200,
+        "max": 700,
+        "step": 10,
+        "default": 450
+      }
+	],
+	"blocks":[
+		{
+          "type": "slide",
+          "name": "Slide",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "slider_bg_img",
+                  "label": "Image",
+                  "info": "Recommended Size: 1920 x 500px"
+              },
+			        {
+                  "type": "text",
+                  "id": "slider_title",
+                  "label": "Title",
+                  "default": "Woman Fashion"
+              },
+              {
+                  "type": "text",
+                  "id": "slider_sub_title",
+                  "label": "Sub Title",
+                  "default": "Get up to 50% off Today Only!"
+              },
+			  {
+                  "type": "text",
+                  "id": "slider_content",
+                  "label": "Slider Content"
+              },
+              {
+                  "type": "text",
+                  "id": "slider_button",
+                  "label": "Button Text",
+                  "default": "Shop now"
+              },
+              {
+                  "type": "url",
+                  "id": "slider_button_url",
+                  "label": "Button URL"
+              },
+              {
+                "type": "header",
+                "content": "Slider Style"
+              },
+              {
+                "type": "color",
+                "id": "slider_title_color",
+                "label": "Slider Title Color",
+                "default": "#292b2c"
+              },
+			  {
+                "type": "color",
+                "id": "slider_subtitle_color",
+                "label": "Slider Sub title Color",
+                "default": "#292b2c"
+              },
+			  {
+                "type": "color",
+                "id": "slider_content_color",
+                "label": "Slider Content Color",
+                "default": "#292b2c"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_color",
+                "label": "Slider Button Color",
+                "default": "#fff"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bg_color",
+                "label": "Slider Button Background Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bc_color",
+                "label": "Slider Button Border Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_color_hov",
+                "label": "Slider Button Hover Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bg_color_hov",
+                "label": "Slider Button Background Hover Color",
+                "default": "transparent"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bc_color_hov",
+                "label": "Slider Button Border Hover Color",
+                "default": "#FF324D"
+              }
+
+          ]
+      },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Slider One",
+		  "category": "1. slideshow",
+		  "blocks":[
+				{
+					"type": "slide"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,29 @@
+{% form 'new_comment', article %}
+
+{{ form.errors | default_errors }}
+
+<div class="content_title">
+  <h5 class="blog-section-title">{{ 'blogs.comments.title' | t }}</h5>
+</div>
+<div class="field_form" name="enq" method="post">
+  <div class="row">
+    <div class="form-group col-md-6">
+       <input type="text" class="form-control {% if form.errors contains 'author' %}error{% endif %}" name="comment[author]" id="commentAuthor" value="{{ form.author }}" placeholder="{{ 'blogs.comments.name' | t }}">
+    </div>
+    <div class="form-group col-md-6">
+      <input type="text" class="form-control {% if form.errors contains 'email' %}error{% endif %}" name="comment[email]" id="commentEmail" value="{{ form.email }}" placeholder="{{ 'blogs.comments.email' | t }}">
+    </div>
+    <div class="form-group col-md-12">
+      <textarea class="custom-textarea form-control" name="comment[body]" id="commentBody"  placeholder="{{ 'blogs.comments.message' | t }}">{{ form.body }}</textarea>
+    </div>
+    
+    {% if blog.moderated? %}
+    <p>{{ 'blogs.comments.moderated' | t }}</p>
+    {% endif %}
+    
+    <div class="form-group col-md-12">
+      <button value="Submit" name="submit" class="btn btn-fill-out" title="Submit Your Message!" type="submit">{{ 'blogs.comments.post' | t }}</button>
+    </div>
+  </div>
+</div>
+{% endform %}

@@ -1,0 +1,117 @@
+<!-- START HEADER -->
+<header class="header_wrap header-style-two">
+	<div class="top-header d-none d-md-block">
+        <div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-8">
+                	<div class="header_topbar_info">
+                      	{% if section.settings.offer_message2 != '' %}
+                    	<div class="header_offer">
+                    		<span>{{ section.settings.offer_message2 }}</span>
+                        </div>
+                      	{%endif%}
+                      	{%- if section.settings.app_download_enable -%}
+                        <div class="download_wrap">
+                          	{% if section.settings.app_info_title != '' %}
+                            <span class="mr-3">{{ section.settings.app_info_title }}</span>
+                          	{%endif%} 
+                            <ul class="icon_list text-center text-lg-left">
+                              	{% if section.settings.app_icon_1 != '' %}
+                                <li><a href="{{ section.settings.app_url_1 }}"><i class="{{ section.settings.app_icon_1 }}"></i></a></li>
+                              	{%endif%} 
+                              	{% if section.settings.app_icon_2 != '' %}
+                                <li><a href="{{ section.settings.app_url_2 }}"><i class="{{ section.settings.app_icon_2 }}"></i></a></li>
+                              	{%endif%} 
+                              	{% if section.settings.app_icon_3 != '' %}
+                                <li><a href="{{ section.settings.app_url_3 }}"><i class="{{ section.settings.app_icon_3 }}"></i></a></li>
+                              	{%endif%} 
+                            </ul>
+                        </div>
+                      	{%endif%}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4">
+                	<div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                      	{%- if section.settings.google_translate_enable -%}
+                        <div class="lng_dropdown">
+                            {% include 'google-translate' %}
+                        </div>
+                      	{%- endif -%}
+                      	{%- if section.settings.mobile_header_currency_enable -%}
+                        <div class="ml-3">
+                            {%- include 'currency-picker' -%}
+                        </div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="middle-header dark_skin">
+    	<div class="container">
+        	<div class="nav_block">
+                {%- include 'header-logo' -%}
+              	{% if section.settings.mobile_tel_number != '' %}
+                <div class="contact_phone order-md-last">
+                    <i class="linearicons-phone-wave"></i>
+                    <span>{{ section.settings.mobile_tel_number }}</span>
+                </div>
+              	{%endif%} 
+                <div class="product_search_form">
+                    {% include 'search-box' %}
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <div class="bottom_header light_skin main_menu_uppercase bg_dark mb-4">
+    	<div class="container">
+            <div class="row"> 
+              	{%- if section.settings.show_category -%}
+            	<div class="col-lg-3 col-md-4 col-sm-6 col-3">
+                	<div class="categories_wrap">
+                        <button type="button" data-toggle="collapse" data-target="#navCatContent" aria-expanded="true" class="categories_btn">
+                            <i class="linearicons-menu"></i><span>{{ section.settings.categori_menu_title }} </span>
+                        </button>
+                        <div id="navCatContent" class="{% if template == 'index' %}nav_cat {% endif %} navbar collapse">
+                          	{% include 'category-menu' %}
+                        </div>
+                    </div>
+                </div>
+                {%- endif -%}
+                <div class="col-lg-9 col-md-8 col-sm-6 col-9">
+                	<nav class="navbar navbar-expand-lg">
+                    	<button class="navbar-toggler side_navbar_toggler" type="button" data-toggle="collapse" data-target="#navbarSidetoggle" aria-expanded="false"> 
+                            <span class="ion-android-menu"></span>
+                        </button> 
+                        <div class="collapse navbar-collapse mobile_side_menu" id="navbarSidetoggle">
+                      		{% include 'main-menu' %}
+                      	</div>
+                        <ul class="navbar-nav attr-nav align-items-center">
+                            <li>
+                              {% if customer and shop.customer_accounts_enabled %}
+                              <a href="/account/logout" class="nav-link"><i class="linearicons-user"></i></a>
+                              {% else if %}
+                              <a href="/account/login" class="nav-link"><i class="linearicons-user"></i></a>
+                              {% else %}
+                              <a href="/account/register" class="nav-link"><i class="linearicons-user"></i></a>
+                              {% endif %}
+                            </li>
+                          	{% if section.settings.wishlist_btn != '' %}
+                            <li><a href="https://shopwise-demo.myshopify.com/pages/wishlist" class="nav-link"><i class="linearicons-heart"></i></a></li>
+                          	{%endif%}
+                            <li class="dropdown cart_dropdown">
+                                {%- include 'mini-cart' -%}
+                            </li>
+                        </ul>
+                        <div class="pr_search_icon">
+                        	<a href="javascript:void(0);" class="nav-link pr_search_trigger"><i class="linearicons-magnifier"></i></a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- END HEADER -->

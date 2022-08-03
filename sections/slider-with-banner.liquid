@@ -1,0 +1,779 @@
+<!-- START SECTION BANNER -->
+<div class="mt-4 staggered-animation-wrap" id="section-{{ section.id }}">
+	<div class="custom-container">
+    	<div class="row">
+        	<div class="col-lg-{{ section.settings.slider_col_lg }} offset-lg-3">
+            	<div class="banner_section shop_el_slider">
+                    <div id="carouselExampleControls" class="carousel slide carousel-fade light_arrow" data-ride="carousel" data-interval="{{ section.settings.slider_on_off }}">
+                        <div class="carousel-inner">
+                            {% for block in section.blocks %}
+                            {% case block.type %}
+                            {% when 'slide' %}
+                            <div class="carousel-item background_bg" data-img-src="{% if block.settings.slider_bg_img %}{{ block.settings.slider_bg_img | img_url: 'master' }}{% else %}http:\/\/via.placeholder.com\/825x550{% endif %}" style="background-image: url({% if block.settings.slider_bg_img %}{{ block.settings.slider_bg_img | img_url: 'master' }}{% else %}http:\/\/via.placeholder.com\/825x550{% endif %});">
+                                <div class="banner_slide_content banner_content_inner">
+                                    <div class="col-lg-7 col-10">
+                                        <div id="block-{{ block.id }}" class="banner_content3 overflow-hidden">
+                                          	{%if block.settings.slider_sub_title != '' %}
+                                            <h5 class="mb-3 staggered-animation font-weight-light" data-animation="slideInLeft" data-animation-delay="0.5s">{{ block.settings.slider_sub_title }}</h5>
+                                          	{%endif%}
+                                        	{%if block.settings.slider_title != '' %}
+                                            <h2 class="staggered-animation" data-animation="slideInLeft" data-animation-delay="1s">{{ block.settings.slider_title }}</h2>
+                                          	{%endif%}
+                                          	{%if block.settings.slider_title != '' %}
+                                            <h4 class="staggered-animation mb-4 product-price" data-animation="slideInLeft" data-animation-delay="1.2s"><span class="price">{{ block.settings.slider_discount_price }}</span><del>{{ block.settings.slider_reguler_price }}</del></h4>
+                                          	{%endif%}	
+                                          	{%if block.settings.slider_reguler_price != '' %}
+                                            <a class="btn btn-fill-out btn-radius staggered-animation text-uppercase" href="{{ block.settings.slider_button_url }}" data-animation="slideInLeft" data-animation-delay="1.5s">{{ block.settings.slider_button }}</a>
+                                          	{%endif%}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          	{% endcase %}
+      						{% endfor %}
+                        </div>
+                        <ol class="carousel-indicators indicators_style3">
+                            <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleControls" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleControls" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-{{ section.settings.ban_col_lg }} col-md-{{ section.settings.ban_col }} d-none d-lg-block">
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'banner' %}
+            	<div id="block-{{ block.id }}" class="shop_banner2 el_banner1">
+                	<a href="{{ block.settings.btn1_url }}" class="hover_effect1">
+                    	<div class="el_title text_white">
+                          	{%if block.settings.banner_title != '' %}
+                        	<h6>{{ block.settings.banner_title }}</h6>
+                          	{%endif%}
+                          	{%if block.settings.banner_offer_title != '' %}
+                            <span>{{ block.settings.banner_offer_title }}</span>
+                          	{%endif%}
+                        </div>
+                        <div class="el_img">
+                			<img class="lazyload" src="{% if block.settings.banner_image %}{{ block.settings.banner_image | img_url: 'master' }}
+                        {% else %}https://via.placeholder.com/250x355 {% endif %}" alt="{{ block.settings.banner_image.alt }}">
+                        </div>
+                    </a>
+                </div>
+                {% endcase %}
+                {% endfor %}
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'banner2' %}
+                <div id="block-{{ block.id }}" class="shop_banner2 el_banner2">
+                	<a href="{{ block.settings.btn1_url }}" class="hover_effect1">
+                		<div class="el_title text_white">
+                        	{%if block.settings.banner_title != '' %}
+                        	<h6>{{ block.settings.banner_title }}</h6>
+                          	{%endif%}
+                          	{%if block.settings.banner_button != '' %}
+                            <span><u>{{ block.settings.banner_button }}</u></span>
+                          	{%endif%}
+                        </div>
+                        <div class="el_img">
+                			<img class="lazyload" src="{% if block.settings.banner_image %}{{ block.settings.banner_image | img_url: 'master' }}
+                        {% else %}https://via.placeholder.com/250x355 {% endif %}" alt="{{ block.settings.banner_image.alt }}">
+                        </div>
+                    </a>
+                </div>
+                {% endcase %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION BANNER -->
+
+<script>
+ 
+var $slider = $('.carousel-inner');
+var $current = $slider.find('div.carousel-item.active');
+var $next = $current.next();
+
+if(!$next.length) {
+    $next = $slider.find('div.carousel-item:first');
+}
+
+$current.removeClass('active');
+$next.addClass('active');  
+ 
+</script>
+
+{%- include 'section-style' -%}
+
+
+{%- style -%}
+
+
+.ht-hero-slider .ht-single-slide {
+    height: {{ section.settings.slider_height }}vh;
+}
+
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'slide' %}
+
+  #block-{{ block.id }}.banner_content3 h2 {
+      color: {{ block.settings.slider_title_color }} !important;
+  }
+  #block-{{ block.id }}.banner_content3 h5 {
+      color: {{ block.settings.slider_subtitle_color }} !important;
+  }
+  #block-{{ block.id }}.banner_content3 h4 span.price {
+      color: {{ block.settings.slider_discount_price_color }} !important;
+  }
+  #block-{{ block.id }}.banner_content3 h4 del {
+      color: {{ block.settings.slider_reguler_price_color }} !important;
+  }
+  #block-{{ block.id }}.banner_content3 a {
+      background: {{ block.settings.slider_btn_bg_color }} !important;
+      border: 2px solid {{ block.settings.slider_btn_bc_color }} !important;
+      color: {{ block.settings.slider_btn_color }} !important;
+  }
+  #block-{{ block.id }}.banner_content3 a:hover {
+      color: {{ block.settings.slider_btn_color_hov }} !important;
+      border-color: {{ block.settings.slider_btn_bc_color_hov }} !important;
+      background: {{ block.settings.slider_btn_bg_color_hov }} !important;
+  }
+
+  {% endcase %}
+  {% endfor %}
+
+
+
+
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'banner' %}
+    #block-{{ block.id }}.shop_banner2 .text_white * {
+        color: {{ block.settings.banner_content_color }};
+    }
+  {% endcase %}
+  {% endfor %}
+
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'banner2' %}
+    #block-{{ block.id }}.shop_banner2 .text_white * {
+        color: {{ block.settings.banner_content_color }};
+    }
+  {% endcase %}
+  {% endfor %}
+
+
+{%- endstyle -%}
+
+
+
+{% schema %}
+  {
+    "name": "Slider With Banner",
+    "settings": [
+		{
+           "type": "select",
+           "id": "slider_on_off",
+           "label": "Slider Auto Play On/Off",
+           "options":[
+			   {
+                  "value":"7000",
+                  "label": "ON"
+               },
+			  {
+                  "value":"false",
+                  "label": "OFF"
+               }
+
+            ],
+
+            "default": "7000"
+        },
+        {
+          "type": "header",
+          "content": "Slider Column"
+        },
+        {
+          "type": "select",
+          "id": "slider_col_lg",
+          "label": "Select Slider Column LG",
+          "options":[
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            },
+            {
+              "label": "5",
+              "value": "5"
+            },
+            {
+              "label": "6",
+              "value": "6"
+            },
+            {
+              "label": "7",
+              "value": "7"
+            },
+            {
+              "label": "8",
+              "value": "8"
+            },
+            {
+              "label": "9",
+              "value": "9"
+            },
+            {
+              "label": "10",
+              "value": "10"
+            },
+            {
+              "label": "11",
+              "value": "11"
+            },
+            {
+              "label": "12",
+              "value": "12"
+            }
+          ],
+          "default": "7"
+        },
+		{
+          "type": "header",
+          "content": "Banner Column"
+        },
+        {
+          "type": "select",
+          "id": "ban_col_lg",
+          "label": "Select Banner Column LG",
+          "options":[
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            },
+            {
+              "label": "5",
+              "value": "5"
+            },
+            {
+              "label": "6",
+              "value": "6"
+            },
+            {
+              "label": "7",
+              "value": "7"
+            },
+            {
+              "label": "8",
+              "value": "8"
+            },
+            {
+              "label": "9",
+              "value": "9"
+            },
+            {
+              "label": "10",
+              "value": "10"
+            },
+            {
+              "label": "11",
+              "value": "11"
+            },
+            {
+              "label": "12",
+              "value": "12"
+            }
+          ],
+          "default": "2"
+        },
+        {
+          "type": "select",
+          "id": "ban_col",
+          "label": "Select Banner Column MD",
+          "options":[
+            {
+              "label": "1",
+              "value": "1"
+            },
+            {
+              "label": "2",
+              "value": "2"
+            },
+            {
+              "label": "3",
+              "value": "3"
+            },
+            {
+              "label": "4",
+              "value": "4"
+            },
+            {
+              "label": "5",
+              "value": "5"
+            },
+            {
+              "label": "6",
+              "value": "6"
+            },
+            {
+              "label": "7",
+              "value": "7"
+            },
+            {
+              "label": "8",
+              "value": "8"
+            },
+            {
+              "label": "9",
+              "value": "9"
+            },
+            {
+              "label": "10",
+              "value": "10"
+            },
+            {
+              "label": "11",
+              "value": "11"
+            },
+            {
+              "label": "12",
+              "value": "12"
+            }
+          ],
+          "default": "2"
+        }
+	],
+	"blocks":[
+		{
+          "type": "slide",
+          "name": "Slide",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "slider_bg_img",
+                  "label": "Image",
+                  "info": "Recommended Size: 825 x 550px"
+              },
+			  {
+                  "type": "text",
+                  "id": "slider_title",
+                  "label": "Title",
+                  "default": "Dual Camera 20MP"
+              },
+              {
+                  "type": "text",
+                  "id": "slider_sub_title",
+                  "label": "Slider Offer Title",
+                  "default": "Get up to 50% off Today Only!"
+              },
+			  {
+                  "type": "text",
+                  "id": "slider_reguler_price",
+                  "label": "Slider Regular Price",
+                  "default": "$55.25"
+              },
+			  {
+                  "type": "text",
+                  "id": "slider_discount_price",
+                  "label": "Slider Discount Price",
+                  "default": "$45.00"
+              },
+			  {
+                  "type": "text",
+                  "id": "slider_content",
+                  "label": "Slider Content"
+              },
+              {
+                  "type": "text",
+                  "id": "slider_button",
+                  "label": "Button Text",
+                  "default": "Shop now"
+              },
+              {
+                  "type": "url",
+                  "id": "slider_button_url",
+                  "label": "Button URL"
+              },
+              {
+                "type": "header",
+                "content": "Slider Style"
+              },
+              {
+                "type": "color",
+                "id": "slider_title_color",
+                "label": "Slider Title Color",
+                "default": "#292b2c"
+              },
+			  {
+                "type": "color",
+                "id": "slider_subtitle_color",
+                "label": "Slider Offer Color",
+                "default": "#292b2c"
+              },
+			  {
+                  "type": "color",
+                  "id": "slider_reguler_price_color",
+                  "label": "Slider Regular Price Color",
+                  "default": "#919191"
+              },
+			  {
+                  "type": "color",
+                  "id": "slider_discount_price_color",
+                  "label": "Slider Discount Price Color",
+                  "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_content_color",
+                "label": "Slider Content Color",
+                "default": "#292b2c"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_color",
+                "label": "Slider Button Color",
+                "default": "#fff"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bg_color",
+                "label": "Slider Button Background Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bc_color",
+                "label": "Slider Button Border Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_color_hov",
+                "label": "Slider Button Hover Color",
+                "default": "#FF324D"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bg_color_hov",
+                "label": "Slider Button Background Hover Color",
+                "default": "transparent"
+              },
+			  {
+                "type": "color",
+                "id": "slider_btn_bc_color_hov",
+                "label": "Slider Button Border Hover Color",
+                "default": "#FF324D"
+              }
+
+          ]
+      },
+	  {
+          "type": "banner",
+          "name": "Banner",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "banner_image",
+                  "label": "Banner Image"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_title",
+                  "label": "Banner Title",
+                  "default": "iphone Collection"
+              },
+			  {
+                  "type": "text",
+                  "id": "banner_offer_title",
+                  "label": "Banner Offer Title",
+				  "default": "25% off"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button",
+                  "label": "Button",
+                  "default": "SHOP NOW"
+              },
+              {
+                  "type": "url",
+                  "id": "btn1_url",
+                  "label": "URL",
+                  "default": "\/collections\/all"
+              },
+              {
+                  "type": "color",
+                  "id": "banner_content_color",
+                  "label": "Banner Content Color",
+                  "default": "#fff"
+              }
+          ]
+       },
+	   {
+          "type": "banner2",
+          "name": "Banner Style Two",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "banner_image",
+                  "label": "Banner Image"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_title",
+                  "label": "Banner Title",
+                  "default": "iphone Collection"
+              },
+			  {
+                  "type": "text",
+                  "id": "banner_offer_title",
+                  "label": "Banner Offer Title",
+				  "default": "25% off"
+              },
+              {
+                  "type": "text",
+                  "id": "banner_button",
+                  "label": "Button",
+                  "default": "SHOP NOW"
+              },
+              {
+                  "type": "url",
+                  "id": "btn1_url",
+                  "label": "URL",
+                  "default": "\/collections\/all"
+              },
+              {
+                  "type": "color",
+                  "id": "banner_content_color",
+                  "label": "Banner Content Color",
+                  "default": "#fff"
+              }
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Slider With Banner",
+		  "category": "1. slideshow",
+		  "blocks":[
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "slide"
+				},
+				{
+					"type": "banner"
+				},
+				{
+					"type": "banner2"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

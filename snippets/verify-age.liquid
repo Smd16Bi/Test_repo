@@ -1,0 +1,96 @@
+
+<div class="avwrap">
+	<div class="container_verify">
+        <div class="under_container_verify">
+            <div>
+                <p class="text1_verify">
+                    Verify your age
+                </p>
+                <p class="text2_verify">
+                   Complete a brief check to show you're old enough to watch this page. <a class="link_verify" href="#">Learn more</a>
+                </p>
+            </div>
+            <div class="div_button_verify">
+                    <a class="button_verify cancel" href="#">
+                        NOT NOW
+                    </a>
+                    <a class="button_verify accept" href="#">
+                        VERIFY
+                    </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  $('.button_verify.accept').click(function(){
+    $('.avwrap').hide();
+  });
+  
+  $('.button_verify.cancel').click(function(){
+      $(location).prop('href', '{{ shop.url }}')
+  });
+</script>
+
+<style>
+  .avwrap{
+  	position:fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 99999999999999999999999999;
+    background: rgba(0,0,0,0.98);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+.container_verify {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 305px;
+    margin: auto;
+    background-color: white;
+}
+
+.under_container_verify {
+    margin: 0;
+    padding: 25px 15px 25px 15px;
+}
+
+.text1_verify {
+    margin: 0;
+    padding: 0;
+    font-size: 25px;
+    color: black;
+}
+
+.text2_verify {
+    color: gray;
+}
+
+.link_verify {
+    color: blue;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.div_button_verify {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+}
+
+.button_verify {
+    color: blue;
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 30px;
+}
+
+.button_verify:last-child {
+    padding-right: 10px;
+}   
+
+</style>

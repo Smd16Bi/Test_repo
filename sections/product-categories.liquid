@@ -1,0 +1,283 @@
+
+
+<div class="product_categories">
+    <div class="product_categories_body">
+        <div class="product_categories_wrapper">
+            <div class="product_categories_heading">
+                <h3 class="product_categories_heading-title">{{section.settings.title}}</h3>
+                <p class="product_categories_heading-subheader">{{section.settings.subtitle}}</p>
+            </div>
+            <div class="product_categories_collections">
+                {% for block in section.blocks %}
+                {% assign collection = block.settings.collection %}
+                    <a href="{{collection.url}}" class="product_categories_collections_item">
+                        <div class="collection_item_image">
+                            {% if collection.image != blank %}
+                                <img src="{{collection.image | img_url: 'master' }}" alt="{{collection.image.alt}}">
+                            {% elsif block.settings.collection_image != blank %}
+                                <img src="{{block.settings.collection_image | img_url: 'master' }}" alt="{{block.settings.collection_image.alt}}">
+                            {% endif %}
+                        </div>
+                        <div class="collection_item_title">
+                            <h4 class="collection_title">{{collection.title}}</h4>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% style %}
+    .product_categories_body{
+        padding: 0 50px;
+        padding-top: {{section.settings.padding_top}}px;
+        padding-bottom: {{section.settings.padding_bot}}px;
+    }
+    @media screen and (max-width: 768px){
+        .product_categories_body{
+            padding-top: {{section.settings.padding_top | divided_by: 2 }}px;
+            padding-bottom: {{section.settings.padding_bot | divided_by: 2}}px;
+        }
+    }
+    .collection_item_image{
+        {% if section.settings.round == true %}  
+            border-radius: 50%;
+        {% endif %}
+        border: 3px solid {{section.settings.border_color}};
+    }
+    .collection_item_image img{
+        {% if section.settings.round == true %}  
+            border-radius: 50%;
+        {% endif %}
+    }
+    {% if collection.image == blank and block.settings.collection_image == blank %}
+        .collection_item_image{
+            background-color: #F2F2F2;
+            width: 100%;
+            height: auto;
+        }
+    {% endif %}
+{% endstyle %}
+
+<style>
+    .product_categories_body{
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .product_categories_wrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .product_categories_heading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0 0 70px 0;
+    }
+    .product_categories_heading-title{
+        font-family: 'Poppins';
+        font-size: 36px;
+        line-height: 54px;
+        text-align: center;
+        color: #000;
+        font-weight: 600;
+        margin: 0;
+        letter-spacing: -0.035em;
+    }
+    .product_categories_heading-subheader{
+        font-family: 'Poppins';
+        font-size: 21px;
+        line-height: 31px;
+        text-align: center;
+        color: #697287;
+        margin: 0;
+        margin-top: 6px;
+        letter-spacing: 0;
+
+    }
+    .product_categories_collections{
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;   
+    }
+    .product_categories_collections_item{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        flex: 1;
+    }
+    .collection_item_image img{
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    .collection_item_title{
+        height: inherit;
+    }
+    .collection_item_title h4{
+        font-size: 20px;
+        font-weight: 600;
+        font-family: 'Poppins';
+        line-height: 30px;
+        margin: 13px 0 0 0;
+        letter-spacing: -0.035em;
+        text-align: center;
+        word-break: break-word;
+    }
+    .product_categories_collections_item{
+        margin: 0 25px;
+    }
+    .product_categories_collections_item:first-of-type{
+        margin-left: 0 !important;
+    }
+    .product_categories_collections_item:last-of-type{
+        margin-right: 0 !important;
+    }
+    @media screen  and (max-width: 992px){
+        .product_categories_collections{
+            flex-wrap: wrap;
+        }
+        .product_categories_collections_item{
+            max-width: calc(33% - 50px);
+            width: 100%;
+            flex: 1 1 auto;
+        }
+        .product_categories_collections_item{
+            margin: 0 0 50px 0;
+        }
+        .product_categories_collections_item:nth-of-type(2), .product_categories_collections_item:nth-of-type(5), .product_categories_collections_item:nth-of-type(8){
+            margin: 0 50px 50px 50px !important;
+        }
+        .product_categories_collections{
+            justify-content: center;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .product_categories_body{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .product_categories_collections_item{
+            margin: 0 0 20px 0 !important;
+            max-width: calc( 33% - 12px );
+        }
+        .product_categories_collections_item:nth-of-type(2), .product_categories_collections_item:nth-of-type(5), .product_categories_collections_item:nth-of-type(8){
+            margin: 0 20px 20px 20px !important;
+        }
+        .product_categories_heading-title{
+            font-size: 26px;
+            line-height: 34px;
+        }
+        .product_categories_heading-subheader{
+            font-size: 16px;
+            line-height: 24px;
+            margin-top: 3px;
+        }
+        .product_categories_heading{
+            padding: 0 0 40px 0;
+        }
+        .collection_item_title h4{
+            margin: 6px 0 0 0;
+            font-size: 15px;
+            line-height: 22px;
+        }
+    }
+    @media screen and (max-width: 450px) {
+        .product_categories_collections_item{
+            max-width: calc( 50% - 10px );
+        }
+        .product_categories_collections_item:nth-of-type(2), .product_categories_collections_item:nth-of-type(5), .product_categories_collections_item:nth-of-type(8){
+            margin: 0 !important;
+            margin-bottom: 20px !important;
+        }
+        .product_categories_collections_item:nth-of-type(odd){
+            margin-right: 10px !important;
+        }
+        .product_categories_collections_item:nth-of-type(even){
+            margin-left: 10px !important;
+        }
+        .product_categories_collections_item{
+            margin-bottom: 20px !important;
+        }
+    }
+</style>
+
+{% schema %}
+{
+    "name": "Product categories",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "checkbox",
+            "id": "round",
+            "label": "Round image",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "border_color",
+            "label": "Border color (optional)",
+            "default": "#F78E27",
+            "info": "Set transparent for hide border"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 75
+        },
+        {
+            "type": "range",
+            "id": "padding_bot",
+            "label": "Padding bottom",
+            "unit": "px",
+            "min": 0,
+            "max": 100,
+            "step": 1,
+            "default": 85
+        }
+    ],
+    "blocks" : [
+        {
+            "name": "Categiries item",
+            "type": "block",
+            "settings": [
+                {
+                    "type": "collection",
+                    "id": "collection",
+                    "label": "Collection"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "collection_image",
+                    "label": "Collection image (optional)"
+                }
+            ]
+        }
+    ],
+   "presets": [
+       {
+           "name":"Product categories"
+       }
+   ]
+}
+{% endschema %}

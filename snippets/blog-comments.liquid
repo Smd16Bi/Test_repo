@@ -1,0 +1,27 @@
+<div class="content_title">
+  <h5 class="comment-title">{{ 'blogs.comments.with_count' | t: count: article.comments_count }}</h5>
+</div>
+<ul class="list_none comment_list">
+  {% for comment in article.comments %}
+  <li class="comment_info">
+    <div class="d-flex">
+      <div class="comment_user comment-thumb">
+        {% if section.settings.commentator_image %}
+        <img src="{{ section.settings.commentator_image | img_url: '100x100', crop: 'center' }}" alt="{{ section.settings.commentator_image.alt }}">
+        {% else %}
+        <img src="https://www.gravatar.com/avatar/{{ comment.email | remove: ' ' | strip_newlines | downcase | md5 | append: '?s=200' }}" />
+        {% endif %}
+      </div>
+      <div class="comment_content">
+        <div class="d-flex">
+          <div class="meta_data">
+            <h6><a href="#">{{ comment.author }}</a></h6>
+            <div class="comment-time">{{ comment.created_at | date: "%b %d, %Y at %H:%M" }}</div>
+          </div>
+        </div>
+        {{ comment.content }}
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,435 @@
+{% if section.settings.banner_fullwidth_style == 'banner_fullwidth_style_1' %}
+<!-- START SECTION SINGLE BANNER --> 
+<div class="section bg_light_blue2 pb-0 pt-md-0" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+    	<div class="row align-items-center flex-row-reverse">
+            <div class="col-md-6 offset-md-1">
+            	<div class="medium_divider d-none d-md-block clearfix"></div>
+            	<div class="trand_banner_text text-center text-md-left">
+                    <div class="heading_s1 mb-3">
+                      	{%if section.settings.banner_subtitle != '' %}
+                        <span class="sub_heading">{{ section.settings.banner_subtitle }}</span>
+                      	{% endif %}
+                      	{%if section.settings.banner_title != '' %}
+                        <h2>{{ section.settings.banner_title }}</h2>
+                      	{% endif %}
+                    </div>
+                  	{%if section.settings.banner_offer_title != '' %}
+                    <h5 class="mb-4">{{ section.settings.banner_offer_title }}</h5>
+                  	{% endif %}
+                  	{%if section.settings.banner_button_title != '' %}
+                    <a href="{{ section.settings.banner_button_url }}" class="btn btn-fill-out rounded-0">{{ section.settings.banner_button_title }}</a>
+                  	{% endif %}
+                </div>
+            	<div class="medium_divider clearfix"></div>
+            </div>
+            <div class="col-md-5">
+                <div class="text-center trading_img">
+                    <img class="lazyload" src="{% if section.settings.banner_images %}{{ section.settings.banner_images | img_url: 'master' }}{% else %}https://via.placeholder.com/420x460 {% endif %}" alt="tranding_img"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- END SECTION SINGLE BANNER --> 
+
+<style>
+  
+  .sub_heading {
+    color: {{ section.settings.banner_subtitle_color }};
+  }
+  .heading_s1 h2 {
+    color: {{ section.settings.banner_title_color }};
+  }
+  .trand_banner_text h5.mb-4 {
+  	color: {{ section.settings.banner_offer_title_color }};
+  }
+  .btn-fill-out::before, .btn-fill-out::after {
+    background-color: {{ section.settings.banner_btn_bg }};
+  }
+  .btn-fill-out {
+    background-color: {{ section.settings.banner_btn_bg_hov }};
+    border: 1px solid {{ section.settings.banner_btn_border_hov }};
+    color: {{ section.settings.banner_text_color }};
+  }
+  .btn-fill-out:hover {
+    color: {{ section.settings.banner_text_color_hov }} !important;
+  }
+ 
+</style>
+
+
+{% elsif section.settings.banner_fullwidth_style == 'banner_fullwidth_style_2' %}
+
+<!-- START SECTION BANNER --> 
+<div class="section pb_20 small_pt" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+    	<div class="row">
+        	<div class="col-12">
+            	<div class="sale-banner mb-3 mb-md-4">
+                	<a class="hover_effect1" href="{{ section.settings.banner_button_url2 }}">
+                		<img class="lazyload" src="{% if section.settings.banner_images2 %}{{ section.settings.banner_images2 | img_url: 'master' }}{% else %}https://via.placeholder.com/1140x300 {% endif %}" alt="tranding_img"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION BANNER -->
+
+
+{% endif %}
+
+
+
+
+{%- style -%}
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {% case block.type %}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+{%- endstyle -%}
+
+
+{% schema %}
+  	{
+		"name": "Banner Fullwidth",
+		"settings": [
+            {
+              "type": "select",
+              "id": "banner_fullwidth_style",
+              "label": "Banner Full Width Style",
+              "options":[
+                {
+                  "value":"banner_fullwidth_style_1",
+                  "label": "Banner Full Width Style One"
+                },
+                {
+                  "value":"banner_fullwidth_style_2",
+                  "label": "Banner Full Width Style Two"
+                }
+              ],
+
+              "default": "banner_fullwidth_style_1"
+            },
+            {
+              "type": "header",
+              "content": "Banner Width Control"
+            },
+            {
+              "type": "checkbox",
+              "id": "fullwidth_on",
+              "label": "Full Width Enable",
+              "default": true,
+              "info": "If you want Full Width click checkbox"
+            },
+			{
+              "type": "header",
+              "content": "Banner Fullwidth Content For Style One"
+            },
+            {
+              "type": "image_picker",
+              "id": "banner_images",
+              "label": "Banner Images",
+              "info": "Recommended Size: 420 x 460px"
+            },
+			{
+              "type": "text",
+              "id": "banner_subtitle",
+              "label": "Banner Sub Title",
+              "default": "New season trends!"
+            },
+            {
+              "type": "text",
+              "id": "banner_title",
+              "label": "Banner Title",
+              "default": "Best Summer Collection"
+            },
+			{
+              "type": "text",
+              "id": "banner_offer_title",
+              "label": "Banner Offer Title",
+              "default": "Sale Get up to 50% Off"
+            },
+            {
+              "type": "text",
+              "id": "banner_button_title",
+              "label": "Banner Button Title",
+              "default": "Shop Now"
+            },
+            {
+              "type": "url",
+              "id": "banner_button_url",
+              "label": "Banner Button URL"
+            },
+            {
+              "type": "header",
+              "content": "Banner Fullwidth CSS For Style one"
+            },
+            {
+              "type": "color",
+              "id": "banner_subtitle_color",
+              "label": "Banner Sub title Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_title_color",
+              "label": "Banner title Color",
+              "default": "#292b2c"
+            },
+			{
+              "type": "color",
+              "id": "banner_offer_title_color",
+              "label": "Banner Offer title Color",
+              "default": "#292b2c"
+            },
+			{
+              "type": "color",
+              "id": "banner_text_color",
+              "label": "Banner Button  text Color",
+              "default": "#fff"
+            },
+            {
+              "type": "color",
+              "id": "banner_btn_bg",
+              "label": "Banner Button BG Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_btn_border",
+              "label": "Banner Button Border Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_text_color_hov",
+              "label": "Banner Button Hover text Color",
+              "default": "#FF324D"
+            },
+            {
+              "type": "color",
+              "id": "banner_btn_bg_hov",
+              "label": "Banner Button Hover BG Color",
+              "default": "transparent"
+            },
+			{
+              "type": "color",
+              "id": "banner_btn_border_hov",
+              "label": "Banner Button Border Hover Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "header",
+              "content": "Banner Fullwidth Content For Style Two"
+            },
+            {
+              "type": "image_picker",
+              "id": "banner_images2",
+              "label": "Banner Images",
+              "info": "Recommended Size: 1140 x 300px"
+            },
+			{
+              "type": "url",
+              "id": "banner_button_url2",
+              "label": "Banner Button URL"
+            }
+		],
+        "blocks":[
+               {
+                  "type": "section_margin",
+                  "name": "Section Margin",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top_xs",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom_xs",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    }
+                  ]
+               },
+               {
+                  "type": "section_padding",
+                  "name": "Section Padding",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 40
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 40
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top_xs",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 30
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom_xs",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 30
+                    }
+                  ]
+               },
+               {
+                  "type": "section_background",
+                  "name": "Section Background",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "image_picker",
+                      "id": "section_bg_image",
+                      "label": "BG Image"
+                    },
+                    {
+                      "type": "color",
+                      "id": "section_bg_color",
+                      "label": "BG Color",
+                      "default": "#F4F9FC"
+                    }
+                  ]
+               }
+
+            ],
+
+        "presets":[
+                {
+                    "name": "Banner Fullwidth",
+                    "category": "2. Banner",
+                    "blocks":[
+						{
+                            "type": "section_background"
+                        }
+                    ]
+                }
+            ]
+
+
+ 	 }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

@@ -1,0 +1,526 @@
+{% if section.settings.service_style == 'service_style_1' %}
+<!-- START SECTION SHOP INFO -->
+<div class="section pb_70" id="section-{{ section.id }}">
+  <div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+    <div class="row no-gutters">
+      
+      {% for block in section.blocks %}
+      {%- case block.type -%}
+      {%- when 'services' -%}
+      <div class="col-lg-{{ section.settings.service_col_lg }}">	
+        <div class="icon_box icon_box_style1">
+          {% if block.settings.service_icon != blank %}
+          <div class="icon">
+            <i class="{{ block.settings.service_icon }}"></i>
+          </div>
+          {%endif%}
+          <div class="icon_box_content">
+            {% if block.settings.service_title != blank %}
+            <h5>{{ block.settings.service_title }}</h5>
+            {%endif%}
+            {% if block.settings.service_desc != blank %}
+            <p>{{ block.settings.service_desc }}</p>
+            {%endif%}
+          </div>
+        </div>
+      </div>
+      {%- endcase -%}
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+<!-- END SECTION SHOP INFO -->
+
+
+<style>
+
+  .icon_box_style1 .icon i {
+    font-size: {{ section.settings.service_icon_size }}px;
+    line-height: 1;
+    color: {{ section.settings.service_icon_color }};
+  }
+  .icon_box_content h5 {
+    font-size: {{ section.settings.service_title_size }}px;
+    color: {{ section.settings.service_title_color }};
+    line-height: normal;
+  }
+  .icon_box_content p {
+    color: {{ section.settings.service_content_color }};
+    font-size: {{ section.settings.service_content_size }}px;
+    line-height: normal;
+  }
+
+  </style>
+
+
+{% elsif section.settings.service_style == 'service_style_2' %}
+
+<!-- START SECTION SHIPPING INFO -->
+<div class="section small_pb" id="section-{{ section.id }}">
+    <div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+        <div class="row no-gutters">
+            {% for block in section.blocks %}
+            {%- case block.type -%}
+            {%- when 'services' -%}
+            <div class="col-lg-{{ section.settings.service_col_lg }} col-sm-6">
+                <div class="icon_box icon_box_style3">
+                  	{% if block.settings.service_icon != blank %}
+                    <div class="icon">
+                        <i class="{{ block.settings.service_icon }}"></i>
+                    </div>
+                  	{%endif%}
+                    <div class="icon_box_content">
+                      	{% if block.settings.service_title != blank %}
+                        <h6>{{ block.settings.service_title }}</h6>
+                      	{%endif%}
+                      	{% if block.settings.service_desc != blank %}
+                        <p>{{ block.settings.service_desc }}</p>
+                      	{%endif%}
+                    </div>
+                </div>
+            </div>
+            {%- endcase -%}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- START SECTION SHIPPING INFO -->
+
+<style>
+
+  .icon_box_style3 .icon i {
+    font-size: {{ section.settings.service_icon_size }}px;
+    line-height: 1;
+    color: {{ section.settings.service_icon_color }};
+  }
+  .icon_box_content h6 {
+    font-size: {{ section.settings.service_title_size }}px;
+    color: {{ section.settings.service_title_color }};
+    line-height: normal;
+  }
+  .icon_box_content p {
+    color: {{ section.settings.service_content_color }};
+    font-size: {{ section.settings.service_content_size }}px;
+    line-height: normal;
+  }
+
+  </style>
+
+
+{% elsif section.settings.service_style == 'service_style_3' %}
+
+<!-- START SECTION WHY CHOOSE --> 
+<div class="section bg_light_blue2 pb_70" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+      	{% if section.settings.section_title != blank %}
+    	<div class="row justify-content-center">
+        	<div class="col-lg-6 col-md-8">
+            	<div class="heading_s1 text-center">
+                	<h2>{{ section.settings.section_title }}</h2>
+                </div>
+              	{% if section.settings.section_des != blank %}
+                <p class="text-center leads">{{ section.settings.section_des }}</p>
+              	{%endif%}
+            </div>
+        </div>
+      	{%endif%}
+        <div class="row justify-content-center">
+          	{% for block in section.blocks %}
+            {%- case block.type -%}
+            {%- when 'services' -%}
+        	<div class="col-xl-{{ section.settings.service_col_xl }} col-lg-{{ section.settings.service_col_lg }} col-md-{{ section.settings.service_col_md }} col-sm-6">
+            	<div class="icon_box icon_box_style4 box_shadow1">
+                  	{% if block.settings.service_icon != blank %}
+                	<div class="icon">
+                    	<i class="{{ block.settings.service_icon }}"></i>
+                    </div>
+                  	{%endif%}
+                    <div class="icon_box_content">
+                      	{% if block.settings.service_title != blank %}
+                    	<h5>{{ block.settings.service_title }}</h5>
+                      	{%endif%}
+                      	{% if block.settings.service_desc != blank %}
+                        <p>{{ block.settings.service_desc }}</p>
+                      	{%endif%}
+                    </div>
+                </div>
+            </div>
+          	{%- endcase -%}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- END SECTION WHY CHOOSE --> 
+
+<style>
+
+  .icon_box_style4 .icon i {
+    font-size: {{ section.settings.service_icon_size }}px;
+    color: {{ section.settings.service_icon_color }};
+  }
+  .icon_box_content h5 {
+    font-size: {{ section.settings.service_title_size }}px;
+    color: {{ section.settings.service_title_color }};
+  }
+  .icon_box_content p {
+    color: {{ section.settings.service_content_color }};
+    font-size: {{ section.settings.service_content_size }}px;
+  }
+
+  </style>
+
+{% endif %}
+
+
+
+
+
+{%- style -%}
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {% case block.type %}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+{%- endstyle -%}
+
+
+
+
+{% schema %}
+  	{
+		"name": "Services",
+		"settings": [
+                  {
+                    "type": "header",
+                    "content": "Service Style"
+                  },
+          		  {
+                    "type": "select",
+                    "id": "service_style",
+                    "label": "Select Service Style",
+                    "options":[
+                      {
+                        "value":"service_style_1",
+                        "label": "Service Style One"
+                      },
+                      {
+                        "value":"service_style_2",
+                        "label": "Service Style Two"
+                      },
+					  {
+                        "value":"service_style_3",
+                        "label": "Service Style Three"
+                      }
+                    ],
+
+                    "default": "service_style_1"
+                  },
+          		  {
+                      "type": "checkbox",
+                      "id": "fullwidth_on",
+                      "label": "Full Width Enable",
+                      "default": false,
+                      "info": "If you want Full Width click checkbox"
+                  },
+                  {
+                      "type": "text",
+                      "id": "section_title",
+                      "label": "Section Title",
+                      "default": "Why Choose Us?"
+                  },
+                  {
+                      "type": "textarea",
+                      "id": "section_des",
+                      "label": "Section Description",
+                      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+                  },
+					{
+                    "type": "header",
+                    "content": "Service Column"
+                  },
+                      {
+                        "type": "select",
+                        "id": "service_col_lg",
+                        "label": "Large Skin",
+                        "options":[
+                              {
+                                  "label": "2",
+                                  "value": "6"
+                              },
+                              {
+                                  "label": "3",
+                                  "value": "4"
+                              },
+                              {
+                                  "label": "4",
+                                  "value": "3"
+                              }
+                          ],
+                          "default": "4"
+                      },
+                  {
+                    "type": "color",
+                    "id": "service_icon_color",
+                    "label": "Service Icon Color", 
+                    "default": "#687188"
+                  },
+                  {
+                    "type": "text",
+                    "id": "service_icon_size",
+                    "label": "Service Icon Size", 
+                    "default": "46"
+                  },
+                  {
+                    "type": "color",
+                    "id": "service_title_color",
+                    "label": "Service Title Color", 
+                    "default": "#292b2c"
+                  },
+                  {
+                    "type": "text",
+                    "id": "service_title_size",
+                    "label": "Service Title Size", 
+                    "default": "18"
+                  },
+                  {
+                    "type": "color",
+                    "id": "service_content_color",
+                    "label": "Service Content Color", 
+                    "default": "#687188"
+                  },
+                  {
+                    "type": "text",
+                    "id": "service_content_size",
+                    "label": "Service Content Size", 
+                    "default": "14"
+                  }
+		],
+        "blocks":[
+              {
+                  "type": "services",
+                  "name": "Services",
+                  "settings": [
+					  {
+                        "type": "text",
+                        "id": "service_icon",
+                        "label": "Icon Name",
+                        "default": "flaticon-shipped"
+                      },
+                      {
+                        "type": "image_picker",
+                        "id": "service_img",
+                        "label": "Service Image",
+                        "info": "Recommended Size: 234x270px"
+                      },
+                      {
+                        "type": "textarea",
+                        "id": "service_title",
+                        "label": "Service Title",
+                        "default": "Free Delivery"
+                      },
+					  {
+                        "type": "textarea",
+                        "id": "service_desc",
+                        "label": "Service Description",
+                        "default": "If you are going to use of Lorem, you need to be sure there anything"
+                      }
+                  ]
+               },				
+               {
+                  "type": "section_margin",
+                  "name": "Section Margin",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    }
+                  ]
+               },
+               {
+                  "type": "section_padding",
+                  "name": "Section Padding",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 70
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 35
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 50
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom_xs",
+                      "min": 0,
+                      "max": 150,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 20
+                    }
+                  ]
+               },
+               {
+                  "type": "section_background",
+                  "name": "Section Background",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "image_picker",
+                      "id": "section_bg_image",
+                      "label": "BG Image"
+                    },
+                    {
+                      "type": "color",
+                      "id": "section_bg_color",
+                      "label": "BG Color",
+                      "default": "#ffffff"
+                    }
+                  ]
+               }
+
+            ],
+
+        "presets":[
+                {
+                    "name": "Services",
+                    "category": "6. Services",
+                    "blocks":[
+                        {
+                            "type": "services"
+                        },
+						{
+                            "type": "services"
+                        },
+						{
+                            "type": "services"
+                        }
+                    ]
+                }
+            ]
+
+
+ 	 }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

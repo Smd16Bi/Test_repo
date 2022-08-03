@@ -1,0 +1,9 @@
+{% if article.tags.size > 0 %}
+  <div class="tags">
+    
+    {% for tag in article.tags %}
+      <a href="{{ blog.url }}/tagged/{{ tag | handle }}">{{ tag | join: ', ' }}</a>
+    {% endfor %}
+  </div>
+{% endif %}
+

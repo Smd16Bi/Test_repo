@@ -1,0 +1,200 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies" lang="{{ shop.locale }}"> <!--<![endif]-->
+
+<head>{% render 'pagefly-head' %}
+<meta name="google-site-verification" content="w7yPIydSXS91XkBX2pn8pHeg5KC9AMTcD7jvFL_bISw" />
+  <!-- Basic and Helper page needs -->
+
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M5GRFTB');</script>
+<!-- End Google Tag Manager -->
+
+  <meta charset="utf-8">
+  {% include 'pluginseo' %}
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+
+  <!-- Title and description -->
+
+
+  <!-- Helpers -->
+  {% include 'social-meta-tags' %}
+
+  <!-- CSS -->
+  {{ 'timber.scss.css' | asset_url | stylesheet_tag }}
+  {%- include 'header-css' -%}
+
+  <!-- Header hook for plugins -->
+  
+  {{ content_for_header }}
+  {% include 'oldIE-js' %}
+  <!-- JS -->
+  {%- include 'header-js' -%}
+
+  {% if template contains 'customers' %}
+  {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% include 'alireviews_core' %}
+<!-- BEGIN XO GALLERY -->
+  {% include "xo-gallery" %}
+  <!-- END XO GALLERY -->{% include 'fa_translate_core' %}
+
+{% include 'pagefly-header' %}
+ </head>
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template.name | handle }}" >
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+/>
+
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M5GRFTB"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+  {%- if settings.enable_preloader -%}
+  {% include 'preloader' %}
+  {%- endif -%}
+
+  {%- if template == 'index' and settings.newsletter_popup_enable -%}
+  {% include 'newsletter-popup' %}
+  {%- endif -%}
+  <input type="hidden" value="{{ 'theme-rtl.css' | asset_url }}" id="rtl_style">
+  <div class="wrapper{% if settings.box_layout_enable %} wrapper-box{% endif %}">
+
+    {%- if settings.topbar_notification_enable -%}
+    {%- if settings.topbar_notification == 'topbar_in_index' and template == 'index' -%}
+    {% include 'top-notification-bar' %}
+    {%- elsif settings.topbar_notification == 'topbar_in_template' -%}
+    {% include 'top-notification-bar' %}
+    {%- endif -%}
+    {%- endif -%}
+
+    {% section 'header' %}
+
+    {%- if template != 'index' and settings.breadcrumb_banner_enable -%}
+    {% include 'breadcrumb-banner' %}
+    {% section 'breadcrumb' %}
+    {%- endif -%}
+
+    <div class="main_content">
+      {{ content_for_layout }}
+    </div>
+
+    {% section 'footer' %}
+
+    <!-- Necessary JS -->
+    {% include 'footer-js' %}
+
+    {% include 'compare-popup' %}
+
+  </div>
+  <style>
+    iframe#ShopifyChat, #dummy-chat-button-iframe{
+      bottom: 64px !important;
+      right: 15px !important;
+    }
+  </style>
+  <script>
+
+
+    let initSlider = () => {
+      let sliderWrappers = document.querySelectorAll('.collections_homepage_slider')
+      sliderWrappers.forEach( slider => {
+        let arrowLeft = slider.previousElementSibling
+        let arrowRight = slider.nextElementSibling
+        console.log(arrowLeft, arrowRight);
+        const homepageCollections = new Swiper(slider, {
+            slidesPerView: 1,
+            spaceBetween: 15,
+            observer: true,
+            observeParent: true,
+            navigation: {
+                nextEl: arrowRight,
+                prevEl: arrowLeft,
+            },
+            breakpoints: {
+                // when window width is >= 992px
+                992: {
+                slidesPerView: 4,
+                spaceBetween: 45,
+                },
+                768: {
+                slidesPerView: 3,
+                spaceBetween: 15,
+                },
+                450: {
+                slidesPerView: 2,
+                spaceBetween: 15,
+                }
+            }
+
+        });
+      })
+    }
+      initSlider()  
+    
+
+    function getCookie(cname) {
+      var name = cname + "=";
+      var decodedCookie = decodeURIComponent(document.cookie);
+      var ca = decodedCookie.split(';');
+      for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+    var current_lang = getCookie('googtrans');
+
+    if(current_lang=="/en/ar"){
+      var rtl_style = $('#rtl_style').val();
+      $('body').append('<link class="rtl_stylee yesrtl" rel="stylesheet" href="'+rtl_style+'" type="text/css" />');
+    }
+
+
+
+    var myVar;
+
+    function myFunction() {
+      myVar = setInterval(get_int, 1000);
+
+    }
+    myFunction();
+    function get_int() {
+      var current_lang = getCookie('googtrans');
+      if(current_lang=="/en/ar"){
+        var rtl_style = $('#rtl_style').val();
+        if($('.rtl_stylee').hasClass('yesrtl')){}else{
+          $('body').append('<link class="rtl_stylee yesrtl" rel="stylesheet" href="'+rtl_style+'" type="text/css" />');
+        }
+      }else{
+        $('.rtl_stylee').remove();
+      }
+    }
+
+  </script>
+	
+
+</body>
+</html>

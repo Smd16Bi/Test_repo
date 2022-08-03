@@ -1,0 +1,567 @@
+{% assign size = section.blocks.size %}
+
+<div class="best_offers">
+    <div class="best_offers_body">
+        <div class="best_offers_wrapper">
+            <div class="best_offers_header">
+                <h3>{{section.settings.title}}</h3>
+                <p>{{section.settings.subtitle}}</p>
+            </div>
+            {% if size >= 3 %}
+            <div class="best_offers_slider_arrow best_offers_slider_right">
+                <svg style="transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70707 0.959641C8.09759 1.35017 8.09759 1.98333 7.70707 2.37385L3.08084 7.00008L7.70707 11.6263C8.09759 12.0168 8.09759 12.65 7.70707 13.0405C7.31654 13.431 6.68338 13.431 6.29285 13.0405L0.959519 7.70719C0.568995 7.31666 0.568995 6.6835 0.959519 6.29297L6.29285 0.959641C6.68338 0.569117 7.31654 0.569117 7.70707 0.959641Z" fill="#697287"/>
+                </svg>
+            </div>
+            {% endif %}
+            {% if size >= 3 %}
+                <div class="best_offers_slider_arrow best_offers_slider_left">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70707 0.959641C8.09759 1.35017 8.09759 1.98333 7.70707 2.37385L3.08084 7.00008L7.70707 11.6263C8.09759 12.0168 8.09759 12.65 7.70707 13.0405C7.31654 13.431 6.68338 13.431 6.29285 13.0405L0.959519 7.70719C0.568995 7.31666 0.568995 6.6835 0.959519 6.29297L6.29285 0.959641C6.68338 0.569117 7.31654 0.569117 7.70707 0.959641Z" fill="#697287"/>
+                    </svg>
+                </div>
+            {% endif %}
+            {% if size >= 3 %}
+                <div class="best_offers_slider_pagination"></div>
+            {% endif %}
+            <div class="best_offers_slider {% if size >= 3 %}swiper{% endif %}">
+                <div class="best_offers_slider_wrapper {% if size >= 3 %}swiper-wrapper{% endif %}">
+                    {% for block in section.blocks %}
+                    {% assign product = block.settings.product %}
+                    {% if product != blank %}
+                    <a href="{{product.url}}" class="best_offers_slider_item {% if size >= 3 %}swiper-slide{% endif %}">
+                        <div class="slider_item_image">
+                            {% for image in product.images limit: 1 %}
+                                <img src="{{image.src | img_url: 'master' }}" alt="{{image.alt}}">
+                            {% endfor %}
+                        </div>
+                        <div class="slider_item_info">
+                            <div class="slider_item_info_title">
+                                {% if block.settings.product_title != blank %}
+                                    {{block.settings.product_title}}
+                                {% else %}
+                                    {{product.title}}
+                                {% endif %}
+                            </div>
+                            <div class="slider_item_info_price">
+                                <div class="slider_item_info_price-price">{{product.price | money }}</div>
+                                <div class="slider_item_info_price-compare">{{product.compare_at_price | money }}</div>
+                            </div>
+                            <div class="slider_item_info_scale">
+                                <div class="slider_item_info_scale_heading">
+                                    <div class="scale_heading_sold">{{block.settings.sold_text}} <span>{{block.settings.sold}}</span></div>
+                                    <div class="scale_heading_available">{{block.settings.qty_title}} <span>{{product.selected_or_first_available_variant.inventory_quantity}}</span></div>
+                                </div>
+                                {% assign sum = block.settings.sold | plus: product.selected_or_first_available_variant.inventory_quantity %}
+                                {% assign x = block.settings.sold | times: 100| divided_by: sum %}
+
+                                <div class="slider_item_info_scale_body">
+                                    <div class="slider_item_info_scale_body_fill" style="width: {{x}}%;"></div>
+                                </div>
+                                
+                            </div>
+                            <div class="slider_item_info_timer" data-meta="{{product.metafields.my_fields.countdown_date}}">
+                                <div class="box">
+                                    <div class="allTime">
+                                        {% assign text = block.settings.timer_text | split: ',' %}
+                                        <div class="wp hrs">{{text[0]}}<span>00</span></div>
+                                        <div class="wp min">{{text[1]}}<span>00</span></div>
+                                        <div class="wp sec">{{text[2]}}<span>00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% style %}
+    .best_offers_body{
+        padding-top: {{section.settings.padding_top}}px;
+        padding-bottom: {{section.settings.padding_bottom}}px;
+        max-width: 1440px;
+    }
+    @media screen and (max-width: 768px){
+        .best_offers_body{
+            padding-top: {{section.settings.padding_top | divided_by: 2 }}px;
+            padding-bottom: {{section.settings.padding_bottom | divided_by: 2 }}px;
+        }
+    }
+    .best_offers_slider_item{
+        {% if section.settings.box_shadow %}
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        {% endif %}
+    }
+    @media screen and (max-width: 992px){
+        .best_offers_slider_item{
+            {% if section.settings.box_shadow %}
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            {% endif %}
+        }
+    }
+    {% if size <= 2 %}
+        .best_offers_slider_item{
+            flex: 1;
+            margin-right: 29px;
+            margin-bottom: 29px;
+        }
+        .best_offers_slider_item:last-of-type{
+            margin-right: 0 !important;
+        }
+        @media screen and (max-width: 992px) {
+            .best_offers_slider_wrapper{
+                flex-wrap: wrap;
+            }
+            .best_offers_slider_item{
+                flex: 1 1 auto;
+                margin-right: 0 !important;
+            }
+        }
+    {% else %}
+    .best_offers_slider{
+        padding: 10px;
+    }
+    {% endif %}
+{% endstyle %}
+
+<style>
+    .best_offers_slider_pagination{
+        display: none;
+    }
+    .best_offers_slider_arrow{
+        position: absolute;
+        bottom: calc( 50% - 138px );
+        transform: translate(0, -50px);
+        padding: 10px;
+        cursor: pointer;    
+    }
+    .best_offers_slider_arrow:hover > svg path{
+        fill: #F78E27;
+    }
+    .best_offers_slider_left{
+        left: 40px;
+    }
+    .best_offers_slider_right{
+        right: 40px;
+    }
+    .best_offers_body{
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .best_offers_wrapper{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0 90px;
+    }
+    @media screen and (max-width: 1200px) {
+        .best_offers_wrapper{
+            padding: 0 40px;
+        }
+        .best_offers_slider_left{
+            left: 25px;
+        }
+        .best_offers_slider_right{
+            right: 25px;
+        }
+        .best_offers_slider_arrow{
+            padding: 0;
+        }
+    }
+    .best_offers_header{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 52px;
+    }
+    .best_offers_header h3{
+        text-align: center;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 36px;
+        line-height: 54px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.035em;
+    }
+    .best_offers_header p{
+        text-align: center;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 21px;
+        line-height: 32px;
+        font-weight: 400;
+        color: #697287;
+        letter-spacing: -0.035em;
+    }
+    .best_offers_slider{
+        max-width: 100%;
+    }
+    .best_offers_slider_wrapper{
+        position: relative;
+        display: flex;
+        align-items: stretch;
+    }
+    .best_offers_slider_item{
+        height: auto;
+        border-radius: 19px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+    .best_offers_slider_item .slider_item_image{
+        width: 40%;
+        height: 100%;
+    }
+    .best_offers_slider_item .slider_item_image img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-top-left-radius: 19px;
+        border-bottom-left-radius: 19px;
+    }
+    .slider_item_info{
+        width: 60%;
+        padding: 45px 32px 22px 32px;
+    }
+    .slider_item_info .slider_item_info_title{
+        text-align: left;
+        margin: 0 0 5px 0;
+        font-family: 'Poppins';
+        font-size: 18px;
+        line-height: 27px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.035em;
+    }
+    .slider_item_info_price{
+        display: flex;
+        align-items: center;
+    }
+    .slider_item_info_price .slider_item_info_price-price{
+        font-family: 'Poppins';
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.035em;
+    }
+    .slider_item_info_price .slider_item_info_price-compare{
+        font-family: 'Poppins';
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: -0.035em;
+        text-decoration-line: line-through;
+        color: #697287;
+        margin-left: 2px;
+    }
+    .slider_item_info_scale{
+        padding: 11px 0 22px 0;
+        width: 100%;
+    }
+    .slider_item_info_scale_heading{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 7px;
+    }
+    .slider_item_info_scale_heading div{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 22px;
+        letter-spacing: -0.035em;
+        color: #697287;
+    }
+    .slider_item_info_scale_heading div span{
+        font-weight: 600;
+    }
+    .slider_item_info_scale_body{
+        display: block !important;
+        border-radius: 7.5px;
+        width: 100%;
+        background-color: #E9ECEF;
+        height: 15px;
+    }
+    .slider_item_info_scale_body_fill{
+        display: block !important;
+        height: 100%;
+        background-color: #F78E27;
+        border-radius: 7.5px;
+    }
+    .slider_item_info_timer .box .allTime{
+        display: flex;
+        margin: 22px 0;
+    }
+    .slider_item_info_timer .box .wp{
+        max-width: 110px;
+        width: 100%;
+        padding: 9px 10px;
+        font-family: 'Poppins';
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.035em;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #F2F2F2;
+        color: #6F788C;
+    }
+    .slider_item_info_timer .box .wp span{
+        font-family: 'Poppins';
+        font-size: 36px;
+        line-height: 54px;
+        letter-spacing: -0.035em;
+        text-align: center;
+        margin-bottom: 3px;
+        display: block;
+        color: #292A2B;
+    }
+    .slider_item_info_timer .box .wp:nth-of-type(2){
+        margin: 0 9px;
+    }
+    @media screen and (max-width: 768px) {
+        .best_offers_slider_pagination{
+            display: flex !important;
+            position: absolute;
+            bottom: -20px !important;
+            left: 50% !important;
+            transform: translate(-50%, 0);
+            justify-content: center;
+        }
+        .swiper-pagination-bullet-active{
+            background-color: #F78E27;
+        }
+        .best_offers_slider_arrow{
+            display: none !important;
+        }
+        .best_offers_wrapper{
+            padding: 0;
+        }
+        .best_offers_slider{
+            padding: 10px 15px;
+        }
+        .best_offers_header{
+            padding-bottom: 40px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .best_offers_header h3{
+            font-size: 26px;
+            line-height: 34px;
+        }
+        .best_offers_header p{
+            font-size: 16px;
+            line-height: 24px;
+            margin-top: 3px;
+        }
+        .slider_item_info{
+            padding: 15px;
+        }
+        .slider_item_info .slider_item_info_title{
+            font-size: 14px;
+            line-height: 1;
+        }
+    }
+    @media screen and (max-width: 450px) {
+        .best_offers_slider_item{
+            flex-direction: column;
+        }
+        .best_offers_slider_item .slider_item_image img{
+            border-radius: 19px;
+        }
+        .slider_item_info, .best_offers_slider_item .slider_item_image{
+            width: 100%;
+        }
+        .slider_item_info_timer .box .allTime{
+            justify-content: center;
+        }
+        .slider_item_info_timer .box .allTime{
+            margin: 10px 0;
+        }
+        .slider_item_info_scale{
+            padding: 10px 0;
+        }
+    }
+</style>
+
+<script>
+    if ( '{{section.blocks.size}}' >= 3) {
+        const bestOffersSlider = new Swiper('.best_offers_slider', {
+            slidesPerView: 1,
+            spaceBetween: 15,
+            navigation: {
+                nextEl: '.best_offers_slider_right',
+                prevEl: '.best_offers_slider_left',
+            },
+            pagination: {
+                el: '.best_offers_slider_pagination',
+                type: 'bullets',
+                clickable: true
+            },
+            breakpoints: {
+                // when window width is >= 992px
+                992: {
+                slidesPerView: 2,
+                spaceBetween: 29,
+                }
+            }
+
+        });
+    }
+    let dateArr = document.querySelectorAll('.slider_item_info_timer')
+    dateArr.forEach( el => {
+        let date = el.dataset.meta
+        if(date != ''){
+
+        let hrsBox = el.querySelector(".hrs span");
+        let minBox = el.querySelector(".min span");
+        let secBox = el.querySelector(".sec span");
+        let countDownDate = new Date(date).getTime(); 
+        // COUNT DOWN FUNCTION
+        let x = setInterval(function() {
+
+        // GET DATE
+        let now = new Date().getTime();
+
+        // TIME BETWEEN NOW AND DATE
+        let distance = countDownDate - now;
+
+        // CALCULATION TIME
+        let days 	= +Math.floor(distance / (1000 * 60 * 60 * 24));
+        let daysToHours = 0
+        if (days != 0) {
+            daysToHours = days * 24
+        }
+        let hours 	= +Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + daysToHours; 
+        let minutes	= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds	= Math.floor((distance % (1000 * 60)) / 1000);
+        hrsBox.innerHTML 	=  (hours <= 9)? '0' + hours: hours ;
+        minBox.innerHTML 	=  (minutes <= 9)? '0' + minutes: minutes ;
+        secBox.innerHTML 	=  (seconds <= 9)? '0' + seconds: seconds;
+
+        // IF FINISH
+        if (distance < 0) {
+            clearInterval(x);
+            el.querySelector('.box').style.display = 'none'
+        }
+        }, 1000);
+        } else {
+        el.querySelector('.box').style.display = 'none'
+        }
+    } )
+    
+</script>
+
+{% schema %}
+{
+    "name": "Sale: best offers",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },   
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Top padding",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 95
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Bottom padding",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 95
+        },
+        {
+            "type": "checkbox",
+            "id": "box_shadow",
+            "label": "Box-shadow",
+            "default": true
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Product",
+            "type": "product",
+            "settings": [
+                {
+                    "type": "product",
+                    "id": "product",
+                    "label": "Product"
+                },
+                {
+                    "type": "text",
+                    "id": "product_title",
+                    "label": "Custom title for product (optional)"
+                },
+                {
+                    "type": "header",
+                    "content": "Quantity scale"
+                },
+                {
+                    "type": "text",
+                    "id": "sold_text",
+                    "label": "Product were sold",
+                    "info": "title"
+                },
+                {
+                    "type": "text",
+                    "id": "sold",
+                    "label": "Product were sold",
+                    "info": "number only"
+                },
+                {
+                    "type": "text",
+                    "id": "qty_title",
+                    "label": "Products is available",
+                    "info": "title (quantity is dynamic)"
+                },
+                {
+                    "type": "header",
+                    "content": "Hours limit"
+                },
+                {
+                    "type": "text",
+                    "id": "timer_text",
+                    "label": "Timer text",
+                    "info": "Enter some text like this: hours,minutes,seconds"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name":"Sale: best offers"
+        }
+    ]
+}
+{% endschema %}

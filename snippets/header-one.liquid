@@ -1,0 +1,77 @@
+<!-- START HEADER -->
+<header class="header_wrap fixed-top header_with_topbar">
+	<div class="top-header">
+        <div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                	<div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                      	{%- if section.settings.google_translate_enable -%}
+                        <div class="lng_dropdown mr-2">
+                          	{% include 'google-translate' %}
+                        </div>
+                      	{%- endif -%}
+                      	{%- if section.settings.mobile_header_currency_enable -%}
+                        <div class="mr-3">
+                          	{%- include 'currency-picker' -%}
+                        </div>
+                      	{%- endif -%}
+                      	{% if section.settings.mobile_tel_number != '' %}
+                        <ul class="contact_detail text-center text-lg-left">
+                            <li><i class="ti-mobile"></i><span>{{ section.settings.mobile_tel_number }}</span></li>
+                        </ul>
+                      	{%endif%} 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                	<div class="text-center text-md-right">
+                        <ul class="header_list">
+                          {% if section.settings.Compare_btn != '' %}
+                          <li><a href="{{ section.settings.Compare_btn_url }}"><i class="ti-control-shuffle"></i><span>{{ section.settings.Compare_btn }}</span></a></li>
+                          {%endif%} 
+                          {% if section.settings.wishlist_btn != '' %}
+                          <li><a href="/pages/wishlist"><i class="ti-heart"></i><span>{{ section.settings.wishlist_btn }}</span></a></li>
+                          {%endif%}
+
+                          <li>
+                            {% if customer and shop.customer_accounts_enabled %}
+                            <a href="/account/logout"><i class="ti-user"></i><span>Logout</span></a>
+                            {% else if %}
+                            <a href="/account/login"><i class="ti-user"></i><span>Login</span></a>
+                            {% else %}
+                            <a href="/account/register"><i class="ti-user"></i><span>Register</span></a>
+                            {% endif %}
+                          </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_header dark_skin main_menu_uppercase">
+      <div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+        <nav class="navbar navbar-expand-lg">
+          {%- include 'header-logo' -%}
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false"> 
+            <span class="ion-android-menu"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            {% include 'main-menu' %}
+          </div>
+          <ul class="navbar-nav attr-nav align-items-center">
+            <li><a href="javascript:void(0);" class="nav-link search_trigger"><i class="linearicons-magnifier"></i></a>
+              <div class="search_wrap">
+                <span class="close-search"><i class="ion-ios-close-empty"></i></span>
+                {% include 'search-bar' %}
+              </div><div class="search_overlay"></div>
+            </li>
+
+            <li class="dropdown cart_dropdown">
+              {%- include 'mini-cart' -%}
+            </li>
+
+          </ul>
+        </nav>
+      </div>
+    </div>
+</header>
+<!-- END HEADER -->

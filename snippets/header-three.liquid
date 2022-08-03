@@ -1,0 +1,28 @@
+<!-- START HEADER -->
+<header class="header-three header_wrap fixed-top dd_dark_skin transparent_header">
+    <div class="light_skin main_menu_uppercase">
+    	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+            <nav class="navbar navbar-expand-lg"> 
+                {%- include 'header-logo' -%}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-expanded="false"> 
+                    <span class="ion-android-menu"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+              		{% include 'main-menu' %}
+              	</div>
+                <ul class="navbar-nav attr-nav align-items-center">
+                    <li><a href="javascript:void(0);" class="nav-link search_trigger"><i class="linearicons-magnifier"></i></a>
+                        <div class="search_wrap">
+                            <span class="close-search"><i class="ion-ios-close-empty"></i></span>
+                            {% include 'search-bar' %}
+                        </div><div class="search_overlay"></div><div class="search_overlay"></div>
+                    </li>
+                    <li class="dropdown cart_dropdown">
+                        {%- include 'mini-cart' -%}
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- END HEADER -->

@@ -1,0 +1,1462 @@
+{% if section.settings.newsletter_enable %}
+{%- include 'newsletter' -%}
+{% endif %}
+
+
+{% if section.settings.footer_enable %}
+
+{% if section.settings.footer_style == 'footer_style_1' %}
+{% include 'footer-one' %}
+{% elsif section.settings.footer_style == 'footer_style_2' %}
+{% include 'footer-two' %}
+{% elsif section.settings.footer_style == 'footer_style_3' %}
+{% include 'footer-three' %}
+{% elsif section.settings.footer_style == 'footer_style_4' %}
+{% include 'footer-four' %}
+{% elsif section.settings.footer_style == 'footer_style_5' %}
+{% include 'footer-five' %}
+{% endif %}
+
+{% endif %}
+<a href="#" class="scrollup" style=""><i class="ion-ios-arrow-up"></i></a>
+
+{%- include 'section-style' -%}
+
+<style>
+  {% if section.settings.footer_menu_style_enable %}
+   footer .widget_title {
+    color: {{ section.settings.footer_menu_title_color }};
+  }
+  .widget_links li a { 
+    color: {{ section.settings.footer_menu_color }};
+  }
+  .footer_dark a:hover, .footer_dark .widget_links li a:hover, .widget_links li a:hover, .footer_dark .footer_link li a:hover, .footer_link li a:hover {
+    color: {{ section.settings.footer_menu_hov_color }};
+  }
+  {% endif %}
+
+  
+  {% if section.settings.service_style_enable %}
+  .icon_box_style2 .icon i {
+    color: {{ section.settings.service_icon_color }};
+  }
+  .icon_box_content h5 {
+    color: {{ section.settings.service_title_color }};
+  }
+  .icon_box_content p {
+    color: {{ section.settings.service_desc_color }};
+  }
+  {% endif %}
+
+
+  
+  .bg-4 {
+    background-image: {%- if section.settings.footer_bg_img -%}url({{ section.settings.footer_bg_img | img_url: 'master' }}){%- endif -%};
+    background-position: top center;
+  }
+  .bg-4 {
+    background: {{ section.settings.footer_bg_color }};
+  }
+  .newsletter-area {
+      background-color:{{ section.settings.newsletter_bg_color }} !important;
+  }
+  .footer-policy-box p i.icon {
+    border: 1px solid {{ section.settings.service_icon_color }};
+    color: {{ section.settings.service_icon_color }};
+  }
+  .footer-menu ul li a:hover {
+    color: {{ section.settings.footer_menu_hov_color }};
+  }
+  
+  .footer-bottom-area.pb-20.footer-bottom-position {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: transparent;
+  }
+  .footer-bottom-area.pb-20.footer-bottom-position .container {
+  	max-width: 100%;
+    padding: 0 60px;
+  }
+  .footer-area .footer-top .footer-widget-area .single-footer-widget .instagram-image {
+    display: inline;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+  }
+  .single-footer-widget .instagram_profile {
+    display: none;
+  }
+
+</style> 
+
+<script src="{{ 'jquery.instagramFeed.min.js' | asset_url }}"></script>
+
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+        {
+          "type": "header",
+          "content": "Newsletter Option"
+        },
+		{
+          "type": "select",
+          "id": "newsletter_style",
+          "label": "Select Newsletter Style",
+          "options":[
+            {
+              "value":"newsletter_style_1",
+              "label": "Newsletter Style One"
+            },
+            {
+              "value":"newsletter_style_2",
+              "label": "Newsletter Style Two"
+            },
+			{
+              "value":"newsletter_style_3",
+              "label": "Newsletter Style Three"
+            },
+			{
+              "value":"newsletter_style_4",
+              "label": "Newsletter Style Four"
+            },
+			{
+              "value":"newsletter_style_5",
+              "label": "Newsletter Style Five"
+            }
+          ],
+
+          "default": "newsletter_style_1"
+        },
+		{
+           "type": "checkbox",
+           "id": "newsletter_enable",
+           "label": "Newsletter enable",
+           "default": true,
+		   "info": "If you want Newsletter click checkbox"
+        },
+		{
+          "type": "checkbox",
+          "id": "newsletter_fullwidth_on",
+          "label": "Newsletter Full Width Enable",
+          "default": false,
+          "info": "If you want Full Width click checkbox"
+        },
+		{
+          "type": "text",
+          "id": "newsletter_title",
+          "label": "Newsletter Title",
+          "default": "Subscribe Our Newsletter"
+      	},
+		{
+          "type": "text",
+          "id": "newsletter_desc",
+          "label": "Newsletter Description"
+      	},
+		{
+          "type": "text",
+          "id": "email_placeholder",
+          "label": "Email Placeholder",
+          "default": "Enter you email address here..."
+      	},
+		{
+          "type": "text",
+          "id": "button_title",
+          "label": "Button Title",
+          "default": "Subscribe"
+      	},
+        {
+          "type": "color",
+          "id": "newsletter_bg_color",	
+          "label": "Newsletter Background Color"
+        },
+
+		{
+          "type": "header",
+          "content": "Footer Option"
+        },
+		{
+          "type": "select",
+          "id": "footer_style",
+          "label": "Select Footer Style",
+          "options":[
+            {
+              "value":"footer_style_1",
+              "label": "Footer Style One"
+            },
+            {
+              "value":"footer_style_2",
+              "label": "Footer Style Two"
+            },
+			{
+              "value":"footer_style_3",
+              "label": "Footer Style Three"
+            },
+			{
+              "value":"footer_style_4",
+              "label": "Footer Style Four"
+            },
+			{
+              "value":"footer_style_5",
+              "label": "Footer Style Five"
+            }
+          ],
+
+          "default": "footer_style_1"
+        },
+		{
+          "type": "checkbox",
+          "id": "footer_enable",
+          "label": "Footer Enable",
+          "default": true,
+          "info": "If you want Footer click checkbox"
+        },
+        {
+          "type": "header",
+          "content": "Footer Width Control"
+        },
+        {
+          "type": "checkbox",
+          "id": "fullwidth_on",
+          "label": "Full Width Enable",
+          "default": false,
+          "info": "If you want Full Width click checkbox"
+        },
+		{
+          "type": "header",
+          "content": "Footer Menu Option"
+      	},
+		{
+           "type": "checkbox",
+           "id": "footer_menu_style_enable",
+           "label": "Footer Menu Style enable",
+           "default": false,
+		   "info": "If you want Newsletter click checkbox"
+        },
+		{
+          "type": "color",
+          "id": "footer_menu_title_color",	
+          "label": "Footer Menu Color",
+          "default":   "#fff"
+        },
+		{
+          "type": "color",
+          "id": "footer_menu_color",	
+          "label": "Footer Menu Color",
+          "default":   "#fff"
+        },
+		{
+          "type": "color",
+          "id": "footer_menu_hov_color",	
+          "label": "Footer Menu Hover Color",
+          "default":   "#FF324D"
+        },
+		{
+          "type": "header",
+          "content": "Service Option & Style"
+      	},
+		{
+          "type": "header",
+          "content": "Service Width Control"
+        },
+        {
+          "type": "checkbox",
+          "id": "service_fullwidth_on",
+          "label": "Full Width Enable",
+          "default": false,
+          "info": "If you want Full Width click checkbox"
+        },
+		{
+           "type": "checkbox",
+           "id": "service_enable",
+           "label": "Service enable",
+           "default": true,
+		   "info": "If you want Service click checkbox"
+        },
+		{
+           "type": "checkbox",
+           "id": "service_style_enable",
+           "label": "Service Style enable",
+           "default": false,
+		   "info": "If you want Newsletter click checkbox"
+        },
+		{
+          "type": "color",
+          "id": "service_icon_color",	
+          "label": "Service Icon Color",
+          "default":   "#FF324D"
+        },
+		{
+          "type": "color",
+          "id": "service_title_color",	
+          "label": "Service Title Color",
+          "default":   "#292b2c"
+        },
+		{
+          "type": "color",
+          "id": "service_desc_color",	
+          "label": "Service Description Color",
+          "default":   "#687188"
+        },
+		{
+          "type": "header",
+          "content": "Footer Bottom Menu Option"
+      	},
+		{
+           "type": "checkbox",
+           "id": "footer_bottom_menu",
+           "label": "Footer Bottom Menu enable",
+           "default": true,
+		   "info": "If you want Footer Bottom Menu click checkbox"
+        },
+
+
+		{
+          "type": "header",
+          "content": "Copyright Option"
+      	},
+		{
+          "type": "textarea",
+          "id": "copy_ritht_text",
+          "label": "CopyRight Text",
+		  "default": "Copyright © 2020 All Rights Reserved by Bestwebcreator."
+		},
+		{
+           "type": "checkbox",
+           "id": "payment_icon_enable",
+           "label": "payment icon enable",
+           "default": true,
+		   "info": "If you want payment icon click checkbox"
+        },
+		{
+          "type": "image_picker",
+          "id": "payment_icon",
+          "label": "payment Cart",
+          "info": "Recommended Size: 244 x 27px"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",	
+          "label": "Background Color",
+          "default":   "#f6f6f6"
+        }		  
+    ],
+	"blocks":[
+		{
+          "type": "service",
+          "name": "Services",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "service_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "service_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "text",
+                "id": "service_icon",
+                "label": "Service Icon Images",
+                "default": "flaticon-shipped"
+              },
+			  {
+                "type": "text",
+                "id": "service_title",
+                "label": "Service Title",
+                "default": "Free Delivery"
+              },
+			  {
+                "type": "text",
+                "id": "service_content",
+                "label": "SErvice Content",
+                "default": "Phasellus blandit massa enim elit of passage varius nunc."
+              }
+			  
+		  ]
+        },
+		{
+          "type": "about_us",
+          "name": "About Information",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "about_info_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 3,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "about_info_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 6,
+                "info": "Follow Bootstrap-4 Column"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "footer_logo",
+                  "label": "Footer Logo",
+                  "info": "Recommended Size: 182 x 47px"
+              },
+			  {
+                "type": "textarea",
+                "id": "about_content",
+                "label": "About Content",
+                "default": "Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum."
+              },
+              {
+                "type": "checkbox",
+                "id": "contact_info_enable",
+                "label": "Contact Info Enable",
+                "default": false,
+                "info": "If you want Contact Info Top click checkbox"
+              },
+			  {
+                  "type": "header",
+                  "content": "Contact Information"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_1_icon",
+                "label": "Icon Name",
+                "default": "ti-location-pin"	
+              },
+			  {
+                "type": "text",
+                "id": "about_contact_info_dti",
+                "label": "Contact info Details",
+                "default": "123 Street, Old Trafford, NewYork, USA"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_2_icon",
+                "label": "Icon Name",
+                "default": "ti-email"	
+              },
+			  {
+                "type": "text",
+                "id": "about_email_add",
+                "label": "Email Address",
+                "default": "info@sitename.com"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_3_icon",
+                "label": "Icon Name",
+                "default": "ti-mobile"	
+              },
+			  {
+                "type": "text",
+                "id": "about_telephon_num",
+                "label": "Telephone Number",
+                "default": "+ 457 789 789 65"
+              },
+			  {
+                "type": "checkbox",
+                "id": "footer_social_enable",
+                "label": "Footer Social Enable",
+                "default": true,
+                "info": "If you want Footer Social click checkbox"
+              },
+              {
+                "type": "header",
+                "content": "Footer Social Icon"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-facebook"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-twitter"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-googleplus"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-youtube-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-instagram-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_6_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_6_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_7_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_7_link",
+                "label": "Link"
+              }
+			  
+		  ]
+       },
+	   {
+          "type": "footer_menu",
+          "name": "Footer Menu",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "menu_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 2,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "menu_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 3,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                  "type": "text",
+                  "id": "footer_menu_title",
+                  "label": "Menu Title",
+				  "default": "Menu Title"
+              },
+              {
+                  "type": "link_list",
+                  "id": "footer_menu_handle",
+                  "label": "Select Menu"
+              }
+          ]
+       },
+	   {
+            "type": "category",
+            "name": "Category",
+            "settings": [
+			  {
+                "type": "range",
+                "id": "cat_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 2,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "cat_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 3,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "text",
+                "id": "cat_title",
+                "label": "Title",
+                "default": "Categories"
+              },
+              {
+                "type": "range",
+                "id": "categories_list_limit_hanlde",
+                "min": 2,
+                "max": 20,
+                "step": 1,
+                "label": "Category Limit",
+                "default": 4
+              }
+            ]
+         },
+		 {
+          "type": "contact_info",
+          "name": "Contact Information",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "contact_info_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 3,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "contact_info_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+			  {
+                  "type": "header",
+                  "content": "Contact Information"
+              },
+			  {
+                  "type": "text",
+                  "id": "contact_info_title",
+                  "label": "Contact Info Title",
+				  "default": "Contact Info"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_1_icon",
+                "label": "Icon Name",
+                "default": "ti-location-pin"	
+              },
+			  {
+                "type": "text",
+                "id": "about_contact_info_dti",
+                "label": "Contact info Details",
+                "default": "123 Street, Old Trafford, NewYork, USA"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_2_icon",
+                "label": "Icon Name",
+                "default": "ti-email"	
+              },
+			  {
+                "type": "text",
+                "id": "about_email_add",
+                "label": "Email Address",
+                "default": "info@sitename.com"
+              },
+              {
+                "type": "text",
+                "id": "footer_info_3_icon",
+                "label": "Icon Name",
+                "default": "ti-mobile"	
+              },
+			  {
+                "type": "text",
+                "id": "about_telephon_num",
+                "label": "Telephone Number",
+                "default": "+ 457 789 789 65"
+              },
+			  {
+                "type": "header",
+                "content": "Footer Social Icon"
+              },
+			  {
+                "type": "checkbox",
+                "id": "footer_social_enable",
+                "label": "Footer Social Enable",
+                "default": true,
+                "info": "If you want Footer Social click checkbox"
+              },
+			  {
+                "type": "text",
+                "id": "social_title",
+                "label": "Social Title",
+                "default": "Social"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-facebook"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-twitter"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-googleplus"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-youtube-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-instagram-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_6_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_6_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_7_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_7_link",
+                "label": "Link"
+              }
+			  
+		  ]
+       },
+	   {
+          "type": "instafeed",
+          "name": "Instagram",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "instafid_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "instafid_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                  "type": "text",
+                  "id": "footer_instafeed_title",
+                  "label": "Instafeed Title",
+				  "default": "Instagram"
+              },
+      		  {
+                "type": "header",
+                "content": "Instagram Option"
+              },
+              {
+                  "type": "text",
+                  "id": "instafeed_user_name",
+                  "label": "Instafeed Use Name",
+                  "default": "portfolio.devitems"
+              },
+              {
+                  "type": "select",
+                  "id": "instafeed_limit",
+                  "label": "Instafeed Limit",
+                  "options":[
+                      {
+                          "label": "1",
+                          "value": "1"
+                      },
+                      {
+                          "label": "2",
+                          "value": "2"
+                      },
+                      {
+                          "label": "3",
+                          "value": "3"
+                      },
+                      {
+                          "label": "4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "5",
+                          "value": "5"
+                      },
+                      {
+                          "label": "6",
+                          "value": "6"
+                      },
+                      {
+                          "label": "7",
+                          "value": "7"
+                      },
+                      {
+                          "label": "8",
+                          "value": "8"
+                      },
+                      {
+                          "label": "9",
+                          "value": "9"
+                      },
+                      {
+                          "label": "10",
+                          "value": "10"
+                      },
+                      {
+                          "label": "12",
+                          "value": "12"
+                      }
+                  ],
+                  "default": "8"
+              },
+			  {
+                  "type": "select",
+                  "id": "instafeed_per_row",
+                  "label": "Instafeed Per Row",
+                  "options":[
+                      {
+                          "label": "1",
+                          "value": "1"
+                      },
+                      {
+                          "label": "2",
+                          "value": "2"
+                      },
+                      {
+                          "label": "3",
+                          "value": "3"
+                      },
+                      {
+                          "label": "4",
+                          "value": "4"
+                      },
+                      {
+                          "label": "5",
+                          "value": "5"
+                      },
+                      {
+                          "label": "6",
+                          "value": "6"
+                      }
+                  ],
+                  "default": "4"
+              }
+          ]
+       },
+	   {
+          "type": "newsletter",
+          "name": "Footer newsletter",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "newsletter_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "newsletter_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 12,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "text",
+                "id": "newsletter_title",
+                "label": "Newsletter Title",
+                "default": "Subscribe Our Newsletter"
+              },
+              {
+                "type": "text",
+                "id": "newsletter_desc",
+                "label": "Newsletter Description",
+				"default": "If you want to get an email from us every time we have a new special offer, then sign up here!"
+              },
+              {
+                "type": "text",
+                "id": "email_placeholder",
+                "label": "Email Placeholder",
+                "default": "Enter you email address here..."
+              },
+              {
+                "type": "text",
+                "id": "button_title",
+                "label": "Button Title",
+                "default": "Subscribe"
+              }
+          ]
+       },
+		{
+          "type": "app_info_social",
+          "name": "App Info And Social",
+          "settings": [
+			  {
+                "type": "range",
+                "id": "app_info_social_col_lg",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column LG",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+              {
+                "type": "range",
+                "id": "app_info_social_col_md",
+                "min": 1,
+                "max": 12,
+                "step": 1,
+                "label": "Column MD",
+                "default": 4,
+                "info": "Follow Bootstrap-4 Column"
+              },
+			  {
+                "type": "header",
+                "content": "Footer App Info"
+              },
+			  {
+                "type": "checkbox",
+                "id": "footer_app_enable",
+                "label": "Footer App Enable",
+                "default": true,
+                "info": "If you want Footer Social click checkbox"
+              },
+			  {
+                "type": "text",
+                "id": "app_info_title",
+                "label": "App Title",
+                "default": "Download App"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "app_one",
+                  "label": "App One",
+                  "info": "Recommended Size: 131 x 44px"
+              },
+			  {
+                  "type": "url",
+                  "id": "app_one_url",
+                  "label": "App One URL"
+              },
+			  {
+                  "type": "image_picker",
+                  "id": "app_two",
+                  "label": "App Two",
+                  "info": "Recommended Size: 131 x 44px"
+              },
+			  {
+                  "type": "url",
+                  "id": "app_two_url",
+                  "label": "App Two URL"
+              },
+			  
+              {
+                "type": "header",
+                "content": "Footer Social Icon"
+              },
+			  {
+                "type": "checkbox",
+                "id": "footer_social_enable",
+                "label": "Footer Social Enable",
+                "default": true,
+                "info": "If you want Footer Social click checkbox"
+              },
+			  {
+                "type": "text",
+                "id": "social_title",
+                "label": "Social Title",
+                "default": "Social"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-facebook"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-twitter"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-googleplus"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-youtube-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-instagram-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_6_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_6_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_7_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_7_link",
+                "label": "Link"
+              }
+			  
+		  ]
+       },
+	   {
+          "type": "footer_buttom_social",
+          "name": "Footer Buttom Social",
+          "settings": [
+			  {
+                "type": "text",
+                "id": "social_icon_1_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-facebook"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_1_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_2_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-twitter"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_2_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_3_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-googleplus"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_3_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_4_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-youtube-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_4_link",
+                "label": "Link"
+              },
+              {
+                "type": "text",
+                "id": "social_icon_5_name",
+                "label": "Social Icon Name",
+                "default": "ion-social-instagram-outline"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_5_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_6_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_6_link",
+                "label": "Link"
+              },
+			  {
+                "type": "text",
+                "id": "social_icon_7_name",
+                "label": "Social Icon Name"
+              },
+              {
+                "type": "url",
+                "id": "social_icon_7_link",
+                "label": "Link"
+              }
+          ]
+       },
+		{
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#202325"
+			}
+          ]
+       }
+	]
+  }
+
+{% endschema %}
+
+
+
+{% comment %}
+
+<div class="footer-area">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <div class="copyright text-left">
+          {{ section.settings.copy_ritht_text }}
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="payment-icon text-right">
+          {%- if section.settings.payment_image -%}
+          <img src="{{ section.settings.payment_image | img_url: 'large' }}" alt="{{ section.settings.payment_image.alt }}" />
+          {%- elsif shop.enabled_payment_types -%}
+          {%- for type in shop.enabled_payment_types -%}
+          <img src="{{ type | payment_type_img_url }}" height="35" alt="{{ type }}" />
+          {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  {
+    "name": "Footer",
+    "settings": [
+		{
+          "type": "richtext",
+          "id": "copy_ritht_text",
+          "label": "CopyRight Text",
+		  "default": "<p>Copyright ©99Shopify All Right Reserved.</p>"
+		},
+		{
+          "type": "image_picker",
+          "id": "payment_image",
+          "label": "Payment image"
+		}
+    ]
+  }
+
+
+
+
+{% endcomment %}

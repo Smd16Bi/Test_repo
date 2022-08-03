@@ -1,0 +1,59 @@
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}
+{%- assign on_sale = true -%}
+{%- endif -%}
+
+{%- assign sold_out = true -%}
+{%- if product.available -%}
+{%- assign sold_out = false -%}
+{%- endif -%}
+
+{%- assign variant = product.selected_or_first_available_variant -%}
+
+{%- if product.available -%}
+{%- assign func = "Shopify.addItem(" | append: variant.id | append: ", 1)" -%}
+{%- endif -%} 
+
+
+{% comment %} "{{ variant.id }}" this Class is needed for Ajax popup cart {% endcomment %}
+
+<div class="{{ variant.id }} product_wrap">
+  <div class="product_img">
+    {% if product.images.size > 1 %}
+    <a href="{{ product.url | within: collection }}">
+      <img class="popup_cart_image lazyload" alt="" src="{{ product.featured_image.src | img_url: '144X160', crop: 'center' }}">
+      {% for image in product.images limit: 1 offset: 1 %}
+      <img class="popup_cart_image product_hover_img lazyload" alt="" src="{{ image.src | img_url: img_url: '144X160', crop: 'center' }}">
+      {% endfor %}
+    </a>
+    {% else %}
+    <a href="{{ product.url | within: collection }}">
+      <img class="popup_cart_image lazyload" alt="" src="{{ product.featured_image.src | img_url: '144X160', crop: 'center' }}">
+    </a>
+    {% endif %}
+  </div>
+  <div class="product_info">
+    <h6 class="product_title popup_cart_title"><a href="{{ product.url | within: collection }}">{{ product.title }}</a></h6>
+    <div class="product_price">
+      <span class="price">{{ product.variants.first.price | money }}</span>
+      {%- if product.variants.first.compare_at_price > product.variants.first.price -%}
+      <del>{{ product.variants.first.compare_at_price | money }}</del>
+      {%- endif -%}
+      
+      {% if settings.sale_percent_enable %}
+      {%- if product.variants.first.compare_at_price > product.variants.first.price -%}
+      <div class="on_sale">
+        <span class="percent-count">-{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | replace: ',', '.' | times: 100 | remove: '.0'}}%</span>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+    <div class="rating_wrap">
+      <div class="rating">
+        <div class="product_rate product-rating">
+        	<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

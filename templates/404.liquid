@@ -1,0 +1,35 @@
+<!-- START 404 SECTION -->
+<div class="section">
+	<div class="error_wrap theme-default-margin">
+    	<div class="container">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-lg-6 col-md-10 order-lg-first">
+                	<div class="text-center">
+                        {% if settings.opps_404 %}
+                        <img src="{{ settings.opps_404 | img_url: '1024x1024' }}" alt="" />
+                        {% endif %}
+                      	{% if settings.heading_404 !='' %}
+                        <div class="error_txt">{{ settings.heading_404 }}</div>
+                      	{% endif %}
+                      	{% if settings.sub_heading_404 !='' %}
+                        <h5 class="mb-2 mb-sm-3">{{ settings.sub_heading_404 }}</h5> 
+                      	{% endif %}
+                      	{% if settings.sub_text_404 !='' %}
+                        <p>{{ settings.sub_text_404 }}</p>
+                      	{% endif %}
+                        <div class="search_form pb-3 pb-md-4">
+                          <form action="/search" method="get">
+                            <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="form-control" aria-label="{{ 'general.search.placeholder' | t }}">
+                            <button type="submit" class="btn icon_search"><i class="ion-ios-search-strong"></i></button> 
+                          </form>
+                        </div>
+                      	{% if settings.button_title !='' %}
+                        <a href="{{ settings.button_url }}" class="btn btn-fill-out">{{ settings.button_title }}</a>
+                      	{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END 404 SECTION -->

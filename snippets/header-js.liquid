@@ -1,0 +1,34 @@
+<!-- Your update file include here -->
+<script src="{{ 'modernizr-3.5.0.min.js' | asset_url }}"></script>
+<script src="{{ 'jquery-1.12.4.min.js' | asset_url }}"></script>
+
+
+<!-- Put all third-party JS files here -->
+<script src="{{ 'popper.min.js' | asset_url }}"></script>
+<script src="{{ 'bootstrap.min.js' | asset_url }}"></script>
+{% if content_for_layout contains 'owl-carousel' %}
+<script src="{{ 'owl.carousel.min.js' | asset_url }}"></script>
+{% endif %}
+
+
+<script src="{{ 'jquery.instagramFeed.min.js' | asset_url }}"></script>
+<script src="{{ 'magnific-popup.min.js' | asset_url }}"></script>
+<script src="{{ 'waypoints.min.js' | asset_url }}"></script>
+<script src="{{ 'parallax.js' | asset_url }}"></script>
+<script src="{{ 'jquery.countdown.min.js' | asset_url }}"></script>
+<script src="{{ 'imagesloaded.pkgd.min.js' | asset_url }}"></script>
+<script src="{{ 'isotope.min.js' | asset_url }}"></script>
+<script src="{{ 'jquery.dd.min.js' | asset_url }}"></script>
+<script src="{{ 'slick.min.js' | asset_url }}"></script>
+<script src="{{ 'jquery.elevatezoom.js' | asset_url }}"></script>
+
+<script src="{{ 'vendor.js' | asset_url }}"></script>
+
+
+<!-- Ajax Cart js -->
+<script src="{{ 'option_selection.js' | shopify_asset_url }}"></script>
+<script src="{{ 'api.jquery.js' | shopify_asset_url }}"></script>
+<script src="{{ 'cart.api.js' | asset_url }}"></script>
+
+<!-- Your main.js file upload this file -->
+<script src="{{ 'theme.js' | asset_url }}"></script>

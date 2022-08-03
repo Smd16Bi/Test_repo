@@ -1,0 +1,447 @@
+{% if section.settings.brand_logo_style == 'brand_logo_style_1' %}
+<!-- START SECTION CLIENT LOGO -->
+<div class="section small_pt" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{%endif%}">
+      	{% if section.settings.section_title !='' %}
+    	<div class="row">
+			<div class="col-md-12">
+            	<div class="heading_tab_header">
+                    <div class="heading_s2">
+                        <h2>{{ section.settings.section_title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+      	{% endif %}
+
+        <div class="row">
+        	<div class="col-12">
+              <div class="client_logo carousel_slider owl-carousel owl-theme nav_style3" 
+                   data-owl-carousel='{
+                  "loop": true,
+                  "dots": false,                  
+                  "nav": true,
+                  "margin": 30,
+                  "autoplay": true,                   
+                  {%- if settings.rtl_enable -%}
+                  "rtl": true, 
+                  {%- endif -%}
+                  "items": 4,
+                  "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                  "responsive":{
+                      "0":{"items": "2"}, "480":{"items": "3"}, "767":{"items": "4"}, "991":{"items": "5"}
+                  }}'>
+                {% assign item_limit = section.settings.item_limit_handle %}
+                {% for block in section.blocks limit: item_limit %}
+                {% case block.type %}
+                {% when 'single_brand' %}
+                <div class="item">
+                  <div class="cl_logo">
+                    <a href="{{ block.settings.brand_logo_url }}"><img src="{% if block.settings.brand_image %}{{ block.settings.brand_image | img_url: 'master' }}
+                      {% else %}https://via.placeholder.com/163x85 {% endif %}" alt="{{ block.settings.brand_image.alt }}"></a>
+                  </div>
+                </div>
+                {% endcase %}
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION CLIENT LOGO -->
+{% elsif section.settings.brand_logo_style == 'brand_logo_style_2' %}
+
+<!-- START SECTION CLIENT LOGO -->
+<div class="section pt-0 small_pb" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="{% if section.settings.fullwidth_on %}custom-container {% else %}container{%endif%}">
+        {% if section.settings.section_title !='' %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="heading_tab_header">
+              <div class="heading_s2">
+                <h4>{{ section.settings.section_title }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+        	<div class="col-12">
+            	<div class="client_logo carousel_slider owl-carousel owl-theme nav_style3" 
+                      data-owl-carousel='{
+                  "loop": true,
+                  "dots": false,                  
+                  "nav": true,
+                  "margin": 30,
+                  "autoplay": true,                   
+                  {%- if settings.rtl_enable -%}
+                  "rtl": true, 
+                  {%- endif -%}
+                  "items": 4,
+                  "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                  "responsive":{
+                      "0":{"items": "2"}, "480":{"items": "3"}, "767":{"items": "4"}, "991":{"items": "5"}, "1199":{"items": "6"}
+                  }}'>
+                  {% assign item_limit = section.settings.item_limit_handle %}
+                  {% for block in section.blocks limit: item_limit %}
+                  {% case block.type %}
+                  {% when 'single_brand' %}
+                  <div class="item">
+                    <div class="cl_logo">
+                      <a href="{{ block.settings.brand_logo_url }}"><img src="{% if block.settings.brand_image %}{{ block.settings.brand_image | img_url: 'master' }}
+                        {% else %}https://via.placeholder.com/163x85 {% endif %}" alt="{{ block.settings.brand_image.alt }}"></a>
+                    </div>
+                  </div>
+                  {% endcase %}
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION CLIENT LOGO -->
+
+{% endif %}
+
+
+{%- style -%}
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {% case block.type %}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+  
+{%- endstyle -%}
+
+
+
+{% schema %}
+  {
+    "name": "Brand Logo",
+    "settings": [
+			{
+              "type": "select",
+              "id": "brand_logo_style",
+              "label": "Select Brand Logo Style",
+              "options":[
+                {
+                  "value":"brand_logo_style_1",
+                  "label": "Brand Logo Style One"
+                },
+                {
+                  "value":"brand_logo_style_2",
+                  "label": "Brand Logo Style Two"
+                }
+              ],
+
+              "default": "brand_logo_style_1"
+            },
+            {
+              "type": "header",
+              "content": "Section width Control"
+            },
+            {
+                "type": "checkbox",
+                "id": "fullwidth_on",
+                "label": "Full Width Enable",
+                "default": false,
+                "info": "If you want Full Width click checkbox"
+            },
+			{
+              "type": "header",
+              "content": "Section Title"
+            },
+			{
+                "type": "text",
+                "id": "section_title",
+                "label": "Section Title",
+                "default": "Our Brands"
+            },
+            {
+              "type": "range",
+              "id": "item_show",	
+              "label": "Item Display",
+              "min":       2,
+              "max":        50,
+              "step":       1,
+              "default":   5
+            },
+            {
+              "type": "range",
+              "id": "item_limit_handle",	
+              "label": "Post Limit",
+              "min":       2,
+              "max":        48,
+              "step":       1,
+              "default":   12
+            }
+	],
+
+	"blocks":[
+		{
+          "type": "single_brand",
+          "name": "Single Brand Logo",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "brand_image",
+                  "label": "Brand Image",
+                  "info": "Recommended Size: 170 x 82px"
+              },
+			  {
+                "type": "url",
+                "id": "brand_logo_url",
+                "label": "Brand Logo Url"
+              }
+		  ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablate Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablate Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets":[
+		{
+			"name": "Brand Logo",
+			"category": "9. Brand Logo",
+			"blocks":[
+				{
+					"type": "single_brand"
+				},
+				{
+					"type": "single_brand"
+				},
+				{
+					"type": "single_brand"
+				},
+				{
+					"type": "single_brand"
+				},
+				{
+					"type": "single_brand"
+				},
+				{
+					"type": "single_brand"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

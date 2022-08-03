@@ -1,0 +1,384 @@
+<!-- START SECTION SHOP -->
+<div class="section pt-0 pb-0" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="{% if section.settings.fullwidth_on %}custom-container{%else%}container{%endif%}">
+      	{%- if section.settings.section_title != '' -%}
+    	<div class="row">
+        	<div class="col-md-12">
+            	<div class="heading_tab_header">
+                    <div class="heading_s2">
+                        <h4>{{ section.settings.section_title }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+      	{%- endif -%}
+        <div class="row">
+        	<div class="col-md-12">
+            	<div class="deal_of_the_ady_two product_slider carousel_slider owl-carousel owl-theme nav_style3" 
+                     data-owl-carousel='{
+                      "loop": true,
+                      "dots": false,                  
+                      "nav": true,
+                      "margin": 30,                 
+                      {%- if settings.rtl_enable -%}
+                      "rtl": true, 
+                      {%- endif -%}
+                      "items": 2,
+                      "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                      "responsive":{
+                          "0":{"items": "1"}, "650":{"items": "2"}, "1199":{"items": "2"}
+                      }}'>
+                    {% assign item_limit = section.settings.item_limit_handle %}
+                    {% for block in section.blocks limit: item_limit %}
+                    {% case block.type %}
+                    {% when 'deal_product' %}
+            		<div class="item">
+                        <div class="deal_wrap">
+                            <div class="product_img">
+                              <a href="{{ block.settings.product_url }}">
+                                <img src="{% if block.settings.deal_product_image %}{{ block.settings.deal_product_image | img_url: 'master' }}
+                                          {% else %}https://via.placeholder.com/330x333 {% endif %}" alt="{{ block.settings.deal_product_image.alt }}">
+                              </a>
+                            </div>
+                            <div class="deal_content">
+                                <div class="product_info">
+                                  	{%- if block.settings.deal_product_title != '' -%}
+                                    <h5 class="product_title"><a href="{{ block.settings.product_url }}">{{ block.settings.deal_product_title }}</a></h5>
+                                  	{%- endif -%}
+                                    <div class="product_price">
+                                      	{%- if block.settings.product_reg_price != '' -%}
+                                        <span class="price">{{ block.settings.product_reg_price }}</span>
+                                      	{%- endif -%}
+                                      	{%- if block.settings.product_disc_price != '' -%}
+                                        <del>{{ block.settings.product_disc_price }}</del>
+                                      	{%- endif -%}
+                                    </div>
+                                </div>
+                                <div class="deal_progress">
+                                  	{%- if block.settings.product_sold != '' -%}
+                                    <span class="stock-sold">Already Sold: <strong>{{ block.settings.product_sold }}</strong></span>
+                                  	{%- endif -%}
+                                  	{%- if block.settings.widget_title != '' -%}
+                                    <span class="stock-available">Available: <strong>{{ block.settings.product_available }}</strong></span>
+                                  	{%- endif -%}
+                                  	{%- if block.settings.product_bar != '' -%}
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ block.settings.product_bar }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ block.settings.product_bar }}%"> {{ block.settings.product_bar }}% </div>
+                                    </div>
+                                  	{%- endif -%}
+                                </div>
+                              	{%- if block.settings.offer_time != '' -%}
+                                <div class="countdown_time countdown_style4 mb-4" data-time="{{ block.settings.offer_time }}"></div>
+                              	{%- endif -%}
+                            </div>
+                        </div>
+                    </div>
+                    {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+
+
+
+{%- include 'section-style' -%}
+
+
+{% schema %}
+  {
+    "name": "Deal Of The Day Style Two",
+    "settings": [
+		{
+		  "type": "header",
+          "content": "Container Widht Control"
+        },
+		{
+            "type": "checkbox",
+            "id": "fullwidth_on",
+            "label": "Full Width Enable",
+            "default": true,
+            "info": "If you want Full Width click checkbox"
+        },
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Deal Of The Days"
+      	},
+        {
+          "type": "range",
+          "id": "item_show",	
+          "label": "Item Display",
+          "min":       2,
+          "max":        50,
+          "step":       1,
+          "default":   3
+        }
+    ],
+	"blocks":[
+	  {
+          "type": "deal_product",
+          "name": "Deal Product",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "deal_product_image",
+                  "label": "Deal Product Image",
+                  "info": "Recommended Size: 170 x 82px"
+              },
+              {
+                "type": "text",
+                "id": "deal_product_title",
+                "label": "Product Title",
+                "default": "Red & Black Headphone"
+              },
+			  {
+                "type": "text",
+                "id": "product_reg_price",
+                "label": "Product Regular Title",
+                "default": "$45.00"
+              },
+			  {
+                "type": "text",
+                "id": "product_disc_price",
+                "label": "Product Discount Title",
+                "default": "$55.25"
+              },
+			  {
+                "type": "text",
+                "id": "product_sold",
+                "label": "Product Sold",
+                "default": "6"
+              },
+			  {
+                "type": "text",
+                "id": "product_available",
+                "label": "Product Available",
+                "default": "8"
+              },
+      		  {
+                  "type": "range",
+                  "id": "product_bar",
+                  "min": 0,
+                  "max": 100,
+                  "step": 1,
+                  "label": "Product Available",
+                  "default": 40
+              },
+      		  {
+                "type": "text",
+                "id": "offer_time",
+                "label": "Offer Time",
+                "default": "2020/08/28 13:22:15",
+                "info": "Ues This formate example : 2020/08/28 13:22:15"
+              },
+			  {
+                "type": "url",
+                "id": "product_url",
+                "label": "Product URL"
+              }
+		  ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Deal Of The Day Style Two",
+		  "category": "4. product",
+		  "blocks":[
+				{
+					"type": "deal_product"
+				},
+				{
+					"type": "deal_product"
+				},
+				{
+					"type": "deal_product"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}

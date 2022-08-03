@@ -1,0 +1,9 @@
+development:
+  password: shptka_d95259a301c56bc143a0b8318491614f
+  theme_id: '129787101334'
+  store: the-rocketshop.myshopify.com
+  ignore_files:
+    - config/settings_data.json
+    - /\.(txt|gif|bat)$/
+    - '*.liquid___jb_tmp___'
+    - '*.liquid___jb_old___'

@@ -1,0 +1,8 @@
+<ul>
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {% when 'product_info' %}
+  <li><a href="{{ block.settings.product_info_url }}"><i class="{{ block.settings.product_info_icon }}"></i>{{ block.settings.product_info_title }}</a></li>
+  {% endcase %}
+  {% endfor %}
+</ul>

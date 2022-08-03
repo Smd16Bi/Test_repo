@@ -1,0 +1,446 @@
+
+{% assign product = section.settings.product %}
+<div class="today_only">
+    <div class="today_only_body">
+        <div class="today_only_wrapper">
+            <div class="today_only_info">
+                <div class="today_only_info_heading">
+                    <h3>{{section.settings.title}}</h3>
+                    {% assign originalPrice = product.price | money_without_currency | replace: ',', '.'  %}
+                    {% assign comparePrice = product.compare_at_price | money_without_currency | replace: ',', '.'  %}
+                    {% assign persent1 = originalPrice | divided_by: comparePrice | times: 100 %}
+                    {% assign persent = 100 | minus: persent1 | split: '.'  %}
+                    {% if section.settings.subtitle contains '[]' %}
+                        <h2>{{persent[0]}}% {{section.settings.subtitle | replace: '[]', ''}}</h2>
+                    {% else %}
+                        <h2>{{section.settings.subtitle}}</h2>
+                    {% endif %}
+                    <div class="box">
+                        <div class="allTime">
+                            {% assign text = section.settings.timer_text | split: ',' %}
+                            <div class="wp hrs">{{text[0]}}<span>00</span></div>
+                            <div class="wp min">{{text[1]}}<span>00</span></div>
+                            <div class="wp sec">{{text[2]}}<span>00</span></div>
+                        </div>
+                    </div>
+                    <a class="btn btn-fill-out rounded-0 today_only_info_heading_btn" href="{{product.url}}">{{section.settings.btn}}</a>
+                </div>
+            </div>
+            <a class="today_only_product" href="{{product.url}}">
+                {% for image in product.images limit: 1 %}
+                    <img src="{{image | img_url: 'master'}}" alt="{{image.alt}}">
+                {% endfor %}
+                {% if section.settings.badge == true %}
+                    <div class="today_only_product_badge">
+                        {{section.settings.badge_text}}
+                        <div>{{section.settings.badge_svg}}</div>
+                    </div>
+                {% endif %}
+                <div class="today_only_product_info">
+                    <span class="today_only_product_info-title">{{product.title}}</span>
+                    <div><span class="today_only_product_info-price">{{product.price | money }}</span><span class="today_only_product_info-compired">{{product.compare_at_price | money }}</span></div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.today_only_wrapper{
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+.today_only_info, .today_only_product{
+    flex: 1;
+}
+.today_only_body{
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.today_only_info{
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+.today_only_info_heading{
+    padding: 61px 50px 61px 113px;
+    width: 100%;
+}
+.today_only_info_heading h3{
+    font-family: 'Poppins';
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    letter-spacing: -0.035em;
+    color: #000;
+    margin: 0;
+}
+.today_only_info_heading h2{
+    font-family: 'Poppins';
+    font-size: 66px;
+    font-weight: 600;
+    line-height: 99px;
+    letter-spacing: -0.035em;
+    color: #000;
+    margin: 10px 0 0 0;
+}
+.today_only_info_heading .box .allTime{
+    display: flex;
+    margin: 50px 0;
+}
+.today_only_info_heading .box .wp{
+    max-width: 110px;
+    width: 100%;
+    padding: 16px 16px;
+    font-family: 'Poppins';
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.035em;
+    text-align: center;
+    border-radius: 10px;
+}
+.today_only_info_heading .box .wp span{
+    font-family: 'Poppins';
+    font-size: 42px;
+    line-height: 63px;
+    letter-spacing: -0.035em;
+    text-align: center;
+    margin-bottom: 3px;
+    display: block;
+    color: #292A2B;
+}
+.today_only_info_heading .box .wp:nth-of-type(2){
+    margin: 0 18px;
+}
+
+.today_only_product{
+    position: relative;
+}
+.today_only_product img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 46px;
+} 
+.today_only .today_only_body .btn {
+    padding: 14.5px 35px;
+    max-width: 210px;
+    width: 100%;
+}
+@media screen and (max-width: 1440px) {
+    .today_only_product img{
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.today_only_product_badge{
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    border-radius: 19px;
+    display: flex;
+    padding: 8px 24px;
+}
+.today_only_product_badge div{
+    display: flex;
+    margin-left: 6px;
+}
+.today_only_product_info{
+    position: absolute;
+    bottom: 50px;
+    left: 36px;
+    border-radius: 17px;
+    padding: 16px 36px;
+    max-width: 85%;
+}
+.today_only_product_info-title{
+    font-family: 'Poppins';
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    color: #000;
+}
+.today_only_product_info div{
+    margin-top: 8px;
+}
+.today_only_product_info div span{
+    font-family: 'Poppins';
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.035em;
+}
+.today_only_product_info-compired{
+    color: #697287;
+    text-decoration: line-through;
+    font-weight: 400;
+}
+.today_only_product_info-price{
+    font-weight: 600;
+    margin-right: 10px;
+}
+@media screen and (max-width: 992px) {
+    .today_only_info_heading{
+        padding: 20px 20px 20px 50px;
+    }
+    .today_only_product_info{
+        bottom: 36px;
+        padding: 16px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .today_only_wrapper{
+        flex-direction: column;
+    }
+    .today_only_info_heading{
+        padding: 0 15px 20px 15px;
+    }
+    .today_only_info_heading .box .allTime{
+        margin: 20px 0;
+        justify-content: center;
+    }
+    .today_only_info_heading h3{
+        text-align: center;
+    }
+    .today_only_info_heading h2{
+        text-align: center;
+        font-size: 45px;
+        line-height: 55px;
+    }
+    .today_only_info_heading_btn{
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+    .today_only_product img{
+        border-radius: 0;
+    }
+    .today_only_info_heading .box .wp{
+        font-size: 14px;
+    }
+    .today_only_info_heading .box .wp span{
+        font-size: 32;
+        line-height: 43px;
+    }
+    .today_only_info_heading .box .wp:nth-of-type(2){
+        margin: 0 10px;
+    }
+    .today_only_product_badge{
+        top: 15px;
+        left: 15px;
+    }
+    .today_only_product_info{
+        bottom: 15px;
+        left: 15px;
+        max-width: calc(100% - 30px);
+    }
+    .today_only_product_info-title{
+        font-size: 14px;
+        line-height: 1;
+    }
+    .today_only_product_info div{
+        margin-top: 4px;
+    }
+    @media screen and (max-width: 450px) {
+        .today_only_product_info{
+            padding: 10px;
+            opacity: 0.8;
+        }
+    }
+}
+</style>
+{% style %}
+    .today_only_product_badge, .today_only_product_info-price{
+        color: {{section.settings.badge_color}};
+    }
+    .today_only_product_badge, .today_only_product_info{
+        background-color: {{section.settings.badge_bg}};
+    }
+    .today_only_info_heading .box .wp{
+        background-color: {{section.settings.background}};
+    }
+    .today_only_wrapper{
+        {% if section.settings.height == false %}
+            max-height: {{section.settings.range_height}}px;
+        {% else %}
+            max-height: auto;
+        {% endif %}
+    }
+    @media screen and (max-width: 768px){
+        .today_only_wrapper{
+            max-height: unset  !important;
+        }
+    }
+{% endstyle %}
+  <script>
+      
+      let date = '{{section.settings.product.metafields.my_fields.countdown_date}}'
+      if(date != ''){
+
+          let countDownBox	= document.querySelector(".today_only_info_heading .allTime span");
+          let hrsBox			= document.querySelector(".today_only_info_heading .hrs span");
+          let minBox			= document.querySelector(".today_only_info_heading .min span");
+          let secBox			= document.querySelector(".today_only_info_heading .sec span");
+          let countDownDate	= new Date(date).getTime();
+    
+    
+          // COUNT DOWN FUNCTION
+          let x = setInterval(function() {
+    
+            // GET DATE
+            let now = new Date().getTime();
+    
+            // TIME BETWEEN NOW AND DATE
+            let distance = countDownDate - now;
+    
+            // CALCULATION TIME
+            let days 	= +Math.floor(distance / (1000 * 60 * 60 * 24));
+            let daysToHours = 0
+            if (days != 0) {
+                daysToHours = days * 24
+            }
+            let hours 	= +Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + daysToHours; 
+            let minutes	= Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds	= Math.floor((distance % (1000 * 60)) / 1000);
+    
+            hrsBox.innerHTML 	=  (hours <= 9)? '0' + hours: hours ;
+            minBox.innerHTML 	=  (minutes <= 9)? '0' + minutes: minutes ;
+            secBox.innerHTML 	=  (seconds <= 9)? '0' + seconds: seconds;
+    
+            // IF FINISH
+            if (distance < 0) {
+              clearInterval(x);
+              document.querySelector('.box').style.display = 'none'
+            }
+          }, 1000);
+      } else {
+        document.querySelector('.box').style.display = 'none'
+      }
+  </script>
+{% schema %}
+{
+    "name": "Sale: today only",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "checkbox",
+            "id": "manual_sale",
+            "label": "Manual sale",
+            "default": false,
+            "info": "If false enter [] before text in subtitle field"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "text",
+            "id": "btn",
+            "label": "Button text"
+        },
+        {
+            "type": "header",
+            "content": "Section height"
+        },
+        {
+            "type": "checkbox",
+            "id": "height",
+            "label": "Auto height",
+            "default": true
+        },
+        {
+            "type": "range",
+            "id": "range_height",
+            "label": "Static height (max-height for section)",
+            "unit": "px",
+            "min": 300,
+            "max": 900,
+            "step": 10,
+            "default": 560
+        },
+        {
+            "type": "header",
+            "content": "Timer"
+        },
+        {
+            "type": "text",
+            "id": "timer_text",
+            "label": "Timer text",
+            "info": "Enter some text like this: hours,minutes,seconds"
+        },
+        {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "#F2F2F2"
+        },
+        {
+            "type": "color",
+            "id": "numb_color",
+            "label": "Color for number",
+            "default": "#000"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Color for text",
+            "default": "#6F788C"
+        },
+        {
+            "type": "header",
+            "content": "Product"
+        },
+        {
+            "type": "product",
+            "id": "product",
+            "label": "Product selector"
+        },
+        {
+            "type": "checkbox",
+            "id": "badge",
+            "label": "Badge",
+            "default": true
+        },
+        {
+            "type": "text",
+            "id": "badge_text",
+            "label": "Badge text"
+        },
+        {
+            "type": "html",
+            "id": "badge_svg",
+            "label": "Badge svg"
+        },
+        {
+            "type": "color",
+            "id": "badge_bg",
+            "label": "Badge background color",
+            "default": "#fff"
+        },
+        {
+            "type": "color",
+            "id": "badge_color",
+            "label": "Badge text color",
+            "default": "#F78E27"
+        }
+    ],
+   "presets": [
+       {
+           "name":"Sale: today only"
+       }
+   ]
+}
+{% endschema %}

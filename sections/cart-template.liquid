@@ -1,0 +1,449 @@
+<!-- PAGE SECTION START -->
+<div class="cart-page theme-default-margin section">
+  <div class="container">
+    {%- if cart.item_count > 0 -%}
+    <form action="/cart" method="post" novalidate class="cart">
+      <div class="row">
+        <div class="col-lg-12 col-12">
+          <div class="cart-table table-responsive shop_cart_table mb-40">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="pro-thumbnail">{{ section.settings.table_image_title }}</th>
+                  <th class="pro-title">{{ section.settings.table_product_title }}</th>
+                  <th class="pro-price">{{ section.settings.table_price_title }}</th>
+                  <th class="pro-quantity">{{ section.settings.table_quantity_title }}</th>
+                  <th class="pro-subtotal">{{ section.settings.table_total_title }}</th>
+                  <th class="pro-remove">{{ section.settings.table_reomove_title }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart.items %}
+                <tr>
+                  <td class="pro-thumbnail"><a href="{{ item.url }}"><img src="{{ item | img_url: 'compact' }}" alt="{{ item.title | escape }}" /></a></td>
+                  <td class="pro-title">
+                    <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    {%- unless item.variant.title contains 'Default' -%}
+                    <span>{{ item.variant.title }}</span>
+                    {%- endunless -%}
+                    {% if section.settings.cart_vendor_enable %}
+                    <p>{{ item.vendor }}</p>
+                    {% endif %}
+                  </td>
+                  <td class="pro-price"><span class="amount">{{ item.price | money }}</span></td>
+                  <td class="pro-quantity"><div class="product-quantity"><input type="text" value="{{ item.quantity }}" name="updates[]" /></div></td>
+                  <td class="pro-subtotal">{{ item.line_price | money }}</td>
+                  <td class="pro-remove"><a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">×</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-lg-12 col-12">
+          <div class="cart-buttons">
+            <input class="btn btn-line-fill btn-sm" name="update" type="submit" value="{{ section.settings.update_button_title }}" />
+            <a class="btn btn-line-fill btn-sm" href="javascript:history.back()">{{ section.settings.continue_shopping_title }}</a>
+            <a class="btn btn-line-fill btn-sm" href="/cart/clear">{{ section.settings.clear_cart_title }}</a>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="medium_divider"></div>
+          <div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+          <div class="medium_divider"></div>
+        </div>
+        <div class="col-lg-12 col-12">
+          <div class="cart-payment">
+            <div class="row">
+              {%- unless section.settings.cart_feature == 'without_both' -%}
+              <div class="col-lg-6">  
+                {%- if section.settings.cart_feature == 'cart_note' -%}
+                <div class="cart-coupon heading_s1 mb-3">
+                  <h6>{{ section.settings.cart_note_title }}</h6>
+                  <textarea name="note" class="" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+                </div>
+                {%- endif -%}
+                {%- if section.settings.cart_feature == 'shipping_calculator' -%}
+                {%- include 'cart-shipping-calculator' -%}
+                {%- endif -%}
+              </div>
+              {%- endunless -%}
+              <div class="col-lg-6{% if section.settings.cart_feature == 'without_both' %} offset-lg-6{% endif %}">
+                <div class="border p-3 p-md-4">
+                  <div class="heading_s1 mb-3">
+                    <h6>{{ section.settings.cart_total_heading_title }}</h6>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tbody>
+                        <tr class="cart-subtotal">
+                          <td class="cart_total_label">{{ section.settings.cart_subtotal_title }}</td>
+                          <td class="cart_total_amount"><span class="amount"><span id="bk-cart-subtotal-price">{{ cart.total_price | money }}</span></span></td>
+                        </tr>
+                        <tr class="order-total">
+                          <td class="cart_total_label">{{ section.settings.cart_total_title }}</td>
+                          <td class="cart_total_amount">
+                            <strong><span class="amount"><span id="bk-cart-subtotal-price">{{ cart.total_price | money }}</span></span></strong>
+                          </td>
+                        </tr>											
+                      </tbody>
+                    </table>
+                  </div>
+                  {%- if cart.total_discounts > 0 -%}
+                  {% assign savings = cart.total_discounts | money %}
+                  <p>
+                    <span class="cart-subtotal__savings"><em>{{ 'cart.general.savings_html' | t: price: savings }}</em></span>
+                  </p>
+                  {%- endif -%}
+                  <div class="proceed-to-checkout">
+                    <button type="submit" class="btn btn-fill-out" name="checkout">{{ section.settings.checkout_button_title }}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {%- else -%}
+    <div class="row">
+      <div class="col-lg-12 col-12">
+        <div class="empty-cart-page">
+          <h2>{{ section.settings.shopping_cart_title }}</h2>
+          <h3>{{ section.settings.cart_empty_title }}</h3>
+          <p>{{ section.settings.cart_continue_title }} <a href="/collections/all">{{ section.settings.here_title }}</a></p>
+        </div>
+      </div>
+    </div>
+    {%- endif -%}
+  </div>
+</div>
+<!-- PAGE SECTION END -->
+{% comment %}
+<!-- START SECTION SHOP -->
+<div class="section">
+	<div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive shop_cart_table">
+                	<table class="table">
+                    	<thead>
+                        	<tr>
+                            	<th class="product-thumbnail">&nbsp;</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        	<tr>
+                            	<td class="product-thumbnail"><a href="#"><img src="assets/images/product_img1.jpg" alt="product1"></a></td>
+                                <td class="product-name" data-title="Product"><a href="#">Blue Dress For Woman</a></td>
+                                <td class="product-price" data-title="Price">$45.00</td>
+                                <td class="product-quantity" data-title="Quantity"><div class="quantity">
+                                <input type="button" value="-" class="minus">
+                                <input type="text" name="quantity" value="2" title="Qty" class="qty" size="4">
+                                <input type="button" value="+" class="plus">
+                              </div></td>
+                              	<td class="product-subtotal" data-title="Total">$90.00</td>
+                                <td class="product-remove" data-title="Remove"><a href="#"><i class="ti-close"></i></a></td>
+                            </tr>
+                            <tr>
+                            	<td class="product-thumbnail"><a href="#"><img src="assets/images/product_img2.jpg" alt="product2"></a></td>
+                                <td class="product-name" data-title="Product"><a href="#">Lether Gray Tuxedo</a></td>
+                                <td class="product-price" data-title="Price">$55.00</td>
+                                <td class="product-quantity" data-title="Quantity"><div class="quantity">
+                                <input type="button" value="-" class="minus">
+                                <input type="text" name="quantity" value="1" title="Qty" class="qty" size="4">
+                                <input type="button" value="+" class="plus">
+                              </div></td>
+                              	<td class="product-subtotal" data-title="Total">$55.00</td>
+                                <td class="product-remove" data-title="Remove"><a href="#"><i class="ti-close"></i></a></td>
+                            </tr>
+                            <tr>
+                            	<td class="product-thumbnail"><a href="#"><img src="assets/images/product_img3.jpg" alt="product3"></a></td>
+                                <td class="product-name" data-title="Product"><a href="#">woman full sliv dress</a></td>
+                                <td class="product-price" data-title="Price">$68.00</td>
+                                <td class="product-quantity" data-title="Quantity"><div class="quantity">
+                                <input type="button" value="-" class="minus">
+                                <input type="text" name="quantity" value="3" title="Qty" class="qty" size="4">
+                                <input type="button" value="+" class="plus">
+                              </div></td>
+                              	<td class="product-subtotal" data-title="Total">$204.00</td>
+                                <td class="product-remove" data-title="Remove"><a href="#"><i class="ti-close"></i></a></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                        	<tr>
+                            	<td colspan="6" class="px-0">
+                                	<div class="row no-gutters align-items-center">
+
+                                    	<div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+                                            <div class="coupon field_form input-group">
+                                                <input type="text" value="" class="form-control form-control-sm" placeholder="Enter Coupon Code..">
+                                                <div class="input-group-append">
+                                                	<button class="btn btn-fill-out btn-sm" type="submit">Apply Coupon</button>
+                                                </div>
+                                            </div>
+                                    	</div>
+                                        <div class="col-lg-8 col-md-6 text-left text-md-right">
+                                            <button class="btn btn-line-fill btn-sm" type="submit">Update Cart</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+            	<div class="medium_divider"></div>
+            	<div class="divider center_icon"><i class="ti-shopping-cart-full"></i></div>
+            	<div class="medium_divider"></div>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col-md-6">
+            	<div class="heading_s1 mb-3">
+            		<h6>Calculate Shipping</h6>
+                </div>
+                <form class="field_form shipping_calculator">
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <div class="custom_select">
+                                <select class="form-control">
+                                    <option value="">Choose a option...</option>
+                                    <option value="AX">Aland Islands</option>
+                                    <option value="AF">Afghanistan</option>
+                                    <option value="AL">Albania</option>
+                                    <option value="DZ">Algeria</option>
+                                    <option value="AD">Andorra</option>
+                                    <option value="AO">Angola</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-6">
+                            <input required="required" placeholder="State / Country" class="form-control" name="name" type="text">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <input required="required" placeholder="PostCode / ZIP" class="form-control" name="name" type="text">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-lg-12">
+                            <button class="btn btn-fill-line" type="submit">Update Totals</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+            	<div class="border p-3 p-md-4">
+                    <div class="heading_s1 mb-3">
+                        <h6>Cart Totals</h6>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="cart_total_label">Cart Subtotal</td>
+                                    <td class="cart_total_amount">$349.00</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">Shipping</td>
+                                    <td class="cart_total_amount">Free Shipping</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart_total_label">Total</td>
+                                    <td class="cart_total_amount"><strong>$349.00</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <a href="#" class="btn btn-fill-out">Proceed To CheckOut</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+{% endcomment %}
+
+{% schema %}
+  {
+    "name": "Cart Page",
+    "settings": [
+		{
+			"type": "header",
+			"content": "Table Heading Title"
+		},
+		{
+			"type": "text",
+			"id": "table_image_title",
+			"label": "Image Heading Title",
+			"default": "Image"
+		},
+		{
+			"type": "text",
+			"id": "table_product_title",
+			"label": "Product Heading Title",
+			"default": "Product"
+		},
+		{
+			"type": "text",
+			"id": "table_price_title",
+			"label": "Price Heading Title",
+			"default": "Price"
+		},
+		{
+			"type": "text",
+			"id": "table_quantity_title",
+			"label": "Quantity Heading Title",
+			"default": "Quantity"
+		},
+		{
+			"type": "text",
+			"id": "table_total_title",
+			"label": "Total Heading Title",
+			"default": "Total"
+		},
+		{
+			"type": "text",
+			"id": "table_reomove_title",
+			"label": "Remove Heading Title",
+			"default": "Remove"
+		},
+		{
+			"type": "header",
+			"content": "Button Title"
+		},
+		{
+			"type": "text",
+			"id": "update_button_title",
+			"label": "Update Button Title",
+			"default": "Update Cart"
+		},
+		{
+			"type": "text",
+			"id": "continue_shopping_title",
+			"label": "Continue Shopping Button Title",
+			"default": "Continue Shopping"
+		},
+		{
+			"type": "text",
+			"id": "clear_cart_title",
+			"label": "Clear Cart Button Title",
+			"default": "Clear Cart"
+		},
+		{
+			"type": "checkbox",
+			"id": "cart_vendor_enable",
+			"label": "Show Product Vendor",
+			"default": false
+		},
+		{
+			"type": "header",
+			"content": "Cart Note / Shipping Calculator"
+		},
+		{
+            "type": "radio",
+            "id": "cart_feature",
+            "label": "Show Any One",
+            "options": [
+                {
+                    "value": "shipping_calculator",
+                    "label": "Shipping Calculator"
+                },
+                {
+                    "value": "cart_note",
+                    "label": "Cart Note"
+                },
+                {
+                    "value": "without_both",
+                    "label": "Without Both"
+                }
+            ],
+            "default": "shipping_calculator"
+        },
+		{
+			"type": "text",
+			"id": "shipping_calculator_heading",
+			"label": "Shipping Calculator Title",
+			"default": "Get shipping estimates"
+		},
+		{
+			"type": "text",
+			"id": "shipping_calculator_button_title",
+			"label": "Shipping Calculator Button Title",
+			"default": "Calculate shipping"
+		},
+		{
+			"type": "text",
+			"id": "cart_note_title",
+			"label": "Cart Note Title",
+			"default": "Special instructions for seller"
+		},
+		{
+			"type": "header",
+			"content": "Cart Totals"
+		},
+		{
+			"type": "text",
+			"id": "cart_total_heading_title",
+			"label": "Cart Total Heading Title",
+			"default": "Cart Totals"
+		},
+		{
+			"type": "text",
+			"id": "cart_subtotal_title",
+			"label": "Cart Subtotal Title",
+			"default": "Subtotal"
+		},
+		{
+			"type": "text",
+			"id": "cart_total_title",
+			"label": "Cart Total Title",
+			"default": "Total"
+		},
+		{
+			"type": "text",
+			"id": "checkout_button_title",
+			"label": "Checkout Button Title",
+			"default": "Proceed to Checkout"
+		},
+		{
+			"type": "header",
+			"content": "Cart Empty"
+		},
+		{
+			"type": "text",
+			"id": "shopping_cart_title",
+			"label": "Shopping Cart Title",
+			"default": "Shopping Cart"
+		},
+		{
+			"type": "text",
+			"id": "cart_empty_title",
+			"label": "Cart Empty Title",
+			"default": "Your cart is currently empty."
+		},
+		{
+			"type": "text",
+			"id": "cart_continue_title",
+			"label": "Continue Browsing Title",
+			"default": "Continue browsing"
+		},
+		{
+			"type": "text",
+			"id": "here_title",
+			"label": "Here Title",
+			"default": "here"
+		}
+	]
+  }
+{% endschema %}

@@ -1,0 +1,66 @@
+{% assign itemStyle = '' %}{% if cart.item_count == 0 %}{% assign itemStyle = ' style="display:none;"' %}{% endif %}
+{% assign itemEmpty = '' %}{% if cart.item_count == 0 %}{% assign itemEmpty = ' style="display:block;"' %}{% endif %}
+
+{%- assign item_count = cart.item_count -%}
+{% if section.settings.header_style == 'header_style_4' %}
+<a class="nav-link cart_trigger" href="/cart" data-toggle="dropdown">
+  <i class="linearicons-bag2"></i>
+  <span class="cart_count bigcounter">{{ cart.item_count }}</span><span class="amount"><span class="currency_symbol shopping-cart__total">{{ cart.total_price | money }}</span></span>
+</a>
+{% else%}
+<a class="nav-link cart_trigger" href="/cart" data-toggle="dropdown">
+  <i class="linearicons-cart"></i>
+  <span class="cart_count bigcounter">{{ cart.item_count }}</span>
+</a>
+{% endif %}
+
+<div class="cart-empty-title" {{ itemEmpty }}>
+  <h3>{{ 'cart.general.empty' | t }}</h3>
+</div>
+<div class="cart_box dropdown-menu dropdown-menu-right" {{ itemStyle }}>
+  <ul class="cart_list">
+    {% for item in cart.items %}
+    <li>
+      <a href="javascript:void(0);" class="item_remove" onclick="Shopify.removeItem({{ item.variant.id }})"><i class="ion-close"></i></a>
+      <a href="{{ item.url }}"><img src="{{ item | img_url: '80x80' }}" alt="cart_thumb1">{{ item.title }}</a>
+      <span class="cart_quantity"> {{ item.quantity }} x <span class="cart_amount"> <span class="price_symbole">{{ item.price | money }}</span></span></span>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="cart_footer">
+    <p class="cart_total total"><strong>{{ 'cart.label.total' | t }} :</strong> <span class="cart_price"> <span class="price_symbole shopping-cart__total">{{ cart.total_price | money }}</span></span></p>
+    <p class="cart_buttons"><a href="/cart" class="btn btn-fill-line view-cart">{{ section.settings.view_cart_title }}</a><a href="/checkout" class="btn btn-fill-out checkout">{{ section.settings.checkout_title }}</a></p>
+  </div>
+
+</div>
+
+
+{% comment %}
+
+
+<div class="cart_box dropdown-menu dropdown-menu-right menuspec">
+  <ul class="cart_list">
+    <li>
+      <a href="#" class="item_remove"><i class="ion-close"></i></a>
+      <a href="#"><img src="assets/images/cart_thamb1.jpg" alt="cart_thumb1">Variable product 001</a>
+      <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>78.00</span>
+    </li>
+    <li>
+      <a href="#" class="item_remove"><i class="ion-close"></i></a>
+      <a href="#"><img src="assets/images/cart_thamb2.jpg" alt="cart_thumb2">Ornare sed consequat</a>
+      <span class="cart_quantity"> 1 x <span class="cart_amount"> <span class="price_symbole">$</span></span>81.00</span>
+    </li>
+  </ul>
+  
+  <div class="cart_footer">
+    <p class="cart_total"><strong>Subtotal:</strong> <span class="cart_price"> <span class="price_symbole">$</span></span>159.00</p>
+    <p class="cart_buttons"><a href="#" class="btn btn-fill-line rounded-0 view-cart">View Cart</a><a href="#" class="btn btn-fill-out rounded-0 checkout">Checkout</a></p>
+  </div>
+</div>
+
+{% endcomment %}
+
+
+
+

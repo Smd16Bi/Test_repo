@@ -1,0 +1,154 @@
+<!-- Menu Type #2 -->
+  <ul class="navbar-nav">
+    {%- for link in linklists.main-menu.links -%}
+    {%- assign childlink_handle = link.title | handle -%}
+    
+    {%- if settings.megamenu_title == link.title -%}
+    <li class="dropdown dropdown-mega-menu"><a class="dropdown-toggle nav-link" data-toggle="dropdown" href="{{ link.url }}">{{ link.title }}</a>
+      <div class="dropdown-menu">
+        <ul class="mega-menu d-lg-flex">      
+          {%- assign megamenu_column_1 = linklists[settings.megamenu_column_1_handle] -%}
+          {%- if megamenu_column_1 != empty -%}
+          <li class="mega-menu-col col-lg-3">
+            <ul>
+              <li class="dropdown-header"><a href="{{ megamenu_column_1.url }}">{{ megamenu_column_1.title }}</a></li>
+              {%- for link in megamenu_column_1.links -%}
+              <li><a class="dropdown-item nav-link nav_item" href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- endif -%}
+          {%- assign megamenu_column_2 = linklists[settings.megamenu_column_2_handle] -%}
+          {%- if megamenu_column_2 != empty -%}
+          <li class="mega-menu-col col-lg-3">
+            <ul>
+              <li class="dropdown-header"><a href="{{ megamenu_column_2.url }}">{{ megamenu_column_2.title }}</a></li>
+              {%- for link in megamenu_column_2.links -%}
+              <li><a class="dropdown-item nav-link nav_item" href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- endif -%}
+          {%- assign megamenu_column_3 = linklists[settings.megamenu_column_3_handle] -%}
+          {%- if megamenu_column_3 != empty -%}
+          <li class="mega-menu-col col-lg-3">
+            <ul>
+              <li class="dropdown-header"><a href="{{ megamenu_column_3.url }}">{{ megamenu_column_3.title }}</a></li>
+              {%- for link in megamenu_column_3.links -%}
+              <li><a class="dropdown-item nav-link nav_item" href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- endif -%}
+          {%- assign megamenu_column_4 = linklists[settings.megamenu_column_4_handle] -%}
+          {%- if megamenu_column_4 != empty -%}
+          <li class="mega-menu-col col-lg-3">
+            <ul>
+              <li class="dropdown-header"><a href="{{ megamenu_column_4.url }}">{{ megamenu_column_4.title }}</a></li>
+              {%- for link in megamenu_column_4.links -%}
+              <li><a class="dropdown-item nav-link nav_item" href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- endif -%}
+        </ul>
+        <div class="d-lg-flex menu_banners">
+          <div class="col-sm-4">
+            <div class="header-banner">
+              {%- if settings.megamenu_image -%}
+              <a href="{{ settings.megamenu_image_url }}"> <img src="{{ settings.megamenu_image | img_url: 'large' }}" alt="" /></a>
+              {%- endif -%}
+              <div class="banne_info">
+                {% if settings.banner_subtitle != '' %}
+                <h6>{{ settings.banner_subtitle }}</h6>
+                {% endif %}
+                {% if settings.banner_title != '' %}
+                <h4>{{ settings.banner_title }}</h4>
+                {% endif %}
+                {% if settings.banner_button != '' %}
+                <a href="{{ settings.megamenu_image_url }}">{{ settings.banner_button }}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="header-banner">
+              {%- if settings.megamenu_image2 -%}
+              <a href="{{ settings.megamenu_image_url2 }}"> <img src="{{ settings.megamenu_image2 | img_url: 'large' }}" alt="" /></a>
+              {%- endif -%}
+              <div class="banne_info">
+                {% if settings.banner_subtitle2 != '' %}
+                <h6>{{ settings.banner_subtitle2 }}</h6>
+                {% endif %}
+                {% if settings.banner_title2 != '' %}
+                <h4>{{ settings.banner_title2 }}</h4>
+                {% endif %}
+                {% if settings.banner_button2 != '' %}
+                <a href="{{ settings.megamenu_image_url2 }}">{{ settings.banner_button2 }}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="header-banner">
+              {%- if settings.megamenu_image3 -%}
+              <a href="{{ settings.megamenu_image_url3 }}"> <img src="{{ settings.megamenu_image3 | img_url: 'large' }}" alt="" /></a>
+              {%- endif -%}
+              <div class="banne_info">
+                {% if settings.banner_subtitle3 != '' %}
+                <h6>{{ settings.banner_subtitle3 }}</h6>
+                {% endif %}
+                {% if settings.banner_title3 != '' %}
+                <h4>{{ settings.banner_title3 }}</h4>
+                {% endif %}
+                {% if settings.banner_button3 != '' %}
+                <a href="{{ settings.megamenu_image_url3 }}">{{ settings.banner_button3 }}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    {%- elsif linklists[childlink_handle] and linklists[childlink_handle].links.size > 0 -%}
+    <li class="dropdown "><a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{{ link.url }}">{{ link.title }}</a>
+      <div class="dropdown-menu">
+        <ul class="mega-menu ">
+          {%- for childlink in linklists[childlink_handle].links -%}
+          {%- assign grand_childlink_handle = childlink.title | handle -%}
+          {%- if linklists[grand_childlink_handle] and linklists[grand_childlink_handle].links.size > 0 -%}
+          <li class="mega-menu-col col-lg-3">
+            <ul>
+              <li class="dropdown-header"><a href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+              {%- for grand_childlink in linklists[grand_childlink_handle].links -%}
+              <li><a class="dropdown-item nav-link nav_item" href="{{ grand_childlink.url }}">{{ grand_childlink.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </li>
+          {%- elsif childlink.type == "collection_link" and childlink.object.image -%}
+          <li class="mega-menu-col col-lg-3">
+            <div class="header_banner">
+              <div class="header_banner_content">
+                <div class="shop_banner">
+                  <div class="banner_img overlay_bg_40">
+                    <a href="{{ childlink.url }}"><img src="{{ childlink.object.image | img_url: 'large' }}" alt="" /></a>
+                  </div> 
+                </div>
+              </div>
+            </div>
+          </li>
+          {%- else -%}
+          <li><a class="dropdown-item nav-link nav_item" href="{{ childlink.url }}">{{ childlink.title }}</a></li>
+          {%- endif -%}  
+          {%- endfor -%}
+        </ul>
+      </div>
+    </li>
+    {%- else -%}
+    <li><a class="nav-link nav_item" href="{{ link.url }}">{{ link.title }}</a></li>
+    {%- endif -%}
+    {%- endfor -%}
+  </ul>
+
+

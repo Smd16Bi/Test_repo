@@ -1,0 +1,235 @@
+<div class="homepage_benefits">
+    <div class="homepage_benefits_wrapper">
+        <div class="homepage_benefits_body">
+            <div class="homepage_benefits_heading">
+                <h3>{{section.settings.title}}</h3>
+                <p>{{section.settings.subtitle}}</p>
+            </div>
+            <div class="homepage_benefits_main">
+                {% for block in section.blocks %}
+                    <div class="homepage_benefits_main_item">
+                        <div class="homepage_benefits_main_item-img">
+                            <div>{{block.settings.block_svg}}</div>
+                        </div>
+                        <div class="homepage_benefits_main_item-title">
+                            {{block.settings.block_title}}
+                        </div>
+                        <div class="homepage_benefits_main_item-text">
+                            {{block.settings.block_text}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% style %}
+    .homepage_benefits_main_item-img{
+        background-color: {{section.settings.block_color}};
+    }
+    .homepage_benefits_wrapper{
+        padding-top: {{section.settings.padding_top}}px;
+        padding-bottom: {{section.settings.padding_bottom}}px;
+    }
+    @media screen and (max-width: 768px){
+        .homepage_benefits_wrapper{
+            padding-top: {{section.settings.padding_top | divided_by: 2 }}px;
+            padding-bottom: {{section.settings.padding_bottom | divided_by: 2 }}px;
+        }
+    }
+{% endstyle %}
+<style>
+    .homepage_benefits_wrapper{
+        max-width: 1440px;
+        padding-left: 100px;
+        padding-right: 100px;
+        margin: 0 auto;
+    }
+    .homepage_benefits_heading{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 75px;
+    }
+    .homepage_benefits_heading h3{
+        text-align: center;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 36px;
+        line-height: 54px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.035em;
+    }
+    .homepage_benefits_heading p{
+        text-align: center;
+        margin: 0;
+        font-family: 'Poppins';
+        font-size: 21px;
+        line-height: 32px;
+        font-weight: 400;
+        color: #697287;
+        letter-spacing: -0.035em;
+    }
+    .homepage_benefits_main{
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-evenly;
+    }
+    .homepage_benefits_main_item{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        max-width: 290px;
+        flex: 1;
+        padding: 0 10px;
+    }
+    .homepage_benefits_main_item-img{
+        width: 76px;
+        height: 76px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .homepage_benefits_main_item-img div{
+        display: flex;
+    }
+    .homepage_benefits_main_item-title{
+        margin: 20px 0 8px 0;
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 27px;
+        text-align: center;
+        letter-spacing: -0.035em;
+        color: #000000;
+    }
+    .homepage_benefits_main_item-text{
+        font-family: 'Poppins';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 170%;
+        text-align: center;
+        letter-spacing: -0.035em;
+        color: #000000;
+    }
+    @media screen and (max-width: 992px) {
+        .homepage_benefits_wrapper{
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .homepage_benefits_heading{
+            padding-bottom: 40px;
+        }
+        .homepage_benefits_heading h3{
+            font-size: 26px;
+            line-height: 34px;
+        }
+        .homepage_benefits_heading p{
+            font-size: 16px;
+            line-height: 24px;
+            margin-top: 3px;
+        }
+        .homepage_benefits_main_item-title{
+            font-size: 16px;
+            margin: 10px 0 4px 0;
+        }
+        .homepage_benefits_main_item-text{
+            line-height: 20px;
+        }
+        .homepage_benefits_wrapper{
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+    @media screen and (max-width: 576px){
+        .homepage_benefits_main{
+            flex-wrap: wrap;
+        }
+        .homepage_benefits_main_item{
+            flex: 1 1 auto;
+            max-width: 100%;
+            padding: 0 0 20px 0;
+        }
+    }
+</style>
+{% schema %}
+{
+    "name": "Benefits",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "range",
+            "id": "padding_top",
+            "label": "Padding top",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 71
+        },
+        {
+            "type": "range",
+            "id": "padding_bottom",
+            "label": "Padding bottom",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 70
+        },
+        {
+            "type": "color",
+            "id": "block_color",
+            "label": "SVG background color",
+            "default": "#F78E27"
+        }
+    ],
+    "max_blocks": 3,
+    "blocks":[
+        {
+            "name": "Benefit item",
+            "type": "block",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "block_title",
+                    "label": "Heading"
+                },
+                {
+                    "type": "html",
+                    "id": "block_text",
+                    "label": "Text"
+                },
+                {
+                    "type": "html",
+                    "id": "block_svg",
+                    "label": "SVG"
+                }
+            ]
+        }
+    ],
+   "presets": [
+       {
+           "name":"Benefits"
+       }
+   ]
+}   
+{% endschema %}

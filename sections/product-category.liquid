@@ -1,0 +1,545 @@
+{% if section.settings.product_category_style == 'product_category_style_1' %}
+<!-- START SECTION CATEGORIES -->
+<div class="section pt-0 small_pb" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+    	<div class="row">
+        	<div class="col-12">
+            	<div class="cat_overlap radius_all_5">
+                	<div class="row align-items-center">
+        				<div class="col-lg-3 col-md-4">
+                        	<div class="text-center text-md-left">
+                              	{% if section.settings.section_title != '' %}
+                                <h4>{{ section.settings.section_title }}</h4>
+                              	{% endif %}
+                              	{% if section.settings.section_desc != '' %}
+                                <p class="mb-2">{{ section.settings.section_desc }}</p>
+                              	{% endif %}
+                              	{% if section.settings.button_title != '' %}
+                                <a href="{{ section.settings.button_url }}" class="btn btn-line-fill btn-sm">{{ section.settings.button_title }}</a>
+                              	{% endif %}
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-8">
+                            <div class="cat_slider mt-4 mt-md-0 carousel_slider owl-carousel owl-theme nav_style5" 
+                                 data-owl-carousel='{
+                                  "loop": true,
+                                  "dots": false,                  
+                                  "nav": true,
+                                  "margin": 30,                 
+                                  {%- if settings.rtl_enable -%}
+                                  "rtl": true, 
+                                  {%- endif -%}
+                                  "items": 4,
+                                  "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                                  "responsive":{
+                                      "0":{"items": "1"}, "380":{"items": "2"}, "991":{"items": "3"}, "1199":{"items": "4"}
+                                  }}'>
+                                {% for block in section.blocks %}
+                                {% case block.type %}
+                                {% when 'product_category' %}
+                                <div class="item">
+                                    <div class="categories_box">
+                                        <a href="{{ block.settings.collection_url }}">
+                                          	{% if block.settings.collection_icon != '' %}
+                                            <i class="{{ block.settings.collection_icon }}"></i>
+                                          	{% endif %}
+                                          	{% if block.settings.collection_title != '' %}
+                                            <span>{{ block.settings.collection_title }}</span>
+                                          	{% endif %}
+                                        </a>
+                                    </div>
+                                </div>
+                              	{% endcase %}
+     						    {% endfor %}
+                            </div>
+                        </div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION CATEGORIES -->
+
+{% elsif section.settings.product_category_style == 'product_category_style_2' %}
+
+<!-- START SECTION CATEGORIES -->
+<div class="section small_pb small_pt" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+      	{% if section.settings.section_title != '' %}
+    	<div class="row justify-content-center">
+			<div class="col-md-6">
+                <div class="heading_s4 text-center">
+                    <h2>{{ section.settings.section_title }}</h2>
+                </div>
+              	{% if section.settings.section_desc != '' %}
+                <p class="text-center leads">{{ section.settings.section_desc }}</p>
+              	{% endif %}
+            </div>
+		</div>
+      	{% endif %}
+
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="cat_slider cat_style1 mt-4 mt-md-0 carousel_slider owl-carousel owl-theme nav_style5" 
+								data-owl-carousel='{
+                                  "loop": true,
+                                  "dots": false,                  
+                                  "nav": true,
+                                  "margin": 30,                 
+                                  {%- if settings.rtl_enable -%}
+                                  "rtl": true, 
+                                  {%- endif -%}
+                                  "items": 4,
+                                  "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                                  "responsive":{
+                                      "0":{"items": "2"}, "480":{"items": "3"}, "576":{"items": "4"}, "768":{"items": "5"}, "991":{"items": "6"}, "1199":{"items": "7"}
+                                  }}'>
+                    {% for block in section.blocks %}
+                    {% case block.type %}
+                    {% when 'product_category' %}
+                    <div class="item">
+                        <div class="categories_box">
+                            <a href="{{ block.settings.collection_url }}">
+                                <img src="{% if block.settings.category_images %}{{ block.settings.category_images | img_url: 'master' }}
+                                          {% else %}https://via.placeholder.com/133x125 {% endif %}" alt="{{ block.settings.category_images.alt }}">
+                                {% if block.settings.collection_title != '' %}
+                                <span>{{ block.settings.collection_title }}</span>
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION CATEGORIES --> 
+
+{% endif %}
+
+
+{%- style -%}
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {% case block.type %}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+{%- endstyle -%}
+
+<script>
+  	/*------------------------------------
+	Food Category Slider
+	--------------------------------------*/
+	var foodSlider = $('#section-{{ section.id }} .ht-food-slider'); 
+	foodSlider.slick({
+		infinite: true,
+		arrows: false,
+        {%- if settings.rtl_enable -%}
+        rtl: true,
+        {%- endif -%}
+		slidesToShow: {{ section.settings.product_col }},
+		responsive: [
+			{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 4,
+				}
+			},
+			{
+				breakpoint: 991,
+				settings: {
+					slidesToShow: 3,
+				}
+			},
+			{
+				breakpoint: 767,
+				settings: {
+					slidesToShow: 2,
+				}
+			},
+			{
+				breakpoint: 479,
+				settings: {
+					slidesToShow: 1,
+					arrows: false,
+					dots: false,
+				}
+			}
+		]
+	});
+</script>
+
+{% schema %}
+  {
+    "name": "Product Category",
+    "settings": [
+		{
+          "type": "select",
+          "id": "product_category_style",
+          "label": "Select Product Category Style",
+          "options":[
+            {
+              "value":"product_category_style_1",
+              "label": "Product Category Style One"
+            },
+            {
+              "value":"product_category_style_2",
+              "label": "Product Category Style Two"
+            }
+          ],
+
+          "default": "product_category_style_1"
+        },
+        {
+          "type": "header",
+          "content": "Category Width Control"
+        },
+        {
+          "type": "checkbox",
+          "id": "fullwidth_on",
+          "label": "Full Width Enable",
+          "default": false,
+          "info": "If you want Full Width click checkbox"
+        },		
+		{
+		  "type": "header",
+          "content": "Section Heading"
+        },
+		{
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Top Categories"
+      	},
+		{
+          "type": "textarea",
+          "id": "section_desc",
+          "label": "Section Description",
+          "default": "There are many variations of passages of Lorem"
+      	},
+		{
+          "type": "text",
+          "id": "button_title",
+          "label": "Button Title",
+          "default": "View All"
+      	},
+		{
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+      	},
+        {
+          "type": "select",
+          "id": "product_col",
+          "label": "Slide Category Column",
+          "options":[
+            {
+              "label": "1 Products",
+              "value": "1"
+            },
+            {
+              "label": "2 Products",
+              "value": "2"
+            },
+            {
+              "label": "3 Products",
+              "value": "3"
+            },
+            {
+              "label": "4 Products",
+              "value": "4"
+            },
+            {
+              "label": "5 Products",
+              "value": "5"
+            },
+            {
+              "label": "6 Products",
+              "value": "6"
+            }
+        ],
+        "default": "4"
+        }
+	],
+	"blocks":[
+		{
+          "type": "product_category",
+          "name": "Product Category",
+          "settings": [
+			{
+              "type": "text",
+              "id": "collection_icon",
+              "label": "Collection Icon",
+              "default": "flaticon-chair"
+            },
+			{
+              "type": "image_picker",
+              "id": "category_images",
+              "label": "Category Images",
+              "info": "Recommended Size: 133 x 125 px"
+            },
+            {
+              "type": "text",
+              "id": "collection_title",
+              "label": "Collection Title",
+              "default": "chair"
+            },
+			{
+              "type": "url",
+              "id": "collection_url",
+              "label": "Collection URL"
+            }
+			  
+		  ]
+       },
+		{
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablate Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablate Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets":[
+		{
+			"name": "Product Category",
+			"category": "3. collections",
+			"blocks":[
+				{
+					"type": "product_category"
+				},
+				{
+					"type": "product_category"
+				},
+				{
+					"type": "product_category"
+				},
+				{
+					"type": "product_category"
+				},
+				{
+					"type": "product_category"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+

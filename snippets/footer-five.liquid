@@ -1,0 +1,311 @@
+<!-- START FOOTER -->
+<footer class="bg_gray" id="section-{{ section.id }}">
+	<div class="footer_top small_pt pb_20">
+        <div class="{% if section.settings.fullwidth_on %}custom-container{% else %}container{%endif%}">
+            <div class="row">
+                {% for block in section.blocks %}
+                {% case block.type %}
+                {% when 'about_us' %}
+                <div class="col-lg-{{ block.settings.about_info_col_lg }} col-md-{{ block.settings.about_info_col_md }} col-sm-12">
+                	<div class="widget">
+                      	{% if block.settings.footer_logo != '' %}
+                        <div class="footer_logo">
+                          <a href="/">
+                            <img src="{% if block.settings.footer_logo %}{{ block.settings.footer_logo | img_url: 'master' }}
+                                      {% else %}https://via.placeholder.com/182x47 {% endif %}" alt="{{ block.settings.brand_image.alt }}">
+                          </a>
+                        </div>
+                      	{% endif %}
+                        {% if block.settings.about_content != '' %}
+                        <p{% if block.settings.contact_info_enable %}class="mb-3"{% endif %}>{{ block.settings.about_content }}</p>
+                        {% endif %}
+                      	{% if block.settings.contact_info_enable %}
+                      	<ul class="contact_info">
+                          	{% if block.settings.about_contact_info_dti != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_1_icon }}"></i>
+                                <p>{{ block.settings.about_contact_info_dti }}</p>
+                            </li>
+                          	{% endif %}
+                          	{% if block.settings.about_email_add != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_2_icon }}"></i>
+                                <a href="mailto:{{ block.settings.about_email_add }}">{{ block.settings.about_email_add }}</a>
+                            </li>
+                          	{% endif %}
+                          	{% if block.settings.about_telephon_num != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_3_icon }}"></i>
+                                <p>{{ block.settings.about_telephon_num }}</p>
+                            </li>
+                          	{% endif %}
+                        </ul>
+                      	{% endif %}
+                    </div>
+                  	{% if block.settings.footer_social_enable %}
+                    <div class="widget">
+                      	{% include 'footer-social-media' %}
+                    </div>
+                  	{% endif %}
+        		</div>
+				{% when 'footer_menu' %}
+                <div class="col-lg-{{ block.settings.menu_col_lg }} col-md-{{ block.settings.menu_col_md }} col-sm-6">
+                	<div class="widget">
+                      	{% if block.settings.footer_menu_title != '' %}
+                        <h6 class="widget_title">{{ block.settings.footer_menu_title }}</h6>
+                      	{% endif %}
+                        <ul class="widget_links">
+                          {% assign footer_menu = block.settings.footer_menu_handle %}
+                          {% for link in linklists[footer_menu].links %}
+                          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+              
+              	{% when 'category' %}
+                <div class="col-lg-{{ block.settings.cat_col_lg }} col-md-{{ block.settings.cat_col_md }} col-sm-6">
+                	<div class="widget">
+                      	{% if block.settings.cat_title != '' %}
+                        <h6 class="widget_title">{{ block.settings.cat_title }}</h6>
+                      	{% endif %}
+                        <ul class="widget_links">
+                          {% assign categories_list_limit = block.settings.categories_list_limit_hanlde %}
+                          {% for c in collections limit: categories_list_limit %}
+                          <li><a href="{{ c.url }}">{{ c.title }}</a></li>
+                          {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+              
+              	{% when 'contact_info' %}
+                <div class="col-lg-{{ block.settings.contact_info_col_lg }} col-md-{{ block.settings.contact_info_col_md }} col-sm-6">
+                	<div class="widget">
+                      	{% if block.settings.contact_info_title != '' %}
+                        <h6 class="widget_title">{{ block.settings.contact_info_title }}</h6>
+                      	{% endif %}
+                        <ul class="contact_info contact_info_light">
+                            {% if block.settings.about_contact_info_dti != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_1_icon }}"></i>
+                                <p>{{ block.settings.about_contact_info_dti }}</p>
+                            </li>
+                          	{% endif %}
+                          	{% if block.settings.about_email_add != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_2_icon }}"></i>
+                                <a href="mailto:{{ block.settings.about_email_add }}">{{ block.settings.about_email_add }}</a>
+                            </li>
+                          	{% endif %}
+                          	{% if block.settings.about_telephon_num != '' %}
+                            <li>
+                                <i class="{{ block.settings.footer_info_3_icon }}"></i>
+                                <p>{{ block.settings.about_telephon_num }}</p>
+                            </li>
+                          	{% endif %}
+                        </ul>
+                    </div>
+                  	{% if block.settings.footer_social_enable %}
+                    <div class="widget widget-2">
+                      {% include 'footer-social-media-3' %}
+                    </div>
+                    {%- endif -%}
+                </div> 
+				{% when 'instafeed' %}
+                <div class="col-lg-{{ block.settings.instafid_col_lg }} col-md-{{ block.settings.instafid_col_md }} col-sm-12">
+                  <div class="widget">
+                    {% if block.settings.footer_instafeed_title != '' %}
+                    <h6 class="widget_title">{{ block.settings.footer_instafeed_title }}</h6>
+                    {% endif %}
+                    <div id="instagram-feed1" class="instagram-image"></div>
+                  </div>
+                </div>
+                <script>
+                  (function($){
+                    "use strict";
+
+                    jQuery(document).ready(function(){
+                      $.instagramFeed({
+                        'username': '{{ block.settings.instafeed_user_name }}',
+                        'container': "#instagram-feed1",
+                        'display_profile': false,
+                        'display_biography': false,
+                        'display_gallery': true,
+                        'callback': null,
+                        'styling': true,
+                        'items': {{ block.settings.instafeed_limit }},
+                        'items_per_row': {{ block.settings.instafeed_per_row }},
+                        'margin': 1
+                      });
+                    });
+                  })(jQuery);
+                </script>
+              
+              
+              	{% when 'newsletter' %}
+                <div class="col-lg-{{ block.settings.newsletter_col_lg }} col-md-{{ block.settings.newsletter_col_md }} col-sm-12">
+                  <div class="widget">
+                    {% if block.settings.newsletter_title != '' %}
+                    <h6 class="widget_title">{{ block.settings.newsletter_title }}</h6>
+                    {% endif %}
+                    {% if block.settings.newsletter_desc != '' %}
+                    <p>{{ block.settings.newsletter_desc }}</p>
+                    {% endif %}
+                    {%- if settings.newsletter_system == 'by_shopify_form' -%}
+          
+                    {%- assign formId = 'Contact_' | append: section.id -%}
+                    {%- form 'customer', id: formId -%}
+                    {%- if form.posted_successfully? -%}
+                    <p class="form-message form-message--success form-success">{{ 'general.newsletter_form.confirmation'| t }}</p>
+                    {%- else -%}
+
+                    {%- if form.errors -%}
+                    <div class="form-message form-message--error">
+                      {{ form.errors | default_errors }}
+                    </div>
+                    {%- endif -%}
+
+                    <div class="newsletter_form rounded_input newsletter-form mc_embed_signup">
+                        <div id="mc_embed_signup_scroll" class="mc-form">
+                          <input type="hidden" name="contact[tags]" value="newsletter">
+                          <input class="email form-control" type="email" name="contact[email]" id="Email" value="{% if customer %}{{ customer.email }}{% endif %}"
+                             placeholder="{{ section.settings.email_placeholder }}" aria-label="{{ section.settings.email_placeholder }}" {% if form.errors %}aria-invalid="true"{% endif %} autocorrect="off" autocapitalize="off">
+                          <button id="Subscribe" type="submit" name="commit" class="default-btn btn-send"><i class="icon-envelope-letter"></i></button>
+                      </div>
+                    </div>
+                    {%- endif -%}
+                    {%- endform -%}      
+
+
+                    {%- elsif settings.newsletter_system == 'by_mailchimp' -%}
+                    <div class="newsletter_form rounded_input newsletter-form mc_embed_signup">
+                      <form action="{{ settings.newsletter_action }}" method="post" id="mc-form" name="mc-embedded-subscribe-form" class="validate newsletter-form validate" target="_blank" novalidate>
+                        <div id="mc_embed_signup_scroll" class="mc-form">
+                          <input type="email" value="" name="EMAIL" class="email form-control" id="mce-EMAIL" placeholder="{{ section.settings.email_placeholder }}" required>
+                          <button id="mc-embedded-subscribe" type="submit" name="subscribe" class="default-btn btn-send"><i class="icon-envelope-letter"></i></button>
+                        </div>
+                      </form> 
+                      <div class="mailchimp-alerts">
+                        <div class="mailchimp-submitting"></div>
+                        <div class="mailchimp-success"></div>
+                        <div class="mailchimp-error"></div>
+                      </div>
+                    </div>
+                    {%- endif -%}
+                  </div>
+                </div>
+              	{% when 'app_info_social' %}
+              	<div class="col-lg-{{ block.settings.app_info_social_col_lg }} col-md-{{ block.settings.app_info_social_col_md }} col-sm-12">
+                  	{% if block.settings.footer_app_enable %}
+                	<div class="widget">
+                      	{% if block.settings.app_info_title != '' %}
+                    	<h6 class="widget_title">{{ block.settings.app_info_title }}</h6>
+                      	{% endif %}
+                      
+                        <ul class="app_list">
+                          {% if block.settings.app_one != '' %}
+                          <li>
+                            <a href="{{ block.settings.app_one_url }}">
+                              <img src="{% if block.settings.app_one %}{{ block.settings.app_one | img_url: 'master' }}
+                                      {% else %}https://via.placeholder.com/131x44 {% endif %}" alt="{{ block.settings.app_one.alt }}">
+                            </a>
+                          </li>
+                          {% endif %}
+                          {% if block.settings.app_two != '' %}
+                          <li>
+                            <a href="{{ block.settings.app_two_url }}">
+                              <img src="{% if block.settings.app_two %}{{ block.settings.app_two | img_url: 'master' }}
+                                      {% else %}https://via.placeholder.com/131x44 {% endif %}" alt="{{ block.settings.app_two.alt }}">
+                            </a>
+                          </li>
+                          {% endif %}
+                        </ul>
+                    </div>
+                  	{%- endif -%}
+                  	{% if block.settings.footer_social_enable %}
+                	<div class="widget widget-2">
+                      	{% if block.settings.social_title != '' %}
+                    	<h6 class="widget_title">{{ block.settings.social_title }}</h6>
+                      	{% endif %}
+                        {% include 'footer-social-media-2' %}
+                    </div>
+                  	{%- endif -%}
+                </div>
+                {% endcase %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+  
+  	{% if section.settings.service_enable %}
+    <div class="middle_footer">
+    	<div class="{% if section.settings.fullwidth_on %}custom-container{% else %}container{%endif%}">
+        	<div class="row">
+            	<div class="col-12">
+                	<div class="shopping_info">
+                        <div class="row justify-content-center">
+                          {% for block in section.blocks %}
+                          {% case block.type %}
+                          {% when 'service' %}
+                            <div class="col-lg-{{ block.settings.service_col_lg }} col-md-{{ block.settings.service_col_md }}">	
+                                <div class="icon_box icon_box_style2">
+                                  	{% if block.settings.service_icon != '' %}
+                                    <div class="icon">
+                                        <i class="{{ block.settings.service_icon }}"></i>
+                                    </div>
+                                  	{%- endif -%}
+                                    <div class="icon_box_content">
+                                      	{% if block.settings.service_title != '' %}
+                                    	<h5>{{ block.settings.service_title }}</h5>
+                                      	{%- endif -%}
+                                      	{% if block.settings.service_content != '' %}
+                                        <p>{{ block.settings.service_content }}</p>
+                                      	{%- endif -%}
+                                    </div>
+                                </div>
+                            </div>
+                          {% endcase %}
+                          {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  	{%- endif -%}
+  
+    <div class="bottom_footer border-top-tran">
+        <div class="{% if section.settings.fullwidth_on %}custom-container{% else %}container{%endif%}">
+            <div class="row align-items-center">
+                {% if block.settings.copy_ritht_text != '' %}
+                <div class="col-lg-4">
+                    <p class="mb-md-0 text-center text-md-left">{{ section.settings.copy_ritht_text }}</p>
+                </div>
+              	{% endif %}
+                <div class="col-lg-4 order-lg-first">
+                	<div class="widget mb-lg-0">
+                      {% for block in section.blocks %}
+                      {% case block.type %}
+                      {% when 'footer_buttom_social' %}
+                        {% include 'footer-social-media-2' %}
+                      {% endcase %}
+                      {% endfor %}
+                    </div>
+                </div>
+                {% if section.settings.payment_icon_enable %}
+                <div class="col-lg-4">
+                    <ul class="footer_payment text-center text-lg-right">
+                        <li><a href="#">
+                          <img src="{% if section.settings.payment_icon %}{{ section.settings.payment_icon | img_url: 'master' }}
+                      {% else %}https://via.placeholder.com/413x27 {% endif %}" alt="{{ section.settings.brand_image.alt }}">
+                          </a></li>
+                    </ul>
+                </div>
+              	{% endif %}
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END FOOTER -->

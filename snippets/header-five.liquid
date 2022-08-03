@@ -1,0 +1,219 @@
+<!-- START HEADER -->
+<header class="header_wrap header-five">
+	<div class="top-header light_skin bg_dark d-none d-md-block">
+        <div class="container container_header">
+            <div class="row  align-items-center">
+              {% if section.settings.bar_on == false %}
+                <div class="col-lg-6 col-md-8">
+                	<div class="header_topbar_info">
+                    
+                    {% if section.settings.offer_message2 != '' %}
+                    <div class="header_offer">
+                      <span>{{ section.settings.offer_message2 }}</span>
+                      </div>
+                      {%endif%}
+                      {%- if section.settings.app_download_enable -%}
+                      <div class="download_wrap">
+                          {% if section.settings.app_info_title != '' %}
+                          <span class="mr-3">{{ section.settings.app_info_title }}</span>
+                          {%endif%} 
+                          <ul class="icon_list text-center text-lg-left">
+                              {% if section.settings.app_icon_1 != '' %}
+                              <li><a href="{{ section.settings.app_url_1 }}"><i class="{{ section.settings.app_icon_1 }}"></i></a></li>
+                              {%endif%} 
+                              {% if section.settings.app_icon_2 != '' %}
+                              <li><a href="{{ section.settings.app_url_2 }}"><i class="{{ section.settings.app_icon_2 }}"></i></a></li>
+                              {%endif%} 
+                              {% if section.settings.app_icon_3 != '' %}
+                              <li><a href="{{ section.settings.app_url_3 }}"><i class="{{ section.settings.app_icon_3 }}"></i></a></li>
+                              {%endif%} 
+                          </ul>
+                      </div>
+                      {%endif%}
+                      	
+                  </div>
+                </div>
+                {% else %}
+                      <div class="announcement_top_bar">
+                        <div class="announcement_top_bar_wrapper">
+                          <div class="announcement_top_bar_item">
+                            {% if section.settings.bar_text1 != blank %}
+                              <div>{{section.settings.bar_svg1}}</div>
+                              <div>{{section.settings.bar_text1}}</div>
+                            {% endif %}
+                          </div>
+                          <div class="announcement_top_bar_item">
+                            {% if section.settings.bar_text2 != blank %}
+                              <div>{{section.settings.bar_svg2}}</div>
+                              <div>{{section.settings.bar_text2}}</div>
+                            {% endif %}
+                          </div>
+                          <div class="announcement_top_bar_item">
+                            {% if section.settings.bar_text3 != blank %}
+                              <div>{{section.settings.bar_svg3}}</div>
+                              <div>{{section.settings.bar_text3}}</div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endif %}  
+                {% if section.settings.bar_on == false %}
+                <div class="col-lg-6 col-md-4">
+                	<div class="d-flex align-items-center justify-content-center justify-content-md-end">
+                        <div class="lng_dropdown">
+                            {% include 'google-translate' %}
+                        </div>
+                      	{%- if settings.currency_enable -%}
+                        <div class="ml-3">
+                            {%- include 'currency-picker' -%}
+                        </div>
+                      	{%endif%}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="middle-header dark_skin">
+    	<div class="container container_header">
+            <div class="nav_block">
+                {%- include 'header-logo' -%}
+                <div class="product_search_form radius_input search_form_btn">
+                    {% include 'search-box-3' %}
+                </div>
+                <ul class="navbar-nav attr-nav align-items-center">
+                    <li>
+                      {% if customer and shop.customer_accounts_enabled %}
+                      <a href="/account/logout" class="nav-link"><i class="linearicons-user"></i></a>
+                      {% else if %}
+                      <a href="/account/login" class="nav-link"><i class="linearicons-user"></i></a>
+                      {% else %}
+                      <a href="/account/register" class="nav-link"><i class="linearicons-user"></i></a>
+                      {% endif %}
+                    </li>
+                    {% if section.settings.wishlist_btn != '' %}
+                    <li><a href="/pages/wishlist" class="nav-link"><i class="linearicons-heart"></i></a></li>
+                    {%endif%}
+                  	
+                    <li class="dropdown cart_dropdown">
+                        {%- include 'mini-cart' -%}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom_header dark_skin main_menu_uppercase border-top">
+    	<div class="container container_header">
+            <div class="row align-items-center"> 
+            	<div class="header1244 col-lg-3 col-md-4 col-sm-6 col-3">
+                	<div class="categories_wrap">
+                        <button type="button" data-toggle="collapse" data-target="#navCatContent" aria-expanded="true" class="categories_btn">
+                            <span>All Categories </span><svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M9.53033 0.96967C9.82322 1.26256 9.82322 1.73744 9.53033 2.03033L5.53033 6.03033C5.23744 6.32322 4.76256 6.32322 4.46967 6.03033L0.46967 2.03033C0.176777 1.73744 0.176777 1.26256 0.46967 0.96967C0.762563 0.676777 1.23744 0.676777 1.53033 0.96967L5 4.43934L8.46967 0.96967C8.76256 0.676777 9.23744 0.676777 9.53033 0.96967Z" fill="white"/>
+                              </svg>
+                        </button>
+                        <div id="navCatContent" class="navbar collapse" style="height: auto;">
+                          {% include 'category-menu' %}
+                        </div>
+                    </div>
+                  
+                    
+                </div>
+                <div class="header123 col-lg-9 col-md-8 col-sm-6 col-9">
+                	<nav class="burgermenuspec navbar navbar-expand-lg">
+                    	<button class="navbar-toggler side_navbar_toggler" type="button" data-toggle="collapse" data-target="#navbarSidetoggle" aria-expanded="false"> 
+                            <span class="ion-android-menu"></span>
+                        </button>
+                        <div class="pr_search_icon">
+                            <a href="javascript:void(0);" class="nav-link pr_search_trigger"><i class="linearicons-magnifier"></i></a>
+                        </div> 
+                        <div class="collapse navbar-collapse mobile_side_menu" id="navbarSidetoggle">
+                      		{% include 'main-menu' %}
+                      	</div>
+                        {% if section.settings.mobile_tel_number != '' %}
+                        <div class="contact_phone contact_support">
+                          <i class="linearicons-phone-wave"></i>
+                          <span>{{ section.settings.mobile_tel_number }}</span>
+                        </div>
+                        {%endif%}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- END HEADER -->
+<script>
+  let navCatContent = document.querySelector('#navCatContent')
+  console.log(navCatContent);
+  let navCatContentChildrenCount = document.querySelectorAll('#navCatContent > ul > li')
+  console.log(navCatContentChildrenCount.length);
+  navCatContent.style.maxHeight = navCatContentChildrenCount.length * 37 + 10 + 'px'
+</script>
+<style>
+    .header123{
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    padding-left: 30px;
+    padding-right: 0 !important;
+  }
+  @media screen and (max-width: 992px) {
+    .header123{
+      padding-right: 15px !important;
+    }
+  }
+  .container_header{
+    max-width: 1440px;
+  }
+  .announcement_top_bar{
+    padding: 0 15px;
+    width: 100%;
+  }
+  .announcement_top_bar_wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    flex: 1;
+  }
+  .announcement_top_bar_item{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .announcement_top_bar_item div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .announcement_top_bar_item div:first-of-type{
+    margin-right: 10px;
+  }
+  .header1244{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 270px !important;
+  }
+
+  .container_header .row{
+    flex-wrap: nowrap !important;
+  }
+  .navbar-nav{
+    flex-wrap: wrap;
+  }
+  @media (max-width: 580px) {
+  .header123 {
+    flex: 0 0 100%;
+  	max-width: 100%;
+  }
+  
+  .header1244 {
+	display: none;
+  }
+  
+  .burgermenuspec {
+  	z-index: 9999;
+  }    
+}
+
+</style>

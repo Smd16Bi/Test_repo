@@ -1,0 +1,639 @@
+{% if section.settings.tab_product_style == 'tab_product_style_1' %}
+<!-- START SECTION SHOP -->
+<div class="section small_pb" data-section="owlcarouselajax" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+		<div class="row">
+			<div class="col-12">
+            	<div class="heading_tab_header">
+                  	{% if section.settings.section_title != '' %}
+                    <div class="heading_s2">
+                        <h2>{{ section.settings.section_title }}</h2>
+                      	{% if section.settings.section_desc != '' %}
+                  		<p>{{ section.settings.section_desc }}</p>
+                      	{%endif%}
+                    </div>
+                  	{%endif%}
+                    <div class="tab-style2">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tabmenubar" aria-expanded="false"> 
+                            <span class="ion-android-menu"></span>
+                        </button>
+                        <ul class="nav nav-tabs justify-content-center justify-content-md-end" id="tabmenubar" role="tablist">
+                          {%- assign i = 1 -%}
+                          {% for block in section.blocks %}
+                          {%- case block.type -%}
+                          {%- when 'tab_with_product' -%}
+                          {%- assign tab_product = collections[block.settings.tab_product_handle2] -%}
+
+                          {%- if tab_product == empty -%}
+                          <li class="nav-item">
+                            <a class="nav-link {% if forloop.first == true %}active{% endif %}" id="arrival-tab" data-toggle="tab" href="#tab-{{ i }}" role="tab" aria-controls="arrival" aria-selected="true">Tab-{{ i }}</a>
+                          </li>
+                          {%- assign i = i | plus: 1 -%}
+                          {%- else -%}
+                          <li class="nav-item">
+                            <a class="nav-link {% if forloop.first == true %}active{% endif %}" id="sellers-tab" data-toggle="tab" href="#tab-{{ block.id }}-{{ tab_product.title | handle }}" role="tab" aria-controls="sellers" aria-selected="false">{{ tab_product.title }}</a>
+                          </li>
+                          {%- endif -%}
+                          {%- endcase -%}
+                          {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <div class="row">
+        	<div class="col-12">
+                <div class="tab_slider">
+                  	{%- assign i = 1 -%}
+                    {% for block in section.blocks %}
+                    {%- case block.type -%}
+                    {%- when 'tab_with_product' -%}
+                    {%- assign tab_product = collections[block.settings.tab_product_handle2] -%}
+                    {%- assign product_limit = section.settings.product_limit_handle -%}
+                    {%- if tab_product == empty -%}
+                  	<div class="tab-pane fade{% if forloop.first == true %} show active{% endif %}" id="tab-{{ i }}">
+                      <div class="tabwithproducttwo product_slider carousel_slider owl-carousel owl-theme nav_style1" 
+                           data-owl-carousel='{
+                            "loop": true,
+                            "dots": false,                  
+                            "nav": true,
+                            "margin": 20,                              
+                            {%- if settings.rtl_enable -%}
+                            "rtl": true, 
+                            {%- endif -%}
+                            "items": 4,
+                            "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                            "responsive":{
+                                "0":{"items": "1"}, 
+                                "481":{"items": "2"}, 
+                                "768":{"items": "3"}, 
+                                "1199":{"items": "4"}
+                            }}'>
+                        {% for i in (1..product_limit) %}
+                        {% capture a %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                        <div class="item" style="margin-bottom: 30px;">
+                          <div>
+                            <div>
+                              {% assign product_item = "product-" | append: a  %}
+                                {{ product_item | placeholder_svg_tag: 'product-svg-image' }}
+                            </div>
+                            <h6>
+                              Product Title
+                            </h6>
+                            <div class="">
+                              <span>$99.99</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    {%- assign i = i | plus: 1 -%}
+                    {%- else -%}
+                	<div class="tab-pane fade {% if forloop.first == true %}show active{% endif %}" id="tab-{{ block.id }}-{{ tab_product.title | handle }}" role="tabpanel" aria-labelledby="arrival-tab">
+                      <div class="tabwithproducttwo product_slider carousel_slider owl-carousel owl-theme nav_style1" 
+                           data-owl-carousel='{
+                            "loop": true,
+                            "dots": false,                  
+                            "nav": true,
+                            "margin": 20,                              
+                            {%- if settings.rtl_enable -%}
+                            "rtl": true, 
+                            {%- endif -%}
+                            "items": 4,
+                            "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                            "responsive":{
+                                "0":{"items": "1"}, 
+                                "481":{"items": "2"}, 
+                                "768":{"items": "3"}, 
+                                "1199":{"items": "4"}
+                            }}'>
+                        {% assign product_column = section.settings.product_column_handle %}
+                        {% for product in tab_product.products limit: product_limit %}  
+                          <div class="item">
+                            {% include 'product-grid-item' %}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  	{%- endif -%}
+                    {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+
+{% elsif section.settings.tab_product_style == 'tab_product_style_2' %}
+
+<!-- START SECTION SHOP -->
+<div class="section small_pb small_pt" data-section="tabwithproducttwo" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+      	{% if section.settings.section_title != '' %}
+        <div class="row justify-content-center">
+			<div class="col-md-6">
+            	<div class="heading_s1 text-center">
+                	<h2>{{ section.settings.section_title }}</h2>
+                  	{% if section.settings.section_desc != '' %}
+                  	<p>{{ section.settings.section_desc }}</p>
+                  	{%endif%}
+                </div>
+            </div>
+		</div>
+      	{%endif%}
+        <div class="row">
+            <div class="col-12">
+            	<div class="tab-style1">
+                  	<ul class="nav nav-tabs justify-content-center" role="tablist">
+                      {%- assign i = 1 -%}
+                      {% for block in section.blocks %}
+                      {%- case block.type -%}
+                      {%- when 'tab_with_product' -%}
+                      {%- assign tab_product = collections[block.settings.tab_product_handle2] -%}
+
+                      {%- if tab_product == empty -%}
+                      <li class="nav-item">
+                        <a class="nav-link {% if forloop.first == true %}active{% endif %}" id="arrival-tab" data-toggle="tab" href="#tab-{{ i }}" role="tab" aria-controls="arrival" aria-selected="true">Tab-{{ i }}</a>
+                      </li>
+                      {%- assign i = i | plus: 1 -%}
+                      {%- else -%}
+                      <li class="nav-item">
+                        <a class="nav-link {% if forloop.first == true %}active{% endif %}" id="sellers-tab" data-toggle="tab" href="#tab-{{ block.id }}-{{ tab_product.title | handle }}" role="tab" aria-controls="sellers" aria-selected="false">{{ tab_product.title }}</a>
+                      </li>
+                      {%- endif -%}
+                      {%- endcase -%}
+                      {% endfor %}
+                    </ul>
+                </div>
+                <div class="tab_slider tab-content">
+                  	{%- assign i = 1 -%}
+                    {% for block in section.blocks %}
+                    {%- case block.type -%}
+                    {%- when 'tab_with_product' -%}
+                    {%- assign tab_product = collections[block.settings.tab_product_handle2] -%}
+                    {%- assign product_limit = section.settings.product_limit_handle -%}
+                    {%- if tab_product == empty -%}
+                  	<div class="tab-pane fade{% if forloop.first == true %} show active{% endif %}" id="tab-{{ i }}">
+                      <div class="tabwithproducttwo product_slider carousel_slider owl-carousel owl-theme dot_style1" 
+                           data-owl-carousel='{
+                            "loop": true,
+                            "dots": false,                  
+                            "nav": true,
+                            "margin": 20,                              
+                            {%- if settings.rtl_enable -%}
+                            "rtl": true, 
+                            {%- endif -%}
+                            "items": 4,
+                            "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                            "responsive":{
+                                "0":{"items": "1"}, 
+                                "481":{"items": "2"}, 
+                                "768":{"items": "3"}, 
+                                "1199":{"items": "4"}
+                            }}'>
+                        {% for i in (1..product_limit) %}
+                        {% capture a %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                        <div class="item" style="margin-bottom: 30px;">
+                          <div>
+                            <div>
+                              {% assign product_item = "product-" | append: a  %}
+                                {{ product_item | placeholder_svg_tag: 'product-svg-image' }}
+                            </div>
+                            <h6>
+                              Product Title
+                            </h6>
+                            <div class="">
+                              <span>$99.99</span>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    {%- assign i = i | plus: 1 -%}
+                    {%- else -%}
+                  	<div class="tab-pane fade {% if forloop.first == true %}show active{% endif %}" id="tab-{{ block.id }}-{{ tab_product.title | handle }}" role="tabpanel" aria-labelledby="arrival-tab">
+                        <div class="tabwithproducttwo product_slider carousel_slider owl-carousel owl-theme dot_style1" 
+                             data-owl-carousel='{
+                            "loop": true,
+                            "dots": false,                  
+                            "nav": true,
+                            "margin": 20,                              
+                            {%- if settings.rtl_enable -%}
+                            "rtl": true, 
+                            {%- endif -%}
+                            "items": 4,
+                            "navText": ["<i class=&#x27;ion-ios-arrow-left&#x27;></i>","<i class=&#x27;ion-ios-arrow-right&#x27;></i>"],
+                            "responsive":{
+                                "0":{"items": "1"}, 
+                                "481":{"items": "2"}, 
+                                "768":{"items": "3"}, 
+                                "1199":{"items": "4"}
+                            }}'>
+                          {% assign product_column = section.settings.product_column_handle %}
+                          {% for product in tab_product.products limit: product_limit %}  
+                          <div class="item">
+                            {% include 'product-grid-item' %}
+                          </div>
+                          {% endfor %}
+                        </div>
+                    </div>
+                  	{%- endif -%}
+                    {% endcase %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION SHOP -->
+
+
+{% endif %}
+
+{%- include 'section-style' -%}
+
+
+{% schema %}
+  {
+    "name": "Tab With Product Two",
+    "settings": [
+		{
+          "type": "select",
+          "id": "tab_product_style",
+          "label": "Select Tab Product Style",
+          "options":[
+            {
+              "value":"tab_product_style_1",
+              "label": "Tab Product Style One"
+            },
+            {
+              "value":"tab_product_style_2",
+              "label": "Tab Product Style Two"
+            }
+          ],
+
+          "default": "tab_product_style_1"
+        },
+        {
+          "type": "header",
+          "content": "Container Width Control"
+        },
+        {
+          "type": "checkbox",
+          "id": "fullwidth_on",
+          "label": "Full Width Enable",
+          "default": false,
+          "info": "If you want Full Width click checkbox"
+        },
+		{
+		  "type": "header",
+          "content": "Product Grid Style"
+        },
+		{
+          "type": "select",
+          "id": "product_grid_style",
+          "label": "Product Grid Style",
+          "options":[
+            {
+              "value":"product",
+              "label": "Style One"
+            },
+            {
+              "value":"product_box",
+              "label": "Style Two"
+            },
+            {
+              "value":"product_wrap",
+              "label": "Style Three"
+            }
+          ],
+
+          "default": "product"
+         },
+		 {
+          "type": "select",
+          "id": "product_aline",
+          "label": "Product Align",
+          "options":[
+            {
+              "value":"text-left",
+              "label": "Left Align"
+            },
+            {
+              "value":"text-right",
+              "label": "Right Align"
+            },
+            {
+              "value":"text-center",
+              "label": "Center Align"
+            },
+			{
+              "value":"default-align",
+              "label": "Default"
+            }
+          ],
+
+          "default": "default-align"
+         },
+		{
+			"type": "header",
+            "content": "Section Title"
+        },
+        {
+          "type": "text",
+          "id": "section_title",
+          "label": "Section Title",
+          "default": "Exclusive Products"
+        },
+		{
+          "type": "text",
+          "id": "section_desc",
+          "label": "Section Description"
+        },
+		{
+			"type": "header",
+            "content": "Product"
+        },
+		{
+            "type": "range",
+            "id": "product_limit_handle",
+            "min": 2,
+            "max": 36,
+            "step": 1,
+            "label": "Limit",
+            "default": 8
+        },
+		{
+			"type": "header",
+            "content": "Product Column"
+        },
+		{
+          "type": "select",
+          "id": "product_column",
+          "label": "Desktop",
+		  "options":[
+				{
+                    "label": "2",
+                    "value": "6"
+                },
+                {
+                    "label": "3",
+                    "value": "4"
+                },
+                {
+                    "label": "4",
+                    "value": "3"
+                }
+			],
+			"default": "3"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_md",
+          "label": "Tablet",
+		  "options":[
+				{
+                    "label": "2",
+                    "value": "6"
+                },
+                {
+                    "label": "3",
+                    "value": "4"
+                },
+                {
+                    "label": "4",
+                    "value": "3"
+                }
+			],
+			"default": "4"
+      	},
+		{
+          "type": "select",
+          "id": "product_column_xs",
+          "label": "Mobile",
+		  "options":[
+				{
+                    "label": "1",
+                    "value": "12"
+                },
+                {
+                    "label": "2",
+                    "value": "6"
+                }
+			],
+			"default": "12"
+      	}
+    ],
+	"blocks":[
+	   {
+          "type": "tab_with_product",
+          "name": "Tab with product",
+          "settings": [
+			{
+			  "type": "collection",
+			  "id": "tab_product_handle2",
+			  "label": "Tab With Product"
+			}
+          ]
+       },
+	   {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 60
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+	"presets": [
+		{
+		  "name": "Tab With Product Two",
+		  "category": "3. collections",
+		  "blocks":[
+				{
+					"type": "tab_with_product"
+				},
+				{
+					"type": "tab_with_product"
+				},
+				{
+					"type": "tab_with_product"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+

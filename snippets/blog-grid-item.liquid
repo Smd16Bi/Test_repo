@@ -1,0 +1,21 @@
+<div class="blog_post blog_style1 box_shadow1 article">
+  <div class="blog_img">
+    <a href="{{ article.url }}">
+      {{ article | img_url: '350x233' | img_tag: article.title }}
+    </a>
+  </div>
+  <div class="blog_content bg-white">
+    <div class="blog_text">
+      <h5 class="blog_title"><a href="{{ article.url }}">{{ article.title }}</a></h5>
+      <ul class="list_none blog_meta">
+        <li><a href="#"><i class="ti-calendar"></i> {{ article.created_at | date: "%b %d, %Y" }}</a></li>
+        <li><a href="{{ article.url }}#comments"><i class="ti-comments"></i> {{ 'blogs.comments.with_count' | t: count: article.comments_count }}</a></li>
+      </ul>
+      {% if article.excerpt.size > 0 %}
+      {{ article.excerpt }}
+      {% else %}
+      <p>{{ article.content | strip_html | truncatewords: 20 }}</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

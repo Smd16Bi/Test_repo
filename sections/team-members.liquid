@@ -1,0 +1,474 @@
+<!-- START SECTION TEAM -->
+{%- assign sset = section.settings -%}
+{%- if sset.show_team_section -%}
+<div class="section pb_70" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{%endif%}">
+      	{%- if sset.team_title != '' or sset.team_subtitle != '' -%}
+    	<div class="row justify-content-center">
+        	<div class="col-lg-6">
+            	<div class="heading_s1 text-center">
+                	<h2>{{ sset.team_title }}</h2>
+                </div>
+                <p class="text-center leads">{{ sset.team_subtitle }}</p>
+            </div>
+        </div>
+      	{%- endif -%}
+
+        <div class="row justify-content-center">
+            {%- for block in section.blocks -%}
+            {%- case block.type -%}
+            {%- when 'team_member' -%}
+            {%- assign bset = block.settings -%}
+        	<div class="col-lg-{{ sset.member_col_lg }} col-md-{{ sset.member_col_md }} col-sm-{{ sset.member_col_sm }}">
+            	<div class="team_box team_style1">
+                	<div class="team_img">
+                        {%- if bset.member_img -%}
+                        <img src="{{ bset.member_img | img_url: 'master' }}" alt="{{ image.alt }}">
+                        {%- else -%}
+                        <img src="https://via.placeholder.com/255x255" alt="placeholder-img">
+                        {%- endif -%}
+                        <ul class="social_icons social_style1">
+                          	{%- if bset.show_fb -%}
+                            <li><a href="{{ bset.fb_url }}"><i class="{{ bset.fb_icon }}"></i></a></li>
+                          	{%- endif -%}
+              				{%- if bset.show_twitter -%}
+                            <li><a href="{{ bset.twitter_url }}"><i class="{{ bset.twitter_icon }}"></i></a></li>
+                          	{%- endif -%}
+              				{%- if bset.show_google_plus -%}
+                            <li><a href="{{ bset.show_google_plus_url }}"><i class="{{ bset.google_icon }}"></i></a></li>
+                          	{%- endif -%}
+              				{%- if bset.show_instagram -%}
+                            <li><a href="{{ bset.instagram_url }}"><i class="{{ bset.instagram_icon }}"></i></a></li>
+                          	{%- endif -%}
+                        </ul>
+                    </div>
+                    <div class="team_content">
+                        <div class="team_title">
+                          	{%- if bset.member_desig != '' -%}
+                            <h5>{{ bset.member_name }}</h5>
+                          	{%- endif -%}
+            				{%- if bset.member_desig != '' -%}
+                            <span>{{ bset.member_desig }}</span>
+                          	{%- endif -%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%- endcase -%}
+            {%- endfor -%}
+        </div>
+    </div>
+</div>
+{%- endif -%}
+<!-- END SECTION TEAM -->
+
+
+
+{%- include 'section-style' -%}
+
+
+{% schema %}
+  {
+    "name": "Team Members",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_team_section",
+            "label": "Show Team Member",
+            "default": true
+        },
+		{
+            "type": "checkbox",
+            "id": "fullwidth_on",
+            "label": "Full Width Enable",
+            "default": true,
+            "info": "If you want Full Width click checkbox"
+        },
+        {
+            "type": "text",
+            "id": "team_title",
+            "label": "Section Title",
+            "default": "Our Team Members"
+        },
+        {
+            "type": "textarea",
+            "id": "team_subtitle",
+            "label": "Section Sub-title",
+            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."
+        },
+        {
+            "type": "select",
+            "id": "member_col_lg",
+            "label": "Column for LG",
+            "options":[
+                {
+                  "label": "2",
+                  "value": "6"
+                },
+                {
+                  "label": "3",
+                  "value": "4"
+                },
+                {
+                  "label": "4",
+                  "value": "3"
+                },
+				{
+                  "label": "6",
+                  "value": "2"
+                }
+            ],
+            "default": "3"
+        },
+		{
+            "type": "select",
+            "id": "member_col_md",
+            "label": "Column for MD",
+            "options":[
+                {
+                  "label": "2",
+                  "value": "6"
+                },
+                {
+                  "label": "3",
+                  "value": "4"
+                },
+                {
+                  "label": "4",
+                  "value": "3"
+                },
+				{
+                  "label": "6",
+                  "value": "2"
+                }
+            ],
+            "default": "6"
+        },
+		{
+            "type": "select",
+            "id": "member_col_sm",
+            "label": "Column for SM",
+            "options":[
+                {
+                  "label": "2",
+                  "value": "6"
+                },
+                {
+                  "label": "3",
+                  "value": "4"
+                },
+                {
+                  "label": "4",
+                  "value": "3"
+                },
+				{
+                  "label": "6",
+                  "value": "2"
+                }
+            ],
+            "default": "6"
+        }
+	],
+    "blocks": [
+        {
+            "type": "team_member",
+            "name": "Team Member",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "member_img",
+                    "label": "Image",
+                    "info": "Recommended size: 270x330px"
+                },
+                {
+                    "type": "text",
+                    "id": "member_name",
+                    "label": "Name",
+                    "default": "John Muniz"
+                },
+                {
+                    "type": "text",
+                    "id": "member_desig",
+                    "label": "Designation",
+                    "default": "Project Engineer"
+                },
+                {
+                    "type": "header",
+                    "content": "Member Social"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_fb",
+                    "label": "Show Facebook",
+                    "default": true
+                },
+				{
+                    "type": "text",
+                    "id": "fb_icon",
+                    "label": "Icone Name",
+                    "default": "ion-social-facebook"
+                },
+                {
+                    "type": "url",
+                    "id": "fb_url",
+                    "label": "Facbook URL"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_twitter",
+                    "label": "Show Twitter",
+                    "default": true
+                },
+				{
+                    "type": "text",
+                    "id": "twitter_icon",
+                    "label": "Icone Name",
+                    "default": "ion-social-twitter"
+                },
+                {
+                    "type": "url",
+                    "id": "twitter_url",
+                    "label": "Twitter URL"
+                },
+				{
+                    "type": "checkbox",
+                    "id": "show_google_plus",
+                    "label": "Show Google Plus",
+                    "default": true
+                },
+				{
+                    "type": "text",
+                    "id": "google_icon",
+                    "label": "Icone Name",
+                    "default": "ion-social-googleplus"
+                },
+                {
+                    "type": "url",
+                    "id": "show_google_plus_url",
+                    "label": "Google Plus URL"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "show_instagram",
+                    "label": "Show Instagram",
+                    "default": true
+                },
+				{
+                    "type": "text",
+                    "id": "instagram_icon",
+                    "label": "Icone Name",
+                    "default": "ion-social-instagram-outline"
+                },
+                {
+                    "type": "url",
+                    "id": "instagram_url",
+                    "label": "Instagram URL"
+                }
+			]
+		},
+	    {
+          "type": "section_margin",
+          "name": "Section Margin",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_md",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_top_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Top",
+			  "unit": "px",
+			  "default": 0
+			},
+			{
+			  "type": "range",
+			  "id": "section_margin_bottom_xs",
+			  "min": 0,
+			  "max": 150,
+			  "step": 5,
+			  "label": "Margin Bottom",
+			  "unit": "px",
+			  "default": 0
+			}
+          ]
+       },
+	   {
+          "type": "section_padding",
+          "name": "Section Padding",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "header",
+			  "content": "Large/Desktop Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 100
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 65
+			},
+			{
+			  "type": "header",
+			  "content": "Tablet Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 80
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_md",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 45
+			},
+			{
+			  "type": "header",
+			  "content": "Mobile Device"
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_top_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Top",
+			  "unit": "px",
+			  "default": 50
+			},
+			{
+			  "type": "range",
+			  "id": "section_padding_bottom_xs",
+			  "min": 0,
+			  "max": 300,
+			  "step": 5,
+			  "label": "Padding Bottom",
+			  "unit": "px",
+			  "default": 30
+			}
+          ]
+       },
+	   {
+          "type": "section_background",
+          "name": "Section Background",
+		  "limit": 1,
+          "settings": [
+            {
+			  "type": "image_picker",
+			  "id": "section_bg_image",
+			  "label": "BG Image"
+			},
+			{
+			  "type": "color",
+			  "id": "section_bg_color",
+			  "label": "BG Color",
+			  "default": "#ffffff"
+			}
+          ]
+       }
+	],
+    "presets":[
+      {
+        "name": "Team Members",
+        "category": "6. Services",
+        "blocks":[
+          {
+            "type": "team_member"
+          },
+          {
+            "type": "team_member"
+          },
+          {
+            "type": "team_member"
+          },
+          {
+            "type": "team_member"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

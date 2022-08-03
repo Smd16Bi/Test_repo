@@ -1,0 +1,372 @@
+<!-- START SECTION BANNER --> 
+<div class="section background_bg" id="section-{{ section.id }}">
+	<div class="container{% if section.settings.fullwidth_on %}-fluid{% endif %}">
+    	<div class="row">
+            <div class="col-lg-6 col-md-8 col-sm-9">
+            	<div class="furniture_banner">
+                  	{%if section.settings.banner_title != '' %}
+                    <h3 class="single_bn_title">{{ section.settings.banner_title }}</h3>
+                  	{% endif %}
+                  	{%if section.settings.banner_offer_title != '' %}
+                    <h4 class="single_bn_title1 text_default">{{ section.settings.banner_offer_title }}</h4>
+                  	{% endif %}
+                  	{%if section.settings.banner_date != '' %}
+                    <div class="countdown_time countdown_style3 mb-4" data-time="{{ section.settings.banner_date }}"></div>
+                  	{% endif %}
+                  	{%if section.settings.banner_button_title != '' %}
+                    <a href="{{ section.settings.banner_button_url }}" class="btn btn-fill-out">{{ section.settings.banner_button_title }}</a>
+                  	{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION BANNER -->
+
+
+{%- style -%}
+  #section-{{ section.id }}{
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'section_margin' -%}
+    margin-top: {{ block.settings.section_margin_top }}px;
+    margin-bottom: {{ block.settings.section_margin_bottom }}px;
+    {%- when 'section_padding' -%}
+    padding-top: {{ block.settings.section_padding_top }}px;
+    padding-bottom: {{ block.settings.section_padding_bottom }}px;
+    {%- when 'section_background' -%}    
+    background: {{ block.settings.section_bg_color }} 
+      {%- if block.settings.section_bg_image -%}url("{{ block.settings.section_bg_image | img_url: 'master' }}"){%- endif -%} no-repeat scroll center center / cover;
+    {%- endcase -%}
+    {%- endfor -%}
+  }
+  @media (min-width: 768px) and (max-width: 991px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {% case block.type %}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_md }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_md }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_md }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_md }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+  @media (max-width: 767px) {
+    #section-{{ section.id }}{
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'section_margin' -%}
+      margin-top: {{ block.settings.section_margin_top_xs }}px;
+      margin-bottom: {{ block.settings.section_margin_bottom_xs }}px;
+      {%- when 'section_padding' -%}
+      padding-top: {{ block.settings.section_padding_top_xs }}px;
+      padding-bottom: {{ block.settings.section_padding_bottom_xs }}px;
+      {%- endcase -%}
+      {%- endfor -%}
+    }
+  }
+
+
+  .single_bn_title {
+    color: {{ section.settings.banner_title_color }};
+  }
+  .furniture_banner .single_bn_title1 {
+    color: {{ section.settings.banner_offer_title_color }};
+  }
+  .countdown_box .countdown {
+      color: {{ section.settings.banner_date_color }};
+  }
+  .countdown_time .cd_text {
+      color: {{ section.settings.banner_date_text_color }};
+  }
+
+  .btn-fill-out::before, .btn-fill-out::after {
+    background-color: {{ section.settings.banner_btn_bg }};
+  }
+  .btn-fill-out {
+    background-color: {{ section.settings.banner_btn_bg_hov }};
+    border: 1px solid {{ section.settings.banner_btn_border_hov }};
+    color: {{ section.settings.banner_text_color }};
+  }
+  .btn-fill-out:hover {
+    color: {{ section.settings.banner_text_color_hov }} !important;
+  }
+
+
+
+{%- endstyle -%}
+
+
+{% schema %}
+  	{
+		"name": "Big Sale Banner",
+		"settings": [
+            {
+              "type": "header",
+              "content": "Banner Width Control"
+            },
+            {
+              "type": "checkbox",
+              "id": "fullwidth_on",
+              "label": "Full Width Enable",
+              "default": false,
+              "info": "If you want Full Width click checkbox"
+            },
+			{
+              "type": "header",
+              "content": "Banner Content"
+            },
+            {
+              "type": "text",
+              "id": "banner_title",
+              "label": "Banner Title",
+              "default": "Big Sale Deal"
+            },
+			{
+              "type": "text",
+              "id": "banner_offer_title",
+              "label": "Banner Offer Title",
+              "default": "Sale 40% Off"
+            },
+			{
+              "type": "text",
+              "id": "banner_date",
+              "label": "Banner Date",
+              "default": "2020/09/02 12:30:15",
+			  "info": "Please use this formate Exanole : 2020/09/02"
+            },
+            {
+              "type": "text",
+              "id": "banner_button_title",
+              "label": "Banner Button Title",
+              "default": "Shop Now"
+            },
+            {
+              "type": "url",
+              "id": "banner_button_url",
+              "label": "Banner Button URL"
+            },
+            {
+              "type": "header",
+              "content": "Banner CSS"
+            },
+			{
+              "type": "color",
+              "id": "banner_title_color",
+              "label": "Banner title Color",
+              "default": "#292b2c"
+            },
+			{
+              "type": "color",
+              "id": "banner_offer_title_color",
+              "label": "Banner Offer title Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_date_color",
+              "label": "Banner Date Color",
+              "default": "#292b2c"
+            },
+			{
+              "type": "color",
+              "id": "banner_date_text_color",
+              "label": "Banner Date Text Color",
+              "default": "#687188"
+            },
+			{
+              "type": "color",
+              "id": "banner_text_color",
+              "label": "Banner Button  text Color",
+              "default": "#fff"
+            },
+            {
+              "type": "color",
+              "id": "banner_btn_bg",
+              "label": "Banner Button BG Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_btn_border",
+              "label": "Banner Button Border Color",
+              "default": "#FF324D"
+            },
+			{
+              "type": "color",
+              "id": "banner_text_color_hov",
+              "label": "Banner Button Hover text Color",
+              "default": "#FF324D"
+            },
+            {
+              "type": "color",
+              "id": "banner_btn_bg_hov",
+              "label": "Banner Button Hover BG Color",
+              "default": "transparent"
+            },
+			{
+              "type": "color",
+              "id": "banner_btn_border_hov",
+              "label": "Banner Button Border Hover Color",
+              "default": "#FF324D"
+            }
+		],
+        "blocks":[
+               {
+                  "type": "section_margin",
+                  "name": "Section Margin",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_top_xs",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Top",
+                      "unit": "px",
+                      "default": 0
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_margin_bottom_xs",
+                      "min": 0,
+                      "max": 350,
+                      "step": 5,
+                      "label": "Margin Bottom",
+                      "unit": "px",
+                      "default": 0
+                    }
+                  ]
+               },
+               {
+                  "type": "section_padding",
+                  "name": "Section Padding",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "header",
+                      "content": "Large/Desktop/Tablate Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 40
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 40
+                    },
+                    {
+                      "type": "header",
+                      "content": "Mobile Device"
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_top_xs",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Top",
+                      "unit": "px",
+                      "default": 30
+                    },
+                    {
+                      "type": "range",
+                      "id": "section_padding_bottom_xs",
+                      "min": 0,
+                      "max": 500,
+                      "step": 5,
+                      "label": "Padding Bottom",
+                      "unit": "px",
+                      "default": 30
+                    }
+                  ]
+               },
+               {
+                  "type": "section_background",
+                  "name": "Section Background",
+                  "limit": 1,
+                  "settings": [
+                    {
+                      "type": "image_picker",
+                      "id": "section_bg_image",
+                      "label": "BG Image",
+					  "info": "Recommended Size: 1920 x 600px"
+                    },
+                    {
+                      "type": "color",
+                      "id": "section_bg_color",
+                      "label": "BG Color",
+                      "default": "#F4F9FC"
+                    }
+                  ]
+               }
+
+            ],
+
+        "presets":[
+                {
+                    "name": "Big Sale Banner",
+                    "category": "2. Banner",
+                    "blocks":[
+						{
+                            "type": "section_background"
+                        }
+                    ]
+                }
+            ]
+
+
+ 	 }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

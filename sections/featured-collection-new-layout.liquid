@@ -1,0 +1,372 @@
+<div class="collections_homepage">
+    <div class="collections_homepage_wrapper">
+        <div class="collections_homepage_body">
+            <div class="collections_homepage_heading">
+                <h3>{{section.settings.title}}</h3>
+                <p>{{section.settings.subtitle}}</p>
+            </div>
+            <div class="collections_homepage_slider_arrow collections_homepage_slider_left">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70707 0.959641C8.09759 1.35017 8.09759 1.98333 7.70707 2.37385L3.08084 7.00008L7.70707 11.6263C8.09759 12.0168 8.09759 12.65 7.70707 13.0405C7.31654 13.431 6.68338 13.431 6.29285 13.0405L0.959519 7.70719C0.568995 7.31666 0.568995 6.6835 0.959519 6.29297L6.29285 0.959641C6.68338 0.569117 7.31654 0.569117 7.70707 0.959641Z" fill="#697287"/>
+                </svg>
+            </div>
+            <div class="collections_homepage_slider swiper">
+                <div class="collections_homepage_slider_wrapper swiper-wrapper">
+                    {% for product in section.settings.collection.products %}
+                    <div class="swiper-slide collections_homepage_slider_item_wrapper">
+                        <a href="{{product.url}}"  class="collections_homepage_slider_item ">
+
+                            <div class="collections_homepage_slider_item_img">
+                                {% for image in product.images limit: 1 %}
+                                    <img src="{{image.src | img_url: 'master'}}" alt="{{image.alt}}">
+                                {% endfor %}
+                            </div>
+                            <div class="collections_homepage_slider_item_info">
+                               
+                                <div class="collections_homepage_slider_item_info-title">
+                                    {{product.title}}
+                                </div>
+                                <div class="collections_homepage_slider_item_info-price">
+                                    <div class="collections_homepage_price_origin">{{product.price | money }}</div>
+                                    <div class="collections_homepage_price_compare">{{product.compare_at_price | money }}</div>
+                                </div>
+                                
+                                {% if product.compare_at_price != blank %}
+                                    <div class="collections_homepage_slider_item_info-badge">{{'pagefly.products.product.on_sale' | t }}</div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        {% if section.settings.wishlist == true %}
+                        <div class="collections_homepage_slider_wishlist">
+                            {% include 'wishlist-button' %}
+                        </div>
+                    {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="collections_homepage_slider_arrow collections_homepage_slider_right">
+                <svg style="transform: rotate(180deg);" xmlns="http://www.w3.org/2000/svg" width="8" height="14" viewBox="0 0 8 14" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7.70707 0.959641C8.09759 1.35017 8.09759 1.98333 7.70707 2.37385L3.08084 7.00008L7.70707 11.6263C8.09759 12.0168 8.09759 12.65 7.70707 13.0405C7.31654 13.431 6.68338 13.431 6.29285 13.0405L0.959519 7.70719C0.568995 7.31666 0.568995 6.6835 0.959519 6.29297L6.29285 0.959641C6.68338 0.569117 7.31654 0.569117 7.70707 0.959641Z" fill="#697287"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+{% style %}
+    .collections_homepage_wrapper{
+        padding-top: {{section.settings.top_padding}}px;
+        padding-bottom: {{section.settings.bottom_padding}}px;
+        max-width: 1440px;
+        width: 100%;
+    }
+    
+    @media screen and (max-width: 768px){
+        .collections_homepage_wrapper{
+            padding-top: {{section.settings.top_padding | divided_by: 2 }}px;
+            padding-bottom: {{section.settings.bottom_padding | divided_by: 2 }}px;
+        }
+    }
+    {% if section.settings.item_border == true %}
+        #shopify-section-{{section.id}} .collections_homepage_slider_item_wrapper{
+            box-shadow: 0px 0px 15px rgb(0 0 0 / 10%);
+        }
+        @media screen and (max-width: 992px){
+            #shopify-section-{{section.id}} .collections_homepage_slider_item_wrapper{
+                box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+            }
+        }
+        #shopify-section-{{section.id}} .collections_homepage_slider_item_info{
+            padding-left: 9px;
+            padding-right: 9px;
+        }
+    {% endif %}
+    .collections_homepage_slider_item_info-badge{
+        color: {{section.settings.badge_text}};
+        background-color: {{section.settings.badge}};
+    }
+{% endstyle %}
+<style>
+.collections_homepage_wrapper{
+    margin: 0 auto;
+}
+.collections_homepage_body{
+    padding: 0 90px;
+    width: 100%;
+    position: relative;
+    margin: 0 auto;
+}
+.collections_homepage_slider{
+    padding: 10px;
+}
+.collections_homepage_heading{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 42px;
+}
+.collections_homepage_heading h3{
+    text-align: center;
+    margin: 0;
+    font-family: 'Poppins';
+    font-size: 36px;
+    line-height: 54px;
+    font-weight: 600;
+    color: #000;
+    letter-spacing: -0.035em;
+}
+.collections_homepage_heading p{
+    text-align: center;
+    margin: 0;
+    font-family: 'Poppins';
+    font-size: 21px;
+    line-height: 32px;
+    font-weight: 400;
+    color: #697287;
+    letter-spacing: -0.035em;
+}
+.collections_homepage_slider_item_wrapper{
+    border-radius: 19px;
+    height: auto;
+    position: relative;
+}
+.collections_homepage_slider_wishlist{
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+.collections_homepage_slider_wishlist .icon-heart:before{
+    font-weight: 900;
+    color: #697287;
+    font-size: 23px;
+}
+.collections_homepage_slider_wishlist:hover .icon-heart:before{
+    color: #F78E27;
+}
+.collections_homepage_slider_item_img img{
+    border-top-left-radius: 19px;
+    border-top-right-radius: 19px;
+}
+.collections_homepage_slider_item_info{
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+.collections_homepage_slider_item_info-title{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    letter-spacing: -0.035em;
+    color: #000000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.collections_homepage_slider_item_img{
+
+}
+.collections_homepage_slider_item_img img{
+    height: 333px;
+    object-fit: contain;
+    width: 100%;
+}
+.collections_homepage_slider_item_info-badge{
+    border-radius: 19px;
+    padding: 4px 15px;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+.collections_homepage_slider_item_info-price{
+    display: flex;
+    align-items: center;
+    padding: 7px 0 0 0;
+}
+.collections_homepage_slider_item_info-price .collections_homepage_price_origin{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.035em;
+    color: #F78E27;
+    margin-right: 4px;
+}
+.collections_homepage_slider_item_info-price .collections_homepage_price_compare{
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.035em;
+    text-decoration-line: line-through;
+    color: #697287;
+}
+.collection_homepage_slider_item_info-wishlist{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+.collections_homepage_slider_arrow{
+    opacity: 0;
+    position: absolute;
+    bottom: calc( 50% - 128px );
+    transform: translate(0, -50px);
+}
+.collections_homepage_body:hover .collections_homepage_slider_arrow{
+    opacity: 1;
+}
+.collections_homepage_slider_arrow:hover > svg path{
+    fill: #F78E27;
+}
+.collections_homepage_slider_left{
+    left: 50px;
+}
+.collections_homepage_slider_right{
+    right: 50px;
+}
+@media screen and (max-width: 992px) {
+    .collections_homepage_body{
+        padding: 0 40px;
+    }
+    .collections_homepage_slider_left{
+        left: 25px;
+    }
+    .collections_homepage_slider_right{
+        right: 25px;
+    }
+}
+@media screen and (max-width: 768px){
+    .collections_homepage_slider_arrow:hover > svg path{
+        fill: #fff;
+    }
+    .collections_homepage_slider{
+        padding: 10px 15px;
+    }
+    .collections_homepage_body{
+        padding: 0;
+    }
+    .collections_homepage_slider_arrow{
+        z-index: 3;
+        opacity: 1;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #F78E27;
+    }
+    .collections_homepage_slider_arrow svg path{
+        fill: white;
+    }
+    .collections_homepage_heading{
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 30px;
+    }
+    .collections_homepage_heading h3{
+        font-size: 26px;
+        line-height: 34px;
+    }
+    .collections_homepage_heading p{
+        font-size: 16px;
+        line-height: 24px;
+        margin-top: 3px;
+    }
+    .collections_homepage_slider_item_info-title{
+        font-size: 14px;
+    }
+    .collections_homepage_slider_item_info-price{
+        padding: 0;
+    }
+}
+</style>
+
+
+{% schema %}
+{
+    "name": "New featured collection",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitle"
+        },
+        {
+            "type": "header",
+            "content": "Collection settings"
+        },
+        {
+            "type": "collection",
+            "id": "collection",
+            "label": "Collection"
+        },
+        {
+            "type": "checkbox",
+            "id": "item_border",
+            "label": "Shadow for product item",
+            "default": false
+        },
+        {
+            "type": "checkbox",
+            "id": "wishlist",
+            "label": "Wishlist",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "badge",
+            "label": "Badge background",
+            "default": "#F78E27"
+        },
+        {
+            "type": "color",
+            "id": "badge_text",
+            "label": "Badge text color",
+            "default": "#000"
+        },
+        {
+            "type": "range",
+            "id": "top_padding",
+            "label": "Top padding",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 59
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding",
+            "label": "Bottom padding",
+            "unit": "px",
+            "min": 20,
+            "max": 100,
+            "step": 1,
+            "default": 70
+        }
+    ],
+    "presets": [
+        {
+            "name":"Homepage collection"
+        }
+    ]
+}
+{% endschema %}
